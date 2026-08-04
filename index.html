@@ -44,7 +44,7 @@
             font-weight: 500;
         }
 
-        /* Fixed Layout Grid */
+        /* Fixed 3-Column Layout Grid */
         .layout-container {
             width: 1200px;
             margin-left: auto;
@@ -52,14 +52,14 @@
             padding: 1.5rem 1rem;
             display: flex;
             flex-direction: row;
-            gap: 2rem;
+            gap: 1.5rem;
             flex-grow: 1;
             box-sizing: border-box;
         }
 
         /* Left Side Navigation Box */
         nav {
-            width: 16rem;
+            width: 14rem;
             flex-shrink: 0;
         }
         .nav-box {
@@ -95,16 +95,51 @@
             letter-spacing: 0.025em;
             text-decoration: none;
             transition: all 0.2s ease;
+            text-align: left;
+            cursor: pointer;
         }
-        .nav-btn:hover {
-            border-color: #2dd4bf;
-            color: #2dd4bf;
-            background-color: #27272a;
+        /* Highlight colors now dynamic */
+        .nav-btn:hover, .nav-btn.active {
+            border-color: #2dd4bf !important;
+            color: #2dd4bf !important;
+            background-color: #27272a !important;
         }
 
-        /* Central Chat Box Frame */
-        main {
+        /* Central Content Box Frame */
+        .content-display-box {
             flex-grow: 1;
+            background-color: #09090b;
+            border: 1px solid #27272a;
+            border-radius: 1rem;
+            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.5);
+            height: 550px;
+            overflow-y: auto;
+            padding: 1.5rem;
+            box-sizing: border-box;
+        }
+        
+        /* Inner Content Styling */
+        .tab-content {
+            display: none;
+        }
+        .tab-content.active {
+            display: block;
+        }
+        .tab-content h2 {
+            margin-top: 0;
+            color: #2dd4bf;
+            font-size: 1.5rem;
+        }
+        .tab-content p {
+            color: #d4d4d8;
+            font-size: 0.95rem;
+            line-height: 1.6;
+        }
+
+        /* Right Side Chat Box Frame */
+        main {
+            width: 24rem;
+            flex-shrink: 0;
             display: flex;
             flex-direction: column;
             border: 1px solid #27272a;
@@ -250,17 +285,6 @@
             background-color: #14b8a6;
         }
 
-        /* Clear Button Variant Style */
-        .clear-btn {
-            background-color: transparent !important;
-            border: 1px solid #27272a !important;
-            color: #71717a !important;
-        }
-        .clear-btn:hover {
-            border-color: #ef4444 !important;
-            color: #ef4444 !important;
-        }
-
         footer {
             text-align: center;
             padding: 2rem 0;
@@ -273,51 +297,30 @@
         }
 
         .chat-stream::-webkit-scrollbar { width: 6px; }
-        .chat-stream::-webkit-scrollbar-track { background: #000000; }
-        .chat-stream::-webkit-scrollbar-thumb { background: #27272a; border-radius: 3px; }
-        .chat-stream::-webkit-scrollbar-thumb:hover { background: #2dd4bf; }
+        .chat-stream::-webkit-scrollbar-track { background: transparent; }
+        .chat-stream::-webkit-scrollbar-thumb { background: #27272a; border-radius: 9999px; }
     </style>
 </head>
 <body>
 
     <header>
         <h1>8BRCAM</h1>
-        <p>Yahoo Pool Tournament Lobby</p>
+        <p>Yahoo Pool Competition Platform</p>
     </header>
 
     <div class="layout-container">
+        
+        <!-- Left Side Navigation Box -->
         <nav>
             <div class="nav-box">
                 <div class="nav-title">Tournament Menu</div>
-                <a href="#" class="nav-btn">Lobby Home</a>
-                <a href="#" class="nav-btn">View Bracket</a>
-                <a href="#" class="nav-btn">Leaderboard</a>
-                <a href="#" class="nav-btn">Rules & Settings</a>
+                <!-- Fixed: Removed static 'active' text from Rules button -->
+                <a href="#" class="nav-btn" onclick="switchTab('rules', this)">Rules</a>
+                <a href="#" class="nav-btn" onclick="switchTab('groups', this)">Groups</a>
+                <a href="#" class="nav-btn" onclick="switchTab('playoffs', this)">Playoffs</a>
+                <a href="#" class="nav-btn" onclick="switchTab('archives', this)">Archives</a>
+                <a href="#" class="nav-btn" onclick="switchTab('application', this)">Application</a>
             </div>
         </nav>
 
-        <main>
-            <div class="chat-header">
-                <div class="live-indicator">
-                    <span class="dot"></span>
-                    <h2 class="chat-title">Saved Local Chat</h2>
-                </div>
-                <!-- Added a utility button to wipe the storage history -->
-                <button class="clear-btn" style="padding: 0.25rem 0.75rem;" onclick="clearHistory()">Clear History</button>
-            </div>
-
-            <div class="chat-stream" id="chatStream">
-                <div class="sys-alert">
-                    <span class="sys-tag">Welcome back. Chat log saved on your computer.</span>
-                </div>
-            </div>
-
-            <div class="chat-input-area">
-                <input type="text" id="chatInput" placeholder="Type a message here..." autocomplete="off" onkeypress="handleKey(event)">
-                <button id="sendBtn" onclick="sendMessage()">Send</button>
-            </div>
-        </main>
-    </div>
-
-    <footer>
-        &copy; 2026 8brcam Yahoo Pool League Engine
+        <div class="content-display-box">
