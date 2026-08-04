@@ -21,12 +21,23 @@
         }
 
         /* Top Header */
-        header {
-            width: 100%;
-            padding-top: 3rem;
-            padding-bottom: 1.5rem;
-            text-align: center;
-        }
+header {
+    width: 100%;
+    padding-top: 2rem;
+    padding-bottom: 1rem;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.header-logo {
+    max-width: 600px; /* Limits the logo size so it fits perfectly */
+    width: 100%;
+    height: auto;
+    object-fit: contain;
+    filter: drop-shadow(0 0 15px rgba(45, 212, 191, 0.25)); /* Adds the neon teal glow */
+}
+
         h1 {
             font-size: 3rem;
             font-weight: 900;
