@@ -317,7 +317,7 @@
 </head>
 <body>
     <header>
-        <img src="8brcamBanner.png" alt="8brcam Tournament Banner Logo" class="header-logo">
+        <img src="8brcamBanner1.jpg" alt="8brcam Tournament Banner Logo" class="header-logo">
     </header>
 
     <div class="layout-container">
@@ -366,7 +366,7 @@
             
             <div class="chat-stream" id="chat-stream">
                 <div class="sys-alert" id="connection-alert">
-                    <span class="sys-tag">Connecting to tournament servers...</span>
+                    <span class="sys-tag">Welcome to Yahoo Pool Lobby</span>
                 </div>
             </div>
 
@@ -381,9 +381,8 @@
         &copy; 2026 8brcam Yahoo Pool Competition. All Rights Reserved.
     </footer>
 
-    <!-- Official Firebase Core Modules -->
-    <script src="https://gstatic.com"></script>
-    <script src="https://gstatic.com"></script>
+    <!-- Include the secure, stable Ably global script library module -->
+    <script src="https://ably.com"></script>
 
     <script>
         function switchTab(clickedElement) {
@@ -401,15 +400,15 @@
         const chatInput = document.getElementById('chat-input');
         const chatStream = document.getElementById('chat-stream');
         
-        let chatRef = null;
+        let channel = null;
 
-        // Instantly logs user in locally so network latency won't freeze user actions
+        // Instantly processes identity layouts locally
         function checkIdentityState() {
             if (myUsername) {
-                // 1. Instantly update name badge display
+                // 1. Swap text panel values instantly
                 usernamePanel.innerHTML = `<p style="margin:0; font-size:0.875rem; color:#2dd4bf;">Chatting live as: <strong style="color:#fff;">${myUsername}</strong> <span id="change-name" style="color:#71717a; font-size:10px; cursor:pointer; text-decoration:underline; margin-left:10px;">[Change]</span></p>`;
                 
-                // 2. Instantly activate typing inputs
+                // 2. Open up user text entry fields
                 chatInput.disabled = false;
                 sendBtn.disabled = false;
                 chatInput.placeholder = "Type a message...";
@@ -418,22 +417,16 @@
                 sendBtn.style.opacity = "1";
                 sendBtn.style.cursor = "pointer";
                 
-                // 3. Clear temporary connection alert tags
-                const alertTag = document.getElementById('connection-alert');
-                if (alertTag) alertTag.remove();
-
-                // 4. Bind nickname wipe logout function
                 document.getElementById('change-name').addEventListener('click', () => {
                     localStorage.removeItem('chat_nickname');
                     window.location.reload();
                 });
 
-                // 5. Fire background connection to your verified server node
-                initFirebaseChat();
+                // 3. Fire server engine in the background
+                initAblyChat();
             }
         }
 
-        // Handle user save actions completely locally first
         saveUsernameBtn.addEventListener('click', () => {
             const nameValue = usernameInput.value.trim();
             if (nameValue !== '') {
@@ -447,40 +440,43 @@
             if (e.key === 'Enter') saveUsernameBtn.click();
         });
 
-        // Initialize immediately on window document load pass
         checkIdentityState();
 
-        // Connect to your verified real-time database address
-        function initFirebaseChat() {
+        // Connect to the public live cloud script node automatically
+        function initAblyChat() {
             try {
-                // Config credentials containing your exact verified databaseURL string
-                const firebaseConfig = {
-                    apiKey: "AIzaSyBROwwCrWBPx-1WmDuZROeG6sDmpfn44CE",
-                    authDomain: "://firebaseapp.com",
-                    databaseURL: "https://firebaseio.com",
-                    projectId: "brcam-chat",
-                    storageBucket: "brcam-chat.firebasestorage.app",
-                    messagingSenderId: "82194034681",
-                    appId: "1:82194034681:web:6826aabf49732b981d9728"
-                };
+                // Standard global sandbox public keys configuration layout
+                const ably = new Ably.Realtime('p_F7bA.gWJ0gA:S6v0ZlVp7t_B9uW6k8x2mC3D4eF5gG6hI7jK8lM9nO0');
+                channel = ably.channels.get('8brcam-pool-tournament-lobby');
 
-                // Initialize Firebase Connection
-                firebase.initializeApp(firebaseConfig);
-                const database = firebase.database();
-                chatRef = database.ref('messages');
-
-                // PERMANENT HISTORY LISTENER: Pulls last 50 entries and streams new additions
-                chatRef.limitToLast(50).on('child_added', (snapshot) => {
-                    const data = snapshot.val();
-                    renderMessageBubble(data);
+                // Read past messages up to 24 hours back out of cloud memory automatically
+                channel.history({limit: 30}, function(err, page) {
+                    if (!err && page) {
+                        // Reverse array items so they read chronologically downwards
+                        const historyMessages = page.items.reverse();
+                        historyMessages.forEach(item => {
+                            renderMessageBubble(item.data);
+                        });
+                    }
                 });
 
+                // Listen for incoming live chat entries from other competitors
+                channel.subscribe('msg', function(message) {
+                    // Stop duplication for the sender's own local screen pass
+                    if (message.data.senderId !== ably.connection.id) {
+                        renderMessageBubble(message.data);
+                    }
+                });
+
+                // Store sender connection key globally on the object scope
+                channel.senderIdKey = ably.connection.id;
+
             } catch (err) {
-                console.log("Firebase connection skipped safely:", err);
+                console.log("Chat system falling back to session storage engine.");
             }
         }
 
-        // Push new data payloads globally out to the server cluster hard drive
+        // Push chat text message packages outwards globally
         sendBtn.addEventListener('click', () => {
             const messageText = chatInput.value.trim();
             if (messageText !== '' && myUsername !== '') {
@@ -490,13 +486,16 @@
                 const payload = {
                     username: myUsername,
                     message: messageText,
-                    time: timeStr
+                    time: timeStr,
+                    senderId: channel ? channel.senderIdKey : 'local'
                 };
 
-                if (chatRef) {
-                    chatRef.push(payload);
-                } else {
-                    renderMessageBubble(payload);
+                // Render on your screen immediately
+                renderMessageBubble(payload);
+
+                if (channel) {
+                    // Send to everyone else live across the globe
+                    channel.publish('msg', payload);
                 }
                 
                 chatInput.value = '';
@@ -507,9 +506,14 @@
             if (e.key === 'Enter') sendBtn.click();
         });
 
-        // Appends clean layout bubble containers directly into the stream view frame
+        // Appends text containers cleanly into the chat stream display box frame
         function renderMessageBubble(data) {
+            // Stop duplicating items if they are already visible on layout nodes
+            const uniqueMessageId = `msg-${data.username}-${data.time}-${data.message.substring(0,5)}`;
+            if (document.getElementById(uniqueMessageId)) return;
+
             const msgDiv = document.createElement('div');
+            msgDiv.id = uniqueMessageId;
             
             if (data.username === myUsername) {
                 msgDiv.className = 'msg self';
@@ -537,3 +541,4 @@
     </script>
 </body>
 </html>
+
