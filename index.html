@@ -403,7 +403,7 @@
         
         let chatRef = null;
 
-        // Instantly logs user in locally so network state won't block UI actions
+        // Instantly logs user in locally so network latency won't freeze user actions
         function checkIdentityState() {
             if (myUsername) {
                 // 1. Instantly update name badge display
@@ -428,7 +428,7 @@
                     window.location.reload();
                 });
 
-                // 5. Fire background connection to region-specific server node
+                // 5. Fire background connection to your verified server node
                 initFirebaseChat();
             }
         }
@@ -450,14 +450,14 @@
         // Initialize immediately on window document load pass
         checkIdentityState();
 
-        // Connect to your custom USA hosted real-time cluster drive
+        // Connect to your verified real-time database address
         function initFirebaseChat() {
             try {
-                // Config credentials matched exactly to your regional profile [INDEX]
+                // Config credentials containing your exact verified databaseURL string
                 const firebaseConfig = {
                     apiKey: "AIzaSyBROwwCrWBPx-1WmDuZROeG6sDmpfn44CE",
                     authDomain: "://firebaseapp.com",
-                    databaseURL: "https://firebasedatabase.app",
+                    databaseURL: "https://firebaseio.com",
                     projectId: "brcam-chat",
                     storageBucket: "brcam-chat.firebasestorage.app",
                     messagingSenderId: "82194034681",
@@ -537,4 +537,3 @@
     </script>
 </body>
 </html>
-
