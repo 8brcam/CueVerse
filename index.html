@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=1200, initial-scale=1.0">
     <title>8brcam | Yahoo Pool Competition</title>
     
-    <!-- REMOVED THE GLOBAL BASE TARGET TAG FROM HERE -->
-    
     <style>
         /* Base Setup */
         html, body {
@@ -68,7 +66,7 @@
             display: flex;
             flex-direction: column;
             gap: 0.5rem;
-            height: 550px;
+            box-sizing: border-box;
         }
         
         .nav-title {
@@ -99,7 +97,6 @@
             cursor: pointer;
         }
         
-        /* Highlight colors */
         .nav-btn:hover, .nav-btn.active {
             border-color: #2dd4bf !important;
             color: #2dd4bf !important;
@@ -242,7 +239,7 @@
             text-align: right;
         }
 
-        /* Chat Input Area */
+        /* Chat Input Box Fixed Frame */
         .chat-input-area {
             padding: 1rem;
             border-top: 1px solid #27272a;
@@ -301,27 +298,122 @@
     </style>
 </head>
 <body>
-
     <header>
         <img src="8brcamBanner.png" alt="8brcam Tournament Banner Logo" class="header-logo">
     </header>
 
     <div class="layout-container">
         
-        <!-- Left Side Navigation Box -->
+        <!-- Left Side Navigation Box with all 8 buttons completely visible -->
         <nav>
             <div class="nav-box">
                 <div class="nav-title">Tournament Menu</div>
                 
-                <!-- THESE 4 BUTTONS WILL OPEN INSIDE THE CONTENT BOX -->
+                <!-- 4 BUTTONS FOR INSIDE: These open inside the context box -->
                 <a href="./Rules/" target="content-frame" class="nav-btn active" onclick="switchTab(this)">Rules</a>
                 <a href="./Groups/" target="content-frame" class="nav-btn" onclick="switchTab(this)">Groups</a>
                 <a href="./Playoffs/" target="content-frame" class="nav-btn" onclick="switchTab(this)">Playoffs</a>
                 <a href="./Archives/" target="content-frame" class="nav-btn" onclick="switchTab(this)">Archives</a>
                 
-                <!-- THESE 4 BUTTONS WILL OPEN IN A BRAND NEW BROWSER TAB OUTSIDE THE APP -->
-                <a href="https://google.com" target="_blank" class="nav-btn" onclick="switchTab(this)">Application</a>
-                <a href="https://youtube.com" target="_blank" class="nav-btn" onclick="switchTab(this)">Videos</a>
-                <a href="https://github.com" target="_blank" class="nav-btn" onclick="switchTab(this)">Forum</a>
+                <!-- 4 BUTTONS FOR OUTSIDE: These open normal links outside the context box -->
+                <a href="./Application/" class="nav-btn" onclick="switchTab(this)">Application</a>
+                <a href="./Videos/" class="nav-btn" onclick="switchTab(this)">Videos</a>
+                <a href="./Forum/" class="nav-btn" onclick="switchTab(this)">Forum</a>
+                <a href="./Chat/" class="nav-btn" onclick="switchTab(this)">Chat</a>
+            </div>
+        </nav>
 
+        <!-- Central Content Box Frame -->
+        <div class="content-display-box">
+            <iframe name="content-frame" id="content-frame" src="./Rules/" style="width: 100%; height: 100%; border: none; background: transparent; border-radius: 1rem;"></iframe>
+        </div>
+        <!-- Right Side Live Match Chat Column -->
+        <main>
+            <div class="chat-header">
+                <div class="live-indicator">
+                    <span class="dot"></span>
+                    <h2 class="chat-title">Live Match Chat</h2>
+                </div>
+                <span class="lobby-tag">LOBBY #01</span>
+            </div>
+            
+            <div class="chat-stream" id="chat-stream">
+                <div class="sys-alert">
+                    <span class="sys-tag">Welcome to Yahoo Pool Lobby</span>
+                </div>
+                
+                <div class="msg">
+                    <div class="msg-meta">
+                        <span class="user-left">Player_One</span>
+                        <span class="time">10:42 AM</span>
+                    </div>
+                    <div class="bubble">Good luck in the competition everyone!</div>
+                </div>
+
+                <div class="msg self">
+                    <div class="msg-meta">
+                        <span class="time">10:43 AM</span>
+                        <span class="user-right">You</span>
+                    </div>
+                    <div class="bubble">Thanks! Good luck to you too!</div>
+                </div>
+            </div>
+
+            <div class="chat-input-area">
+                <input type="text" id="chat-input" placeholder="Type a message...">
+                <button type="button" id="send-btn">Send</button>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        &copy; 2026 8brcam Yahoo Pool Competition. All Rights Reserved.
+    </footer>
+
+    <script>
+        // Manages UI navigation highlighting states cleanly
+        function switchTab(clickedElement) {
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            clickedElement.classList.add('active');
+        }
+
+        // Live Chat box message generator engine
+        const sendBtn = document.getElementById('send-btn');
+        const chatInput = document.getElementById('chat-input');
+        const chatStream = document.getElementById('chat-stream');
+
+        if(sendBtn && chatInput && chatStream) {
+            sendBtn.addEventListener('click', () => {
+                const messageText = chatInput.value.trim();
+                if (messageText !== '') {
+                    const msgDiv = document.createElement('div');
+                    msgDiv.className = 'msg self';
+                    
+                    const now = new Date();
+                    const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                    
+                    msgDiv.innerHTML = `
+                        <div class="msg-meta">
+                            <span class="time">${timeStr}</span>
+                            <span class="user-right">You</span>
+                        </div>
+                        <div class="bubble">${messageText}</div>
+                    `;
+                    
+                    chatStream.appendChild(msgDiv);
+                    chatInput.value = '';
+                    chatStream.scrollTop = chatStream.scrollHeight;
+                }
+            });
+
+            chatInput.addEventListener('keypress', (e) => {
+                if (e.key === 'Enter') {
+                    sendBtn.click();
+                }
+            });
+        }
+    </script>
+</body>
+</html>
 
