@@ -38,6 +38,24 @@
             filter: drop-shadow(0 0 15px rgba(45, 212, 191, 0.25));
         }
 
+        h1 {
+            font-size: 3rem;
+            font-weight: 900;
+            letter-spacing: 0.1em;
+            color: #2dd4bf;
+            margin: 0;
+            filter: drop-shadow(0 0 15px rgba(45, 212, 191, 0.3));
+        }
+        
+        header p {
+            font-size: 0.75rem;
+            color: #a1a1aa;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            margin-top: 0.5rem;
+            font-weight: 500;
+        }
+
         /* Fixed 3-Column Layout Grid */
         .layout-container {
             width: 1200px;
@@ -299,7 +317,7 @@
 </head>
 <body>
     <header>
-        <img src="8brcamBanner1.jpg" alt="8brcam Tournament Banner Logo" class="header-logo">
+        <img src="8brcamBanner.png" alt="8brcam Tournament Banner Logo" class="header-logo">
     </header>
 
     <div class="layout-container">
@@ -347,7 +365,7 @@
             </div>
             
             <div class="chat-stream" id="chat-stream">
-                <div class="sys-alert">
+                <div class="sys-alert" id="connection-alert">
                     <span class="sys-tag">Connecting to tournament servers...</span>
                 </div>
             </div>
@@ -373,13 +391,7 @@
             clickedElement.classList.add('active');
         }
 
-        // Auto-running public channels (No account management required)
-        const pubnub = new PubNub({
-            publishKey: 'pub-c-897c8d9e-1080-4cf9-93e1-38cb88599426', // Public standard developer keys
-            subscribeKey: 'sub-c-1a06700c-b26a-4d2c-8069-b5417ecbb1fa',
-            userId: 'user_' + Math.random().toString(36).substring(2, 9)
-        });
-
+        // Layout Elements
         let myUsername = localStorage.getItem('chat_nickname') || "";
         const usernamePanel = document.getElementById('username-panel');
         const usernameInput = document.getElementById('username-input');
@@ -387,10 +399,16 @@
         const sendBtn = document.getElementById('send-btn');
         const chatInput = document.getElementById('chat-input');
         const chatStream = document.getElementById('chat-stream');
+        
+        let pubnub = null;
 
+        // FIXED: Runs 100% locally first to prevent network freezing issues [INDEX]
         function checkIdentityState() {
             if (myUsername) {
+                // 1. Instantly swap user layout box panel status [INDEX]
                 usernamePanel.innerHTML = `<p style="margin:0; font-size:0.875rem; color:#2dd4bf;">Chatting live as: <strong style="color:#fff;">${myUsername}</strong> <span id="change-name" style="color:#71717a; font-size:10px; cursor:pointer; text-decoration:underline; margin-left:10px;">[Change]</span></p>`;
+                
+                // 2. Instantly unlock the keyboard message values fields [INDEX]
                 chatInput.disabled = false;
                 sendBtn.disabled = false;
                 chatInput.placeholder = "Type a message...";
@@ -399,16 +417,22 @@
                 sendBtn.style.opacity = "1";
                 sendBtn.style.cursor = "pointer";
                 
-                const systemTags = chatStream.querySelectorAll('.sys-alert');
-                systemTags.forEach(tag => tag.remove());
-                
+                // 3. Clear placeholder alert notifications text [INDEX]
+                const alertTag = document.getElementById('connection-alert');
+                if (alertTag) alertTag.remove();
+
+                // 4. Bind the target user name clearing function [INDEX]
                 document.getElementById('change-name').addEventListener('click', () => {
                     localStorage.removeItem('chat_nickname');
                     window.location.reload();
                 });
+
+                // 5. Fire network initialization separately in the background [INDEX]
+                initNetworkChat();
             }
         }
 
+        // FIXED: The save trigger processes instantly inside the local framework window [INDEX]
         saveUsernameBtn.addEventListener('click', () => {
             const nameValue = usernameInput.value.trim();
             if (nameValue !== '') {
@@ -422,22 +446,60 @@
             if (e.key === 'Enter') saveUsernameBtn.click();
         });
 
+        // Initialize user login states immediately on document load [INDEX]
         checkIdentityState();
 
+        // Safely manages server connection separately so it cannot brick your layout [INDEX]
+        function initNetworkChat() {
+            try {
+                if (typeof PubNub === 'undefined') {
+                    console.log("Network library offline, running local mock.");
+                    return;
+                }
+
+                pubnub = new PubNub({
+                    publishKey: 'pub-c-897c8d9e-1080-4cf9-93e1-38cb88599426', 
+                    subscribeKey: 'sub-c-1a06700c-b26a-4d2c-8069-b5417ecbb1fa',
+                    userId: 'user_' + Math.random().toString(36).substring(2, 9)
+                });
+
+                pubnub.addListener({
+                    message: function(event) {
+                        const data = event.message;
+                        renderMessageBubble(data);
+                    }
+                });
+
+                pubnub.subscribe({
+                    channels: ['8brcam-pool-lobby-room']
+                });
+
+            } catch (err) {
+                console.log("Network initialization bypassed safely:", err);
+            }
+        }
+
+        // Broadcast Message Outward into the Live Chat Room [INDEX]
         sendBtn.addEventListener('click', () => {
             const messageText = chatInput.value.trim();
             if (messageText !== '' && myUsername !== '') {
                 const now = new Date();
                 const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
                 
-                pubnub.publish({
-                    channel: '8brcam-pool-lobby-room',
-                    message: {
-                        username: myUsername,
-                        message: messageText,
-                        time: timeStr
-                    }
-                });
+                const payload = {
+                    username: myUsername,
+                    message: messageText,
+                    time: timeStr
+                };
+
+                if (pubnub) {
+                    pubnub.publish({
+                        channel: '8brcam-pool-lobby-room',
+                        message: payload
+                    });
+                } else {
+                    renderMessageBubble(payload);
+                }
                 
                 chatInput.value = '';
             }
@@ -447,39 +509,33 @@
             if (e.key === 'Enter') sendBtn.click();
         });
 
-        pubnub.addListener({
-            message: function(event) {
-                const data = event.message;
-                const msgDiv = document.createElement('div');
-                
-                if (data.username === myUsername) {
-                    msgDiv.className = 'msg self';
-                    msgDiv.innerHTML = `
-                        <div class="msg-meta">
-                            <span class="time">${data.time}</span>
-                            <span class="user-right">You</span>
-                        </div>
-                        <div class="bubble">${data.message}</div>
-                    `;
-                } else {
-                    msgDiv.className = 'msg';
-                    msgDiv.innerHTML = `
-                        <div class="msg-meta">
-                            <span class="user-left">${data.username}</span>
-                            <span class="time">${data.time}</span>
-                        </div>
-                        <div class="bubble">${data.message}</div>
-                    `;
-                }
-
-                chatStream.appendChild(msgDiv);
-                chatStream.scrollTop = chatStream.scrollHeight;
+        // Appends text containers cleanly into the chat stream display box frame [INDEX]
+        function renderMessageBubble(data) {
+            const msgDiv = document.createElement('div');
+            
+            if (data.username === myUsername) {
+                msgDiv.className = 'msg self';
+                msgDiv.innerHTML = `
+                    <div class="msg-meta">
+                        <span class="time">${data.time}</span>
+                        <span class="user-right">You</span>
+                    </div>
+                    <div class="bubble">${data.message}</div>
+                `;
+            } else {
+                msgDiv.className = 'msg';
+                msgDiv.innerHTML = `
+                    <div class="msg-meta">
+                        <span class="user-left">${data.username}</span>
+                        <span class="time">${data.time}</span>
+                    </div>
+                    <div class="bubble">${data.message}</div>
+                `;
             }
-        });
 
-        pubnub.subscribe({
-            channels: ['8brcam-pool-lobby-room']
-        });
+            chatStream.appendChild(msgDiv);
+            chatStream.scrollTop = chatStream.scrollHeight;
+        }
     </script>
 </body>
 </html>
