@@ -368,7 +368,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Real-Time Chat</title>
+    <title>Real-Time Chat Lobby</title>
     <!-- Complete browser-supported Firebase SDK links -->
     <script src="https://gstatic.com"></script>
     <script src="https://gstatic.com"></script>
@@ -378,11 +378,12 @@
         #chat-stream { height: 300px; overflow-y: auto; border: 1px solid #27272a; padding: 10px; margin-bottom: 10px; background: #09090b; }
         .msg { margin-bottom: 10px; }
         .msg.self { text-align: right; }
-        .bubble { display: inline-block; padding: 8px 12px; border-radius: 6px; background: #27272a; max-width: 70%; }
+        .bubble { display: inline-block; padding: 8px 12px; border-radius: 6px; background: #27272a; max-width: 70%; word-break: break-word; }
         .msg.self .bubble { background: #2dd4bf; color: #09090b; }
         .msg-meta { font-size: 11px; color: #a1a1aa; margin-bottom: 2px; }
         input, button { padding: 10px; border-radius: 4px; border: 1px solid #27272a; background: #18181b; color: #fff; }
         input:disabled, button:disabled { opacity: 0.5; cursor: not-allowed; }
+        #connection-alert { margin-bottom: 10px; }
     </style>
 </head>
 <body>
@@ -476,10 +477,11 @@
 
         function initPermanentFirebaseChat() {
             try {
+                // FIXED: Repaired configuration object utilizing your verified live links
                 const firebaseConfig = {
                     apiKey: "AIzaSyBROwwCrWBPx-1WmDuZROeG6sDmpfn44CE",
-                    authDomain: "://firebaseapp.com",
-                    databaseURL: "https://firebaseio.com",
+                    authDomain: "brcam-chat.firebaseapp.com",
+                    databaseURL: "https://brcam-chat-default-rtdb.firebaseio.com", 
                     projectId: "brcam-chat",
                     storageBucket: "brcam-chat.firebasestorage.app",
                     messagingSenderId: "82194034681",
@@ -493,7 +495,7 @@
                 dbRef = firebase.database().ref("chats/" + tournamentRoomId);
 
                 const connAlert = document.getElementById('connection-alert');
-                if (connAlert) connAlert.remove();
+                if (connAlert) connAlert.innerHTML = '';
 
                 dbRef.limitToLast(50).on("child_added", (snapshot) => {
                     const msgPayload = snapshot.val();
@@ -507,7 +509,7 @@
                 console.error("Firebase setup error:", err);
                 const connAlert = document.getElementById('connection-alert');
                 if (connAlert) {
-                    connAlert.innerHTML = '<span class="sys-tag" style="color:#ef4444; border-color: rgba(239,68,68,0.2);">Database Error</span>';
+                    connAlert.innerHTML = '<span style="color:#ef4444; border: 1px solid rgba(239,68,68,0.2); padding: 5px; border-radius: 4px; display: inline-block;">Database Error</span>';
                 }
             }
         }
