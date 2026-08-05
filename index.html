@@ -385,6 +385,7 @@
 </head>
 <body>
     <div class="chat-container">
+        <!-- Nickname screen is back so people have unique identities -->
         <div id="username-panel" style="margin-bottom: 15px;">
             <input type="text" id="username-input" placeholder="Choose a nickname...">
             <button id="save-username-btn">Join Chat</button>
@@ -397,11 +398,9 @@
         </div>
     </div>
     <script type="module">
-        // Import your brand new Firebase v12 libraries seamlessly
         import { initializeApp } from "https://gstatic.com";
-        import { getDatabase, ref, push, child, limitToLast, query, onChildAdded, serverTimestamp } from "https://gstatic.com";
+        import { getDatabase, ref, push, limitToLast, query, onChildAdded, serverTimestamp } from "https://gstatic.com";
 
-        // Your exact newly registered application configuration parameters
         const firebaseConfig = {
             apiKey: "AIzaSyBROwwCrWBPx-1WmDuZROeG6sDmpfn44CE",
             authDomain: "://firebaseapp.com",
@@ -466,9 +465,9 @@
                 }
             }
         }
-        // HARD-BOUND SELECTORS: Fixed the module locking issue by binding clicks directly here
+        // FIXED: Using standard event listeners inside the module so the browser registers the click 100% of the time
         if (saveUsernameBtn) {
-            saveUsernameBtn.onclick = function() {
+            saveUsernameBtn.addEventListener('click', () => {
                 if (!usernameInput) return;
                 const nameValue = usernameInput.value.trim();
                 if (nameValue !== '') {
@@ -476,20 +475,19 @@
                     localStorage.setItem('chat_nickname', myUsername);
                     checkIdentityState();
                 }
-            };
+            });
         }
 
         if (usernameInput) {
-            usernameInput.onkeypress = function(e) {
+            usernameInput.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter' && saveUsernameBtn) {
                     saveUsernameBtn.click();
                 }
-            };
+            });
         }
 
         function initPermanentFirebaseChat() {
             try {
-                // Initialize the base modular application configuration
                 const app = initializeApp(firebaseConfig);
                 db = getDatabase(app);
                 chatRoomRef = ref(db, "chats/" + tournamentRoomId);
@@ -497,7 +495,6 @@
                 const connAlert = document.getElementById('connection-alert');
                 if (connAlert) connAlert.innerHTML = '';
 
-                // Modern v12 child query architecture logic
                 const lastMessagesQuery = query(chatRoomRef, limitToLast(50));
                 onChildAdded(lastMessagesQuery, (snapshot) => {
                     const msgPayload = snapshot.val();
@@ -526,7 +523,7 @@
                     username: myUsername,
                     message: messageText,
                     time: timeStr,
-                    timestamp: serverTimestamp() // v12 standard server timestamp function mapping
+                    timestamp: serverTimestamp()
                 };
 
                 push(chatRoomRef, payload).catch(err => console.error("Cloud push failed:", err));
@@ -534,11 +531,14 @@
             }
         }
 
-        if (sendBtn) sendBtn.onclick = processOutboundMessage;
+        if (sendBtn) {
+            sendBtn.addEventListener('click', processOutboundMessage);
+        }
+        
         if (chatInput) {
-            chatInput.onkeypress = function(e) {
+            chatInput.addEventListener('keypress', (e) => {
                 if (e.key === 'Enter') processOutboundMessage();
-            };
+            });
         }
 
         function renderMessageBubble(data) {
@@ -578,7 +578,6 @@
             }[s]));
         }
 
-        // Initialize script logic controls
         checkIdentityState();
     </script>
 </body>
