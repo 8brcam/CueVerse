@@ -369,9 +369,6 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Real-Time Chat Lobby</title>
-    <!-- Complete browser-supported Firebase SDK links -->
-    <script src="https://gstatic.com"></script>
-    <script src="https://gstatic.com"></script>
     <style>
         body { font-family: sans-serif; background: #09090b; color: #fff; padding: 20px; }
         .chat-container { max-width: 600px; margin: 0 auto; background: #18181b; padding: 20px; border-radius: 8px; }
@@ -399,12 +396,22 @@
             <button id="send-btn">Send</button>
         </div>
     </div>
-    <script>
-        function switchTab(clickedElement) {
-            const buttons = document.querySelectorAll('.nav-btn');
-            buttons.forEach(btn => btn.classList.remove('active'));
-            clickedElement.classList.add('active');
-        }
+    <script type="module">
+        // Import your brand new Firebase v12 libraries seamlessly
+        import { initializeApp } from "https://gstatic.com";
+        import { getDatabase, ref, push, child, limitToLast, query, onChildAdded, serverTimestamp } from "https://gstatic.com";
+
+        // Your exact newly registered application configuration parameters
+        const firebaseConfig = {
+            apiKey: "AIzaSyBROwwCrWBPx-1WmDuZROeG6sDmpfn44CE",
+            authDomain: "://firebaseapp.com",
+            databaseURL: "https://firebaseio.com",
+            projectId: "brcam-chat",
+            storageBucket: "brcam-chat.firebasestorage.app",
+            messagingSenderId: "82194034681",
+            appId: "1:82194034681:web:bfb3dbe585c1e2601d9728",
+            measurementId: "G-E5RM1XMHYV"
+        };
 
         let myUsername = localStorage.getItem('chat_nickname') || "";
         const usernamePanel = document.getElementById('username-panel');
@@ -414,7 +421,8 @@
         const chatInput = document.getElementById('chat-input');
         const chatStream = document.getElementById('chat-stream');
         
-        let dbRef = null;
+        let db = null;
+        let chatRoomRef = null;
         const tournamentRoomId = "8brcam_yahoo_pool_lobby_2026";
 
         function checkIdentityState() {
@@ -477,28 +485,17 @@
 
         function initPermanentFirebaseChat() {
             try {
-                // Configured with your exact, verified database parameters
-                const firebaseConfig = {
-                    apiKey: "AIzaSyBROwwCrWBPx-1WmDuZROeG6sDmpfn44CE",
-                    authDomain: "://firebaseapp.com",
-                    databaseURL: "https://firebaseio.com",
-                    projectId: "brcam-chat",
-                    storageBucket: "brcam-chat.firebasestorage.app",
-                    messagingSenderId: "82194034681",
-                    appId: "1:82194034681:web:6826aabf49732b981d9728",
-                    measurementId: "G-LVJYZZ53DX"
-                };
-
-                if (!firebase.apps.length) {
-                    firebase.initializeApp(firebaseConfig);
-                }
-                
-                dbRef = firebase.database().ref("chats/" + tournamentRoomId);
+                // Initialize the base modular application configuration
+                const app = initializeApp(firebaseConfig);
+                db = getDatabase(app);
+                chatRoomRef = ref(db, "chats/" + tournamentRoomId);
 
                 const connAlert = document.getElementById('connection-alert');
                 if (connAlert) connAlert.innerHTML = '';
 
-                dbRef.limitToLast(50).on("child_added", (snapshot) => {
+                // Modern v12 child query architecture logic
+                const lastMessagesQuery = query(chatRoomRef, limitToLast(50));
+                onChildAdded(lastMessagesQuery, (snapshot) => {
                     const msgPayload = snapshot.val();
                     renderMessageBubble({
                         ...msgPayload,
@@ -517,7 +514,7 @@
         function processOutboundMessage() {
             if (!chatInput) return;
             const messageText = chatInput.value.trim();
-            if (messageText !== '' && myUsername !== '' && dbRef) {
+            if (messageText !== '' && myUsername !== '' && chatRoomRef) {
                 const now = new Date();
                 const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
                 
@@ -525,10 +522,10 @@
                     username: myUsername,
                     message: messageText,
                     time: timeStr,
-                    timestamp: firebase.database.ServerValue.TIMESTAMP
+                    timestamp: serverTimestamp() // v12 standard server timestamp function mapping
                 };
 
-                dbRef.push(payload).catch(err => console.error("Cloud push failed:", err));
+                push(chatRoomRef, payload).catch(err => console.error("Cloud push failed:", err));
                 chatInput.value = '';
             }
         }
@@ -577,6 +574,7 @@
             }[s]));
         }
 
+        // Initialize script logic controls
         checkIdentityState();
     </script>
 </body>
