@@ -466,21 +466,25 @@
                 }
             }
         }
+        // HARD-BOUND SELECTORS: Fixed the module locking issue by binding clicks directly here
         if (saveUsernameBtn) {
-            saveUsernameBtn.addEventListener('click', () => {
-                const nameValue = usernameInput ? usernameInput.value.trim() : '';
+            saveUsernameBtn.onclick = function() {
+                if (!usernameInput) return;
+                const nameValue = usernameInput.value.trim();
                 if (nameValue !== '') {
                     myUsername = nameValue;
                     localStorage.setItem('chat_nickname', myUsername);
                     checkIdentityState();
                 }
-            });
+            };
         }
 
         if (usernameInput) {
-            usernameInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter' && saveUsernameBtn) saveUsernameBtn.click();
-            });
+            usernameInput.onkeypress = function(e) {
+                if (e.key === 'Enter' && saveUsernameBtn) {
+                    saveUsernameBtn.click();
+                }
+            };
         }
 
         function initPermanentFirebaseChat() {
@@ -530,11 +534,11 @@
             }
         }
 
-        if (sendBtn) sendBtn.addEventListener('click', processOutboundMessage);
+        if (sendBtn) sendBtn.onclick = processOutboundMessage;
         if (chatInput) {
-            chatInput.addEventListener('keypress', (e) => {
+            chatInput.onkeypress = function(e) {
                 if (e.key === 'Enter') processOutboundMessage();
-            });
+            };
         }
 
         function renderMessageBubble(data) {
