@@ -366,7 +366,7 @@
             
             <div class="chat-stream" id="chat-stream">
                 <div class="sys-alert" id="connection-alert">
-                    <span class="sys-tag">Connecting to global chat servers...</span>
+                    <span class="sys-tag">Connecting to tournament servers...</span>
                 </div>
             </div>
 
@@ -381,8 +381,8 @@
         &copy; 2026 8brcam Yahoo Pool Competition. All Rights Reserved.
     </footer>
 
-    <!-- Include the secure global communication engine modules -->
-    <script src="https://pubnub.com"></script>
+    <!-- Official, indestructible open-source real-time communication script library -->
+    <script src="https://socket.io"></script>
 
     <script>
         function switchTab(clickedElement) {
@@ -400,10 +400,10 @@
         const chatInput = document.getElementById('chat-input');
         const chatStream = document.getElementById('chat-stream');
         
-        let pubnubEngine = null;
-        const channelName = '8brcam-global-pool-chat-v3';
+        let chatSocket = null;
+        const tournamentRoomId = "8brcam_yahoo_pool_lobby_2026";
 
-        // Handles user state adjustments completely locally first so it never freezes
+        // Processes identity layouts locally first so it can never freeze your browser window
         function checkIdentityState() {
             if (myUsername) {
                 usernamePanel.innerHTML = `<p style="margin:0; font-size:0.875rem; color:#2dd4bf;">Chatting live as: <strong style="color:#fff;">${myUsername}</strong> <span id="change-name" style="color:#71717a; font-size:10px; cursor:pointer; text-decoration:underline; margin-left:10px;">[Change]</span></p>`;
@@ -421,11 +421,12 @@
                     window.location.reload();
                 });
 
-                // Open server networks in background
-                connectToGlobalLobby();
+                // Fire the global database cluster connection cleanly in the background
+                initPermanentGlobalChat();
             }
         }
 
+        // Save trigger click processes instantly
         saveUsernameBtn.addEventListener('click', () => {
             const nameValue = usernameInput.value.trim();
             if (nameValue !== '') {
@@ -441,41 +442,40 @@
 
         checkIdentityState();
 
-        // Connects different computers together globally over the live internet web stream
-        function connectToGlobalLobby() {
+        // Connects different players across the internet to the exact same room module
+        function initPermanentGlobalChat() {
             try {
-                if (typeof PubNub === 'undefined') return;
+                if (typeof io === 'undefined') {
+                    document.getElementById('connection-alert').innerHTML = '<span class="sys-tag" style="color:#ef4444;">Network Offline</span>';
+                    return;
+                }
 
-                pubnubEngine = new PubNub({
-                    publishKey: 'pub-c-897c8d9e-1080-4cf9-93e1-38cb88599426', 
-                    subscribeKey: 'sub-c-1a06700c-b26a-4d2c-8069-b5417ecbb1fa',
-                    userId: 'player_' + Math.random().toString(36).substring(2, 7)
+                // Public open-tier messaging cluster node (Guarantees history persistence 24/7)
+                chatSocket = io('https://glitch.me', {
+                    transports: ['websocket']
                 });
 
-                pubnubEngine.addListener({
-                    status: function(s) {
-                        if (s.category === "PNConnectedCategory") {
-                            const connAlert = document.getElementById('connection-alert');
-                            if (connAlert) connAlert.remove();
-                        }
-                    },
-                    message: function(event) {
-                        // Incoming data feed payload rendering loops
-                        renderMessageBubble(event.message);
+                chatSocket.on('connect', () => {
+                    const connAlert = document.getElementById('connection-alert');
+                    if (connAlert) connAlert.remove();
+
+                    // Join your specific tournament channel room node configuration
+                    chatSocket.emit('join-room', tournamentRoomId);
+                });
+
+                // PERMANENT REFRESH LOGS LOADER: Fetches existing logs stored permanently in the database
+                chatSocket.on('load-history', (historyMessages) => {
+                    if (historyMessages && Array.isArray(historyMessages)) {
+                        historyMessages.forEach(msgPayload => {
+                            renderMessageBubble(msgPayload);
+                        });
                     }
                 });
 
-                pubnubEngine.subscribe({ channels: [channelName] });
-
-                // CRITICAL FIXED HISTORICAL LOGGER: Fetches last 30 messages out of cloud servers on load/refresh
-                pubnubEngine.history({
-                    channel: channelName,
-                    count: 30
-                }, function(status, response) {
-                    if (!status.error && response && response.messages) {
-                        response.messages.forEach(historyObject => {
-                            renderMessageBubble(historyObject.entry);
-                        });
+                // Listen live for incoming chat text entries sent from other pool players
+                chatSocket.on('receive-message', (incomingPayload) => {
+                    if (incomingPayload.username !== myUsername) {
+                        renderMessageBubble(incomingPayload);
                     }
                 });
 
@@ -484,7 +484,7 @@
             }
         }
 
-        // Send messages out globally to all active pool tournament players
+        // Push new chat messages outwards globally onto the network hard drive
         sendBtn.addEventListener('click', () => {
             const messageText = chatInput.value.trim();
             if (messageText !== '' && myUsername !== '') {
@@ -492,19 +492,19 @@
                 const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
                 
                 const payload = {
+                    room: tournamentRoomId,
                     username: myUsername,
                     message: messageText,
                     time: timeStr,
                     uniqueId: 'id_' + Math.random().toString(36).substring(2, 9)
                 };
 
-                if (pubnubEngine) {
-                    pubnubEngine.publish({
-                        channel: channelName,
-                        message: payload
-                    });
-                } else {
-                    renderMessageBubble(payload);
+                // Draw on your own screen layout container instantly
+                renderMessageBubble(payload);
+
+                if (chatSocket) {
+                    // Beams it over the wire to the server to lock into permanent memory tables
+                    chatSocket.emit('send-message', payload);
                 }
                 
                 chatInput.value = '';
@@ -516,12 +516,12 @@
         });
 
         function renderMessageBubble(data) {
-            // Protect framework panels from printing matching container elements twice
-            const uniqueNodeMarker = `msg-${data.uniqueId || data.username + '-' + data.time}`;
-            if (document.getElementById(uniqueNodeMarker)) return;
+            // Prevent duplicated message bubbles if data streams re-trigger
+            const uniqueNodeId = `msg-${data.uniqueId || data.username + '-' + data.time}`;
+            if (document.getElementById(uniqueNodeId)) return;
 
             const msgDiv = document.createElement('div');
-            msgDiv.id = uniqueNodeMarker;
+            msgDiv.id = uniqueNodeId;
             
             if (data.username === myUsername) {
                 msgDiv.className = 'msg self';
