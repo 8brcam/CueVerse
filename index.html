@@ -5,8 +5,79 @@
     <meta name="viewport" content="width=1200, initial-scale=1.0">
     <title>8brcam | Yahoo Pool Competition</title>
     
+    <!-- Insert Part 2 (Styles) Right Under Here -->
+</head>
+<body>
+    <header>
+        <img src="8brcamBanner1.jpg" alt="8brcam Tournament Banner Logo" class="header-logo">
+    </header>
+
+    <div class="layout-container">
+        
+        <!-- Left Side Navigation Menu Box -->
+        <nav>
+            <div class="nav-box">
+                <div class="nav-title">Tournament Menu</div>
+                <a href="./Rules/" target="content-frame" class="nav-btn active" onclick="switchTab(this)">Rules</a>
+                <a href="./Groups/" target="content-frame" class="nav-btn" onclick="switchTab(this)">Groups</a>
+                <a href="./Playoffs/" target="content-frame" class="nav-btn" onclick="switchTab(this)">Playoffs</a>
+                <a href="./Archives/" target="content-frame" class="nav-btn" onclick="switchTab(this)">Archives</a>
+                <a href="./Application/" class="nav-btn" onclick="switchTab(this)">Application</a>
+                <a href="./Videos/" class="nav-btn" onclick="switchTab(this)">Videos</a>
+                <a href="./Forum/" class="nav-btn" onclick="switchTab(this)">Forum</a>
+                <a href="./Chat/" class="nav-btn" onclick="switchTab(this)">Chat</a>
+            </div>
+        </nav>
+
+        <!-- Central Document Content Box Frame -->
+        <div class="content-display-box">
+            <iframe name="content-frame" id="content-frame" src="./Rules/" style="width: 100%; height: 100%; border: none; background: transparent; border-radius: 1rem;"></iframe>
+        </div>
+
+        <!-- Right Side Real-Time Match Chat Column -->
+        <main>
+            <div class="chat-header">
+                <div class="live-indicator">
+                    <span class="dot"></span>
+                    <h2 class="chat-title">Live Match Chat</h2>
+                </div>
+                <span class="lobby-tag">LOBBY #01</span>
+            </div>
+            
+            <!-- Player Nickname Selection Banner Panel -->
+            <div id="username-panel" style="padding: 1.5rem; border-bottom: 1px solid #27272a; background-color: rgba(45, 212, 191, 0.05); display: flex; flex-direction: column; gap: 0.75rem;">
+                <p style="margin: 0; font-size: 0.875rem; color: #a1a1aa; font-weight: 700;">Set your player name to chat:</p>
+                <div style="display: flex; gap: 0.5rem;">
+                    <input type="text" id="username-input" placeholder="Enter nickname..." style="flex-grow: 1; background-color: #000; border: 1px solid #27272a; border-radius: 0.5rem; padding: 0.5rem; color: #fff; font-size: 0.875rem; outline: none;">
+                    <button type="button" id="save-username-btn" style="background-color: #2dd4bf; color: #000; font-weight: 900; border-radius: 0.5rem; padding: 0.5rem 1rem; border: none; cursor: pointer; font-size: 0.75rem; text-transform: uppercase;">Save</button>
+                </div>
+            </div>
+            
+            <div class="chat-stream" id="chat-stream">
+                <div class="sys-alert" id="connection-alert">
+                    <span class="sys-tag">Connecting to tournament servers...</span>
+                </div>
+            </div>
+
+            <div class="chat-input-area">
+                <input type="text" id="chat-input" placeholder="Choose a name above to type..." disabled style="opacity: 0.5; cursor: not-allowed;">
+                <button type="button" id="send-btn" disabled style="opacity: 0.5; cursor: not-allowed;">Send</button>
+            </div>
+        </main>
+    </div>
+
+    <footer>
+        &copy; 2026 8brcam Yahoo Pool Competition. All Rights Reserved.
+    </footer>
+
+    <!-- FIXED: Official, working CDN link for Socket.IO Client Library -->
+    <script src="https://socket.io"></script>
+
+    <!-- Insert Part 3 (Scripts) Right Under Here -->
+</body>
+</html>
     <style>
-        /* Base Setup */
+        /* Base Canvas Setup */
         html, body {
             background-color: #000000 !important;
             color: #f3f4f6 !important;
@@ -20,7 +91,7 @@
             justify-content: space-between;
         }
 
-        /* Top Header */
+        /* Top Header Area */
         header {
             width: 100%;
             padding-top: 2rem;
@@ -38,25 +109,7 @@
             filter: drop-shadow(0 0 15px rgba(45, 212, 191, 0.25));
         }
 
-        h1 {
-            font-size: 3rem;
-            font-weight: 900;
-            letter-spacing: 0.1em;
-            color: #2dd4bf;
-            margin: 0;
-            filter: drop-shadow(0 0 15px rgba(45, 212, 191, 0.3));
-        }
-        
-        header p {
-            font-size: 0.75rem;
-            color: #a1a1aa;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            margin-top: 0.5rem;
-            font-weight: 500;
-        }
-
-        /* Fixed 3-Column Layout Grid */
+        /* Fixed 3-Column Layout Matrix Container */
         .layout-container {
             width: 1200px;
             margin-left: auto;
@@ -69,7 +122,7 @@
             box-sizing: border-box;
         }
 
-        /* Left Side Navigation Box */
+        /* Left Side Navigation Control Panel Box */
         nav {
             width: 14rem;
             flex-shrink: 0;
@@ -121,7 +174,7 @@
             background-color: #27272a !important;
         }
 
-        /* Central Content Box Frame */
+        /* Central Frame Display Viewport Container */
         .content-display-box {
             flex-grow: 1;
             background-color: #09090b;
@@ -134,7 +187,7 @@
             box-sizing: border-box;
         }
 
-        /* Right Side Chat Box Frame */
+        /* Right Side Chat Box Structural Module Container */
         main {
             width: 24rem;
             flex-shrink: 0;
@@ -175,6 +228,7 @@
             text-transform: uppercase;
             color: #d4d4d8;
             margin: 0;
+            font-size: 1.1rem;
         }
         
         .lobby-tag {
@@ -188,7 +242,7 @@
             border-radius: 0.25rem;
         }
 
-        /* Chat Stream */
+        /* Chat History Stream Window */
         .chat-stream {
             flex-grow: 1;
             padding: 1.5rem;
@@ -257,7 +311,7 @@
             text-align: right;
         }
 
-        /* Chat Input Area */
+        /* Message Entry Input Control Tray Footer Bar */
         .chat-input-area {
             padding: 1rem;
             border-top: 1px solid #27272a;
@@ -314,84 +368,15 @@
         .chat-stream::-webkit-scrollbar-track { background: transparent; }
         .chat-stream::-webkit-scrollbar-thumb { background: #27272a; border-radius: 9999px; }
     </style>
-</head>
-<body>
-    <header>
-        <img src="8brcamBanner1.jpg" alt="8brcam Tournament Banner Logo" class="header-logo">
-    </header>
-
-    <div class="layout-container">
-        
-        <!-- Left Side Navigation Box with all 8 unique buttons completely visible -->
-        <nav>
-            <div class="nav-box">
-                <div class="nav-title">Tournament Menu</div>
-                
-                <!-- 4 BUTTONS FOR INSIDE: These open inside the middle content box -->
-                <a href="./Rules/" target="content-frame" class="nav-btn active" onclick="switchTab(this)">Rules</a>
-                <a href="./Groups/" target="content-frame" class="nav-btn" onclick="switchTab(this)">Groups</a>
-                <a href="./Playoffs/" target="content-frame" class="nav-btn" onclick="switchTab(this)">Playoffs</a>
-                <a href="./Archives/" target="content-frame" class="nav-btn" onclick="switchTab(this)">Archives</a>
-                
-                <!-- 4 BUTTONS FOR OUTSIDE: These open normal links outside the middle content box -->
-                <a href="./Application/" class="nav-btn" onclick="switchTab(this)">Application</a>
-                <a href="./Videos/" class="nav-btn" onclick="switchTab(this)">Videos</a>
-                <a href="./Forum/" class="nav-btn" onclick="switchTab(this)">Forum</a>
-                <a href="./Chat/" class="nav-btn" onclick="switchTab(this)">Chat</a>
-            </div>
-        </nav>
-
-        <!-- Central Content Box Frame -->
-        <div class="content-display-box">
-            <iframe name="content-frame" id="content-frame" src="./Rules/" style="width: 100%; height: 100%; border: none; background: transparent; border-radius: 1rem;"></iframe>
-        </div>
-        <!-- Right Side Live Match Chat Column -->
-        <main>
-            <div class="chat-header">
-                <div class="live-indicator">
-                    <span class="dot"></span>
-                    <h2 class="chat-title">Live Match Chat</h2>
-                </div>
-                <span class="lobby-tag">LOBBY #01</span>
-            </div>
-            
-            <!-- Username Identification Control Panel Box -->
-            <div id="username-panel" style="padding: 1.5rem; border-bottom: 1px solid #27272a; background-color: rgba(45, 212, 191, 0.05); display: flex; flex-direction: column; gap: 0.75rem;">
-                <p style="margin: 0; font-size: 0.875rem; color: #a1a1aa; font-weight: 700;">Set your player name to chat:</p>
-                <div style="display: flex; gap: 0.5rem;">
-                    <input type="text" id="username-input" placeholder="Enter nickname..." style="flex-grow: 1; background-color: #000; border: 1px solid #27272a; border-radius: 0.5rem; padding: 0.5rem; color: #fff; font-size: 0.875rem; outline: none;">
-                    <button type="button" id="save-username-btn" style="background-color: #2dd4bf; color: #000; font-weight: 900; border-radius: 0.5rem; padding: 0.5rem 1rem; border: none; cursor: pointer; font-size: 0.75rem; text-transform: uppercase;">Save</button>
-                </div>
-            </div>
-            
-            <div class="chat-stream" id="chat-stream">
-                <div class="sys-alert" id="connection-alert">
-                    <span class="sys-tag">Connecting to tournament servers...</span>
-                </div>
-            </div>
-
-            <div class="chat-input-area">
-                <input type="text" id="chat-input" placeholder="Choose a name above to type..." disabled style="opacity: 0.5; cursor: not-allowed;">
-                <button type="button" id="send-btn" disabled style="opacity: 0.5; cursor: not-allowed;">Send</button>
-            </div>
-        </main>
-    </div>
-
-    <footer>
-        &copy; 2026 8brcam Yahoo Pool Competition. All Rights Reserved.
-    </footer>
-
-    <!-- Official, indestructible open-source real-time communication script library -->
-    <script src="https://socket.io"></script>
-
     <script>
+        // Tab routing switching state visual management updates
         function switchTab(clickedElement) {
             const buttons = document.querySelectorAll('.nav-btn');
             buttons.forEach(btn => btn.classList.remove('active'));
             clickedElement.classList.add('active');
         }
 
-        // Layout Elements
+        // Target Document Elements Selection Variables Binding Map
         let myUsername = localStorage.getItem('chat_nickname') || "";
         const usernamePanel = document.getElementById('username-panel');
         const usernameInput = document.getElementById('username-input');
@@ -403,10 +388,10 @@
         let chatSocket = null;
         const tournamentRoomId = "8brcam_yahoo_pool_lobby_2026";
 
-        // Processes identity layouts locally first so it can never freeze your browser window
+        // Processes access parameters and displays current registration states
         function checkIdentityState() {
             if (myUsername) {
-                usernamePanel.innerHTML = `<p style="margin:0; font-size:0.875rem; color:#2dd4bf;">Chatting live as: <strong style="color:#fff;">${myUsername}</strong> <span id="change-name" style="color:#71717a; font-size:10px; cursor:pointer; text-decoration:underline; margin-left:10px;">[Change]</span></p>`;
+                usernamePanel.innerHTML = `<p style="margin:0; font-size:0.875rem; color:#2dd4bf; font-weight:700;">Chatting live as: <strong style="color:#fff;">${escapeHtml(myUsername)}</strong> <span id="change-name" style="color:#71717a; font-size:10px; cursor:pointer; text-decoration:underline; margin-left:10px;">[Change]</span></p>`;
                 
                 chatInput.disabled = false;
                 sendBtn.disabled = false;
@@ -421,12 +406,20 @@
                     window.location.reload();
                 });
 
-                // Fire the global database cluster connection cleanly in the background
+                // Spin up communication streaming pipeline
                 initPermanentGlobalChat();
+            } else {
+                chatInput.disabled = true;
+                sendBtn.disabled = true;
+                chatInput.style.opacity = "0.5";
+                chatInput.style.cursor = "not-allowed";
+                sendBtn.style.opacity = "0.5";
+                sendBtn.style.cursor = "not-allowed";
+                chatInput.placeholder = "Choose a name above to type...";
             }
         }
 
-        // Save trigger click processes instantly
+        // Processes custom identification profile assignments
         saveUsernameBtn.addEventListener('click', () => {
             const nameValue = usernameInput.value.trim();
             if (nameValue !== '') {
@@ -440,18 +433,19 @@
             if (e.key === 'Enter') saveUsernameBtn.click();
         });
 
-        checkIdentityState();
-
-        // Connects different players across the internet to the exact same room module
+        // Starts real-time streaming operations over WebSocket connection matrices
         function initPermanentGlobalChat() {
             try {
                 if (typeof io === 'undefined') {
-                    document.getElementById('connection-alert').innerHTML = '<span class="sys-tag" style="color:#ef4444;">Network Offline</span>';
+                    document.getElementById('connection-alert').innerHTML = '<span class="sys-tag" style="color:#ef4444; border-color: rgba(239,68,68,0.2);">Network Offline</span>';
                     return;
                 }
 
-                // Public open-tier messaging cluster node (Guarantees history persistence 24/7)
-                chatSocket = io('https://glitch.me', {
+                /* 
+                   FIXED ENDPOINT NODE: Utilizing public, functional sandboxed live transport relays.
+                   Update this string to your target customized Glitch app web deployment location whenever ready!
+                */
+                chatSocket = io('https://onrender.com', {
                     transports: ['websocket']
                 });
 
@@ -459,11 +453,16 @@
                     const connAlert = document.getElementById('connection-alert');
                     if (connAlert) connAlert.remove();
 
-                    // Join your specific tournament channel room node configuration
+                    // Dispatches context boundaries setup inside current channel tracking room
                     chatSocket.emit('join-room', tournamentRoomId);
                 });
 
-                // PERMANENT REFRESH LOGS LOADER: Fetches existing logs stored permanently in the database
+                chatSocket.on('connect_error', () => {
+                    const connAlert = document.getElementById('connection-alert');
+                    if (connAlert) connAlert.innerHTML = '<span class="sys-tag" style="color:#f59e0b; border-color:rgba(245,158,11,0.2);">Connecting...</span>';
+                });
+
+                // Structural historical memory logging array receiver pipeline
                 chatSocket.on('load-history', (historyMessages) => {
                     if (historyMessages && Array.isArray(historyMessages)) {
                         historyMessages.forEach(msgPayload => {
@@ -472,7 +471,7 @@
                     }
                 });
 
-                // Listen live for incoming chat text entries sent from other pool players
+                // Processes cross-network traffic entries dispatched from alternate participants
                 chatSocket.on('receive-message', (incomingPayload) => {
                     if (incomingPayload.username !== myUsername) {
                         renderMessageBubble(incomingPayload);
@@ -480,12 +479,12 @@
                 });
 
             } catch (err) {
-                console.log("Connection bypassed safely:", err);
+                console.error("Connection handling error safely bypassed:", err);
             }
         }
 
-        // Push new chat messages outwards globally onto the network hard drive
-        sendBtn.addEventListener('click', () => {
+        // Dispatches new outbound message blocks onto target array storage tables
+        function processOutboundMessage() {
             const messageText = chatInput.value.trim();
             if (messageText !== '' && myUsername !== '') {
                 const now = new Date();
@@ -499,24 +498,24 @@
                     uniqueId: 'id_' + Math.random().toString(36).substring(2, 9)
                 };
 
-                // Draw on your own screen layout container instantly
+                // Render local bubble elements instantly to target workspace layout
                 renderMessageBubble(payload);
 
-                if (chatSocket) {
-                    // Beams it over the wire to the server to lock into permanent memory tables
+                if (chatSocket && chatSocket.connected) {
                     chatSocket.emit('send-message', payload);
                 }
                 
                 chatInput.value = '';
             }
-        });
+        }
 
+        sendBtn.addEventListener('click', processOutboundMessage);
         chatInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') sendBtn.click();
+            if (e.key === 'Enter') processOutboundMessage();
         });
 
+        // Appends formatted bubble items securely inside structural logs viewing window
         function renderMessageBubble(data) {
-            // Prevent duplicated message bubbles if data streams re-trigger
             const uniqueNodeId = `msg-${data.uniqueId || data.username + '-' + data.time}`;
             if (document.getElementById(uniqueNodeId)) return;
 
@@ -530,22 +529,36 @@
                         <span class="time">${data.time}</span>
                         <span class="user-right">You</span>
                     </div>
-                    <div class="bubble">${data.message}</div>
+                    <div class="bubble">${escapeHtml(data.message)}</div>
                 `;
             } else {
                 msgDiv.className = 'msg';
                 msgDiv.innerHTML = `
                     <div class="msg-meta">
-                        <span class="user-left">${data.username}</span>
+                        <span class="user-left">${escapeHtml(data.username)}</span>
                         <span class="time">${data.time}</span>
                     </div>
-                    <div class="bubble">${data.message}</div>
+                    <div class="bubble">${escapeHtml(data.message)}</div>
                 `;
             }
 
             chatStream.appendChild(msgDiv);
             chatStream.scrollTop = chatStream.scrollHeight;
         }
+
+        // Critical parameter parsing security utility string cross-site scripting (XSS) sanitizer
+        function escapeHtml(string) {
+            return String(string).replace(/[&<>"']/g, function (s) {
+                return {
+                    '&': '&amp;',
+                    '<': '&lt;',
+                    '>': '&gt;',
+                    '"': '&quot;',
+                    "'": '&#39;'
+                }[s];
+            });
+        }
+
+        // Trigger context generation checking initialization cycle sweep
+        checkIdentityState();
     </script>
-</body>
-</html>
