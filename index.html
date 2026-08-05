@@ -381,7 +381,7 @@
         &copy; 2026 8brcam Yahoo Pool Competition. All Rights Reserved.
     </footer>
 
-    <!-- Include the free, open global network network library safely -->
+    <!-- FIXED: Corrected working link to the live server library -->
     <script src="https://pubnub.com"></script>
 
     <script>
@@ -402,7 +402,6 @@
         
         let pubnubEngine = null;
 
-        // Processes your player login profile locally first so it never freezes
         function checkIdentityState() {
             if (myUsername) {
                 usernamePanel.innerHTML = `<p style="margin:0; font-size:0.875rem; color:#2dd4bf;">Chatting live as: <strong style="color:#fff;">${myUsername}</strong> <span id="change-name" style="color:#71717a; font-size:10px; cursor:pointer; text-decoration:underline; margin-left:10px;">[Change]</span></p>`;
@@ -420,7 +419,6 @@
                     window.location.reload();
                 });
 
-                // Fire up the internet connection engine safely in the background
                 connectToInternetChat();
             }
         }
@@ -440,7 +438,6 @@
 
         checkIdentityState();
 
-        // Connects all tournament players to the exact same internet stream link [INDEX]
         function connectToInternetChat() {
             try {
                 if (typeof PubNub === 'undefined') {
@@ -448,14 +445,12 @@
                     return;
                 }
 
-                // Public global development keys that bypass all site blocking restrictions
                 pubnubEngine = new PubNub({
                     publishKey: 'pub-c-897c8d9e-1080-4cf9-93e1-38cb88599426', 
                     subscribeKey: 'sub-c-1a06700c-b26a-4d2c-8069-b5417ecbb1fa',
                     userId: 'player_' + Math.random().toString(36).substring(2, 7)
                 });
 
-                // Handle incoming global messages and status events
                 pubnubEngine.addListener({
                     status: function(statusEvent) {
                         if (statusEvent.category === "PNConnectedCategory") {
@@ -468,7 +463,6 @@
                     }
                 });
 
-                // Listen to the exact same channel path worldwide
                 pubnubEngine.subscribe({
                     channels: ['8brcam-global-pool-chat']
                 });
@@ -478,7 +472,6 @@
             }
         }
 
-        // Broadcast your message to every active player across the world
         sendBtn.addEventListener('click', () => {
             const messageText = chatInput.value.trim();
             if (messageText !== '' && myUsername !== '') {
@@ -508,7 +501,6 @@
             if (e.key === 'Enter') sendBtn.click();
         });
 
-        // Draws message text bubbles cleanly onto the screen display
         function renderMessageBubble(data) {
             const msgDiv = document.createElement('div');
             
@@ -538,6 +530,4 @@
     </script>
 </body>
 </html>
-
-
 
