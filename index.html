@@ -381,9 +381,6 @@
         &copy; 2026 8brcam Yahoo Pool Competition. All Rights Reserved.
     </footer>
 
-    <!-- Include the secure, stable Ably global script library module -->
-    <script src="https://ably.com"></script>
-
     <script>
         function switchTab(clickedElement) {
             const buttons = document.querySelectorAll('.nav-btn');
@@ -399,8 +396,6 @@
         const sendBtn = document.getElementById('send-btn');
         const chatInput = document.getElementById('chat-input');
         const chatStream = document.getElementById('chat-stream');
-        
-        let channel = null;
 
         // Instantly processes identity layouts locally
         function checkIdentityState() {
@@ -422,8 +417,8 @@
                     window.location.reload();
                 });
 
-                // 3. Fire server engine in the background
-                initAblyChat();
+                // 3. Load saved message log history arrays out of memory immediately on tab boot
+                loadSavedChatHistory();
             }
         }
 
@@ -442,61 +437,48 @@
 
         checkIdentityState();
 
-        // Connect to the public live cloud script node automatically
-        function initAblyChat() {
+        // Fetches stored history profiles from the local drive
+        function loadSavedChatHistory() {
             try {
-                // Standard global sandbox public keys configuration layout
-                const ably = new Ably.Realtime('p_F7bA.gWJ0gA:S6v0ZlVp7t_B9uW6k8x2mC3D4eF5gG6hI7jK8lM9nO0');
-                channel = ably.channels.get('8brcam-pool-tournament-lobby');
-
-                // Read past messages up to 24 hours back out of cloud memory automatically
-                channel.history({limit: 30}, function(err, page) {
-                    if (!err && page) {
-                        // Reverse array items so they read chronologically downwards
-                        const historyMessages = page.items.reverse();
-                        historyMessages.forEach(item => {
-                            renderMessageBubble(item.data);
-                        });
-                    }
-                });
-
-                // Listen for incoming live chat entries from other competitors
-                channel.subscribe('msg', function(message) {
-                    // Stop duplication for the sender's own local screen pass
-                    if (message.data.senderId !== ably.connection.id) {
-                        renderMessageBubble(message.data);
-                    }
-                });
-
-                // Store sender connection key globally on the object scope
-                channel.senderIdKey = ably.connection.id;
-
+                const storedLogs = localStorage.getItem('tournament_chat_logs');
+                if (storedLogs) {
+                    const parsedMessages = JSON.parse(storedLogs);
+                    parsedMessages.forEach(msgData => {
+                        renderMessageBubble(msgData);
+                    });
+                }
             } catch (err) {
-                console.log("Chat system falling back to session storage engine.");
+                console.log("Memory load error:", err);
             }
         }
 
-        // Push chat text message packages outwards globally
+        // Processes message entries into permanent hardware memory strings
         sendBtn.addEventListener('click', () => {
             const messageText = chatInput.value.trim();
             if (messageText !== '' && myUsername !== '') {
                 const now = new Date();
                 const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
                 
-                const payload = {
+                const newPayload = {
                     username: myUsername,
                     message: messageText,
-                    time: timeStr,
-                    senderId: channel ? channel.senderIdKey : 'local'
+                    time: timeStr
                 };
 
-                // Render on your screen immediately
-                renderMessageBubble(payload);
+                // 1. Draw bubble container element straight to the screen layout array
+                renderMessageBubble(newPayload);
 
-                if (channel) {
-                    // Send to everyone else live across the globe
-                    channel.publish('msg', payload);
+                // 2. Grab current array logs list, push the new entry, and commit it back down
+                const currentRawLogs = localStorage.getItem('tournament_chat_logs') || "[]";
+                const parsedLogsArray = JSON.parse(currentRawLogs);
+                parsedLogsArray.push(newPayload);
+                
+                // Limit internal local storage drive profile to the last 100 values entries
+                if (parsedLogsArray.length > 100) {
+                    parsedLogsArray.shift();
                 }
+                
+                localStorage.setItem('tournament_chat_logs', JSON.stringify(parsedLogsArray));
                 
                 chatInput.value = '';
             }
@@ -508,12 +490,10 @@
 
         // Appends text containers cleanly into the chat stream display box frame
         function renderMessageBubble(data) {
-            // Stop duplicating items if they are already visible on layout nodes
-            const uniqueMessageId = `msg-${data.username}-${data.time}-${data.message.substring(0,5)}`;
-            if (document.getElementById(uniqueMessageId)) return;
+            const systemTags = chatStream.querySelectorAll('.sys-alert');
+            systemTags.forEach(tag => tag.remove());
 
             const msgDiv = document.createElement('div');
-            msgDiv.id = uniqueMessageId;
             
             if (data.username === myUsername) {
                 msgDiv.className = 'msg self';
@@ -541,4 +521,5 @@
     </script>
 </body>
 </html>
+
 
