@@ -188,115 +188,12 @@
             border-radius: 0.25rem;
         }
 
-        /* Chat Stream */
+        /* Chat Stream Container Adjustments */
         .chat-stream {
             flex-grow: 1;
-            padding: 1.5rem;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            background-color: rgba(0, 0, 0, 0.4);
-        }
-        
-        .sys-alert {
-            text-align: center;
-            margin: 0.25rem 0;
-            align-self: center;
-        }
-        
-        .sys-tag {
-            font-size: 10px;
-            background-color: #18181b;
-            color: #71717a;
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px;
-            font-family: monospace;
-            text-transform: uppercase;
-            border: 1px solid #27272a;
-        }
-        
-        .msg {
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
-            max-width: 85%;
-        }
-        
-        .msg-meta {
-            display: flex;
-            align-items: baseline;
-            gap: 0.5rem;
-        }
-        
-        .user-left { font-size: 0.75rem; font-weight: 900; color: #2dd4bf; }
-        .user-right { font-size: 0.75rem; font-weight: 900; color: #c084fc; }
-        .time { font-size: 10px; color: #52525b; font-family: monospace; }
-        
-        .bubble {
-            background-color: #18181b;
-            border: 1px solid #27272a;
-            border-radius: 0 0.75rem 0.75rem 0.75rem;
-            padding: 0.75rem;
-            font-size: 0.875rem;
-            color: #d4d4d8;
-            line-height: 1.5;
-            text-align: left;
-        }
-        
-        .msg.self {
-            align-self: flex-end;
-            align-items: flex-end;
-        }
-        
-        .msg.self .bubble {
-            background-color: rgba(45, 212, 191, 0.15);
-            border-color: rgba(45, 212, 191, 0.3);
-            border-radius: 0.75rem 0 0.75rem 0.75rem;
-            color: #e4e4e7;
-            text-align: right;
-        }
-
-        /* Chat Input Area */
-        .chat-input-area {
             padding: 1rem;
-            border-top: 1px solid #27272a;
-            display: flex;
-            gap: 0.5rem;
-            align-items: center;
-            background-color: #09090b;
-        }
-        
-        .chat-input-area input {
-            flex-grow: 1;
-            background-color: #000000;
-            border: 1px solid #27272a;
-            border-radius: 0.75rem;
-            padding: 0.75rem 1rem;
-            font-size: 0.875rem;
-            color: #f3f4f6;
-            outline: none;
-        }
-        
-        .chat-input-area input:focus {
-            border-color: #2dd4bf;
-        }
-        
-        .chat-input-area button {
-            background-color: #2dd4bf;
-            color: #000000;
-            font-weight: 900;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            padding: 0.75rem 1.25rem;
-            border-radius: 0.75rem;
-            border: none;
-            cursor: pointer;
-        }
-        
-        .chat-input-area button:hover {
-            background-color: #14b8a6;
+            overflow-y: auto;
+            background-color: rgba(0, 0, 0, 0.4);
         }
 
         footer {
@@ -309,15 +206,11 @@
             border-top: 1px solid #09090b;
             margin-top: 3rem;
         }
-
-        .chat-stream::-webkit-scrollbar { width: 6px; }
-        .chat-stream::-webkit-scrollbar-track { background: transparent; }
-        .chat-stream::-webkit-scrollbar-thumb { background: #27272a; border-radius: 9999px; }
     </style>
 </head>
 <body>
     <header>
-        <img src="8brcamBanner1.jpg" alt="8brcam Tournament Banner Logo" class="header-logo">
+        <img src="8brcamBanner.png" alt="8brcam Tournament Banner Logo" class="header-logo">
     </header>
 
     <div class="layout-container">
@@ -355,24 +248,24 @@
                 <span class="lobby-tag">LOBBY #01</span>
             </div>
             
-            <!-- Username Identification Control Panel Box -->
-            <div id="username-panel" style="padding: 1.5rem; border-bottom: 1px solid #27272a; background-color: rgba(45, 212, 191, 0.05); display: flex; flex-direction: column; gap: 0.75rem;">
-                <p style="margin: 0; font-size: 0.875rem; color: #a1a1aa; font-weight: 700;">Set your player name to chat:</p>
-                <div style="display: flex; gap: 0.5rem;">
-                    <input type="text" id="username-input" placeholder="Enter nickname..." style="flex-grow: 1; background-color: #000; border: 1px solid #27272a; border-radius: 0.5rem; padding: 0.5rem; color: #fff; font-size: 0.875rem; outline: none;">
-                    <button type="button" id="save-username-btn" style="background-color: #2dd4bf; color: #000; font-weight: 900; border-radius: 0.5rem; padding: 0.5rem 1rem; border: none; cursor: pointer; font-size: 0.75rem; text-transform: uppercase;">Save</button>
-                </div>
-            </div>
-            
+            <!-- Core Interactive Chat Stream Frame Container -->
             <div class="chat-stream" id="chat-stream">
-                <div class="sys-alert" id="connection-alert">
-                    <span class="sys-tag">Connecting to tournament database...</span>
-                </div>
-            </div>
-
-            <div class="chat-input-area">
-                <input type="text" id="chat-input" placeholder="Choose a name above to type..." disabled style="opacity: 0.5; cursor: not-allowed;">
-                <button type="button" id="send-btn" disabled style="opacity: 0.5; cursor: not-allowed;">Send</button>
+                <!-- Infuses the permanent global comments engine stream cleanly inside your layout -->
+                <script src="https://giscus.app"
+                        data-repo="8brcam/8brcam.github.io"
+                        data-repo-id="R_kgDONo1234" 
+                        data-category="Announcements"
+                        data-category-id="DIC_kwDONo5678"
+                        data-mapping="pathname"
+                        data-strict="0"
+                        data-reactions-enabled="1"
+                        data-emit-metadata="0"
+                        data-input-position="bottom"
+                        data-theme="dark_dimmed"
+                        data-lang="en"
+                        crossorigin="anonymous"
+                        async>
+                </script>
             </div>
         </main>
     </div>
@@ -381,168 +274,13 @@
         &copy; 2026 8brcam Yahoo Pool Competition. All Rights Reserved.
     </footer>
 
-    <!-- Include the secure global Supabase database library module -->
-    <script src="https://jsdelivr.net"></script>
-
     <script>
+        // Manages UI navigation highlighting states cleanly
         function switchTab(clickedElement) {
             const buttons = document.querySelectorAll('.nav-btn');
             buttons.forEach(btn => btn.classList.remove('active'));
             clickedElement.classList.add('active');
         }
-
-        // Layout Elements
-        let myUsername = localStorage.getItem('chat_nickname') || "";
-        const usernamePanel = document.getElementById('username-panel');
-        const usernameInput = document.getElementById('username-input');
-        const saveUsernameBtn = document.getElementById('save-username-btn');
-        const sendBtn = document.getElementById('send-btn');
-        const chatInput = document.getElementById('chat-input');
-        const chatStream = document.getElementById('chat-stream');
-        
-        let supabaseClient = null;
-
-        // FIXED: Database engine initialized first at the very top of script load execution
-        function initPermanentDatabase() {
-            try {
-                const supabaseUrl = 'https://supabase.co';
-                const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im94dHZtc3Z1eHBrbXZ4bHd3c25qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDg0Nzc2MDAsImV4cCI6MjAyNDA3NzYwMH0.1vX5-yB_8bRCAM_LOBBY_CHAT_KEY_VALID';
-                
-                supabaseClient = supabase.supabase.createClient(supabaseUrl, supabaseKey);
-
-                // Fetch stored message records chronologically
-                supabaseClient
-                    .from('pool_messages')
-                    .select('*')
-                    .order('id', { ascending: true })
-                    .limit(40)
-                    .then(response => {
-                        const connAlert = document.getElementById('connection-alert');
-                        if (connAlert) connAlert.remove();
-                        
-                        if (response && response.data) {
-                            response.data.forEach(msg => {
-                                renderMessageBubble(msg);
-                            });
-                        }
-                    });
-
-                // Listen live for updates sent from other devices
-                supabaseClient
-                    .channel('schema-db-changes')
-                    .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'pool_messages' }, payload => {
-                        if (payload && payload.new && payload.new.username !== myUsername) {
-                            renderMessageBubble(payload.new);
-                        }
-                    })
-                    .subscribe();
-
-            } catch (err) {
-                console.log("Database connection bypassed:", err);
-            }
-        }
-
-        // Start database background listening channels immediately
-        initPermanentDatabase();
-
-        // FIXED: Identity processes can run completely independent of script dependencies
-        function checkIdentityState() {
-            if (myUsername) {
-                usernamePanel.innerHTML = `<p style="margin:0; font-size:0.875rem; color:#2dd4bf;">Chatting live as: <strong style="color:#fff;">${myUsername}</strong> <span id="change-name" style="color:#71717a; font-size:10px; cursor:pointer; text-decoration:underline; margin-left:10px;">[Change]</span></p>`;
-                
-                chatInput.disabled = false;
-                sendBtn.disabled = false;
-                chatInput.placeholder = "Type a message...";
-                chatInput.style.opacity = "1";
-                chatInput.style.cursor = "text";
-                sendBtn.style.opacity = "1";
-                sendBtn.style.cursor = "pointer";
-                
-                document.getElementById('change-name').addEventListener('click', () => {
-                    localStorage.removeItem('chat_nickname');
-                    window.location.reload();
-                });
-            }
-        }
-
-        // Save trigger click processes cleanly
-        saveUsernameBtn.addEventListener('click', () => {
-            const nameValue = usernameInput.value.trim();
-            if (nameValue !== '') {
-                myUsername = nameValue;
-                localStorage.setItem('chat_nickname', myUsername);
-                checkIdentityState();
-            }
-        });
-
-        usernameInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') saveUsernameBtn.click();
-        });
-
-        // Initialize user login badge state check checks
-        checkIdentityState();
-
-        // Push chat text message packages outwards globally
-        sendBtn.addEventListener('click', () => {
-            const messageText = chatInput.value.trim();
-            if (messageText !== '' && myUsername !== '') {
-                const now = new Date();
-                const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                
-                const payload = {
-                    username: myUsername,
-                    message: messageText,
-                    time: timeStr
-                };
-
-                renderMessageBubble(payload);
-
-                if (supabaseClient) {
-                    supabaseClient
-                        .from('pool_messages')
-                        .insert([payload])
-                        .then(() => { console.log("Message saved."); });
-                }
-                
-                chatInput.value = '';
-            }
-        });
-
-        chatInput.addEventListener('keypress', (e) => {
-            if (e.key === 'Enter') sendBtn.click();
-        });
-
-        function renderMessageBubble(data) {
-            const uniqueMessageId = `msg-${data.username}-${data.time}-${data.message.substring(0,5)}`;
-            if (document.getElementById(uniqueMessageId)) return;
-
-            const msgDiv = document.createElement('div');
-            msgDiv.id = uniqueMessageId;
-            
-            if (data.username === myUsername) {
-                msgDiv.className = 'msg self';
-                msgDiv.innerHTML = `
-                    <div class="msg-meta">
-                        <span class="time">${data.time}</span>
-                        <span class="user-right">You</span>
-                    </div>
-                    <div class="bubble">${data.message}</div>
-                `;
-            } else {
-                msgDiv.className = 'msg';
-                msgDiv.innerHTML = `
-                    <div class="msg-meta">
-                        <span class="user-left">${data.username}</span>
-                        <span class="time">${data.time}</span>
-                    </div>
-                    <div class="bubble">${data.message}</div>
-                `;
-            }
-
-            chatStream.appendChild(msgDiv);
-            chatStream.scrollTop = chatStream.scrollHeight;
-        }
     </script>
 </body>
 </html>
-
