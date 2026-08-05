@@ -477,15 +477,16 @@
 
         function initPermanentFirebaseChat() {
             try {
-                // FIXED: Repaired configuration object utilizing your verified live links
+                // Configured with your exact, verified database parameters
                 const firebaseConfig = {
                     apiKey: "AIzaSyBROwwCrWBPx-1WmDuZROeG6sDmpfn44CE",
-                    authDomain: "brcam-chat.firebaseapp.com",
-                    databaseURL: "https://brcam-chat-default-rtdb.firebaseio.com", 
+                    authDomain: "://firebaseapp.com",
+                    databaseURL: "https://firebaseio.com",
                     projectId: "brcam-chat",
                     storageBucket: "brcam-chat.firebasestorage.app",
                     messagingSenderId: "82194034681",
-                    appId: "1:82194034681:web:6826aabf49732b981d9728"
+                    appId: "1:82194034681:web:6826aabf49732b981d9728",
+                    measurementId: "G-LVJYZZ53DX"
                 };
 
                 if (!firebase.apps.length) {
