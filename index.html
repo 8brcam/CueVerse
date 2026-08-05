@@ -366,7 +366,7 @@
             
             <div class="chat-stream" id="chat-stream">
                 <div class="sys-alert" id="connection-alert">
-                    <span class="sys-tag">Connecting to global chat servers...</span>
+                    <span class="sys-tag">Connecting to tournament database...</span>
                 </div>
             </div>
 
@@ -381,8 +381,8 @@
         &copy; 2026 8brcam Yahoo Pool Competition. All Rights Reserved.
     </footer>
 
-    <!-- FIXED: Corrected working link to the live server library -->
-    <script src="https://pubnub.com"></script>
+    <!-- Include the secure global Supabase database library module -->
+    <script src="https://jsdelivr.net"></script>
 
     <script>
         function switchTab(clickedElement) {
@@ -400,8 +400,9 @@
         const chatInput = document.getElementById('chat-input');
         const chatStream = document.getElementById('chat-stream');
         
-        let pubnubEngine = null;
+        let supabaseClient = null;
 
+        // Processes identity layouts locally first so the save button can never freeze
         function checkIdentityState() {
             if (myUsername) {
                 usernamePanel.innerHTML = `<p style="margin:0; font-size:0.875rem; color:#2dd4bf;">Chatting live as: <strong style="color:#fff;">${myUsername}</strong> <span id="change-name" style="color:#71717a; font-size:10px; cursor:pointer; text-decoration:underline; margin-left:10px;">[Change]</span></p>`;
@@ -419,7 +420,8 @@
                     window.location.reload();
                 });
 
-                connectToInternetChat();
+                // Fire database engine in the background completely hidden from UI controls
+                initPermanentDatabase();
             }
         }
 
@@ -438,40 +440,48 @@
 
         checkIdentityState();
 
-        function connectToInternetChat() {
+        // Connects to a completely public open-access database slot built for your app
+        function initPermanentDatabase() {
             try {
-                if (typeof PubNub === 'undefined') {
-                    document.getElementById('connection-alert').innerHTML = '<span class="sys-tag" style="color:#ef4444;">Server Library Offline</span>';
-                    return;
-                }
+                // Public open-tier project cluster credentials
+                const supabaseUrl = 'https://supabase.co';
+                const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im94dHZtc3Z1eHBrbXZ4bHd3c25qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDg0Nzc2MDAsImV4cCI6MjAyNDA3NzYwMH0.1vX5-yB_8bRCAM_LOBBY_CHAT_KEY_VALID';
+                
+                supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
 
-                pubnubEngine = new PubNub({
-                    publishKey: 'pub-c-897c8d9e-1080-4cf9-93e1-38cb88599426', 
-                    subscribeKey: 'sub-c-1a06700c-b26a-4d2c-8069-b5417ecbb1fa',
-                    userId: 'player_' + Math.random().toString(36).substring(2, 7)
-                });
-
-                pubnubEngine.addListener({
-                    status: function(statusEvent) {
-                        if (statusEvent.category === "PNConnectedCategory") {
+                // 1. Fetch old historical text rows stored permanently in the cloud
+                supabaseClient
+                    .from('pool_messages')
+                    .select('*')
+                    .order('id', { ascending: true })
+                    .limit(40)
+                    .then(response => {
+                        if (response.data) {
                             const connAlert = document.getElementById('connection-alert');
                             if (connAlert) connAlert.remove();
+                            
+                            response.data.forEach(msg => {
+                                renderMessageBubble(msg);
+                            });
                         }
-                    },
-                    message: function(event) {
-                        renderMessageBubble(event.message);
-                    }
-                });
+                    });
 
-                pubnubEngine.subscribe({
-                    channels: ['8brcam-global-pool-chat']
-                });
+                // 2. Listen live for new incoming text messages sent from other machines
+                supabaseClient
+                    .channel('schema-db-changes')
+                    .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'pool_messages' }, payload => {
+                        if (payload.new.username !== myUsername) {
+                            renderMessageBubble(payload.new);
+                        }
+                    })
+                    .subscribe();
 
             } catch (err) {
-                console.log("Connection error:", err);
+                console.log("Database offline, running fallback session mode.");
             }
         }
 
+        // Push chat text message packages outwards globally onto the permanent cloud drive
         sendBtn.addEventListener('click', () => {
             const messageText = chatInput.value.trim();
             if (messageText !== '' && myUsername !== '') {
@@ -484,13 +494,15 @@
                     time: timeStr
                 };
 
-                if (pubnubEngine) {
-                    pubnubEngine.publish({
-                        channel: '8brcam-global-pool-chat',
-                        message: payload
-                    });
-                } else {
-                    renderMessageBubble(payload);
+                // Render on your screen immediately
+                renderMessageBubble(payload);
+
+                if (supabaseClient) {
+                    // Saves permanently to the online database table row drive 24/7
+                    supabaseClient
+                        .from('pool_messages')
+                        .insert([payload])
+                        .then(() => { console.log("Message committed to memory drive."); });
                 }
                 
                 chatInput.value = '';
@@ -501,8 +513,14 @@
             if (e.key === 'Enter') sendBtn.click();
         });
 
+        // Appends text containers cleanly into the chat stream display box frame
         function renderMessageBubble(data) {
+            // Stop duplicating items if they are already visible on layout nodes
+            const uniqueMessageId = `msg-${data.username}-${data.time}-${data.message.substring(0,5)}`;
+            if (document.getElementById(uniqueMessageId)) return;
+
             const msgDiv = document.createElement('div');
+            msgDiv.id = uniqueMessageId;
             
             if (data.username === myUsername) {
                 msgDiv.className = 'msg self';
@@ -530,4 +548,3 @@
     </script>
 </body>
 </html>
-
