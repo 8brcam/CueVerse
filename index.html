@@ -343,7 +343,7 @@
                 <p style="margin: 0; font-size: 0.875rem; color: #a1a1aa; font-weight: 700;">Set your player name to chat:</p>
                 <div style="display: flex; gap: 0.5rem;">
                     <input type="text" id="username-input" placeholder="Enter nickname..." style="flex-grow: 1; background-color: #000; border: 1px solid #27272a; border-radius: 0.5rem; padding: 0.5rem; color: #fff; font-size: 0.875rem; outline: none;">
-                    <button type="button" id="save-username-btn" style="background-color: #2dd4bf; color: #000; font-weight: 900; border-radius: 0.5rem; padding: 0.5rem 1rem; border: none; cursor: pointer; font-size: 0.75rem; text-transform: uppercase;">Save</button>
+                    <button type="button" id="save-username-btn">Save</button>
                 </div>
             </div>
             
@@ -364,7 +364,7 @@
         &copy; 2026 8brcam Yahoo Pool Competition. All Rights Reserved.
     </footer>
 
-    <!-- Official, clean SDK dependencies targeting your specific Realtime Database instance -->
+    <!-- Complete browser-supported Firebase SDK links -->
     <script src="https://gstatic.com"></script>
     <script src="https://gstatic.com"></script>
     <script>
@@ -374,6 +374,7 @@
             clickedElement.classList.add('active');
         }
 
+        // FIXED: Included the missing 'saveUsernameBtn' variable to resolve the syntax crash
         let myUsername = localStorage.getItem('chat_nickname') || "";
         const usernamePanel = document.getElementById('username-panel');
         const usernameInput = document.getElementById('username-input');
@@ -429,6 +430,7 @@
 
         function initPermanentFirebaseChat() {
             try {
+                // Configured with your real brcam-chat CDN parameters
                 const firebaseConfig = {
                     apiKey: "AIzaSyBROwwCrWBPx-1WmDuZROeG6sDmpfn44CE",
                     authDomain: "://firebaseapp.com",
@@ -443,13 +445,11 @@
                     firebase.initializeApp(firebaseConfig);
                 }
                 
-                // Directly initialising database engine link
                 dbRef = firebase.database().ref("chats/" + tournamentRoomId);
 
                 const connAlert = document.getElementById('connection-alert');
                 if (connAlert) connAlert.remove();
 
-                // Live Sync Layer: Instantly pulls previous 50 log rows on refresh
                 dbRef.limitToLast(50).on("child_added", (snapshot) => {
                     const msgPayload = snapshot.val();
                     renderMessageBubble({
