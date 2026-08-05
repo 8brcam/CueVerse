@@ -403,7 +403,7 @@
         
         let chatRef = null;
 
-        // FIXED: Instantly logs user in locally so the network can never block your UI actions
+        // Instantly logs user in locally so the network can never block your UI actions
         function checkIdentityState() {
             if (myUsername) {
                 // 1. Instantly update the name badge look
@@ -453,7 +453,7 @@
         // Connects to your custom account repository background data drive safely
         function initFirebaseChat() {
             try {
-                // Your exact validated database config credentials keys [INDEX]
+                // Your exact validated database config credentials keys
                 const firebaseConfig = {
                     apiKey: "AIzaSyBROwwCrWBPx-1WmDuZROeG6sDmpfn44CE",
                     authDomain: "://firebaseapp.com",
@@ -539,3 +539,4 @@
     </script>
 </body>
 </html>
+
