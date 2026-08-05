@@ -364,7 +364,7 @@
         &copy; 2026 8brcam Yahoo Pool Competition. All Rights Reserved.
     </footer>
 
-    <!-- Firebase script library modules matching your Realtime Database framework -->
+    <!-- Official, clean SDK dependencies targeting your specific Realtime Database instance -->
     <script src="https://gstatic.com"></script>
     <script src="https://gstatic.com"></script>
     <script>
@@ -429,7 +429,6 @@
 
         function initPermanentFirebaseChat() {
             try {
-                // Integrated directly with your verified brcam-chat credentials
                 const firebaseConfig = {
                     apiKey: "AIzaSyBROwwCrWBPx-1WmDuZROeG6sDmpfn44CE",
                     authDomain: "://firebaseapp.com",
@@ -444,6 +443,7 @@
                     firebase.initializeApp(firebaseConfig);
                 }
                 
+                // Directly initialising database engine link
                 dbRef = firebase.database().ref("chats/" + tournamentRoomId);
 
                 const connAlert = document.getElementById('connection-alert');
