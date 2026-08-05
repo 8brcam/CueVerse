@@ -364,7 +364,7 @@
         &copy; 2026 8brcam Yahoo Pool Competition. All Rights Reserved.
     </footer>
 
-    <!-- Official SDK Scripts loading your Realtime Database feature layer correctly -->
+    <!-- Firebase script library modules matching your Realtime Database framework -->
     <script src="https://gstatic.com"></script>
     <script src="https://gstatic.com"></script>
     <script>
@@ -429,7 +429,7 @@
 
         function initPermanentFirebaseChat() {
             try {
-                // Your active live data configuration keys successfully integrated
+                // Integrated directly with your verified brcam-chat credentials
                 const firebaseConfig = {
                     apiKey: "AIzaSyBROwwCrWBPx-1WmDuZROeG6sDmpfn44CE",
                     authDomain: "://firebaseapp.com",
@@ -449,7 +449,7 @@
                 const connAlert = document.getElementById('connection-alert');
                 if (connAlert) connAlert.remove();
 
-                // Live Stream Sync Layer: Instantly pulls previous 50 log rows on refresh
+                // Live Sync Layer: Instantly pulls previous 50 log rows on refresh
                 dbRef.limitToLast(50).on("child_added", (snapshot) => {
                     const msgPayload = snapshot.val();
                     renderMessageBubble({
@@ -459,7 +459,7 @@
                 });
 
             } catch (err) {
-                console.error("Firebase runtime execution setup error:", err);
+                console.error("Firebase setup error:", err);
                 document.getElementById('connection-alert').innerHTML = '<span class="sys-tag" style="color:#ef4444; border-color: rgba(239,68,68,0.2);">Database Error</span>';
             }
         }
@@ -477,9 +477,7 @@
                     timestamp: firebase.database.ServerValue.TIMESTAMP
                 };
 
-                dbRef.push(payload)
-                    .catch(err => console.error("Cloud push delivery failure:", err));
-                
+                dbRef.push(payload).catch(err => console.error("Cloud push failed:", err));
                 chatInput.value = '';
             }
         }
@@ -499,19 +497,13 @@
             if (data.username === myUsername) {
                 msgDiv.className = 'msg self';
                 msgDiv.innerHTML = `
-                    <div class="msg-meta">
-                        <span class="time">${data.time}</span>
-                        <span class="user-right">You</span>
-                    </div>
+                    <div class="msg-meta"><span class="time">${data.time}</span><span class="user-right">You</span></div>
                     <div class="bubble">${escapeHtml(data.message)}</div>
                 `;
             } else {
                 msgDiv.className = 'msg';
                 msgDiv.innerHTML = `
-                    <div class="msg-meta">
-                        <span class="user-left">${escapeHtml(data.username)}</span>
-                        <span class="time">${data.time}</span>
-                    </div>
+                    <div class="msg-meta"><span class="user-left">${escapeHtml(data.username)}</span><span class="time">${data.time}</span></div>
                     <div class="bubble">${escapeHtml(data.message)}</div>
                 `;
             }
@@ -521,15 +513,7 @@
         }
 
         function escapeHtml(string) {
-            return String(string).replace(/[&<>"']/g, function (s) {
-                return {
-                    '&': '&amp;',
-                    '<': '&lt;',
-                    '>': '&gt;',
-                    '"': '&quot;',
-                    "'": '&#39;'
-                }[s];
-            });
+            return String(string).replace(/[&<>"']/g, s => ({'&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;'}[s]));
         }
 
         checkIdentityState();
