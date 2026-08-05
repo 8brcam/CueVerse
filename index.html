@@ -239,7 +239,7 @@
             text-align: right;
         }
 
-        /* Chat Input Box Fixed Frame */
+        /* Chat Input Area */
         .chat-input-area {
             padding: 1rem;
             border-top: 1px solid #27272a;
@@ -299,23 +299,23 @@
 </head>
 <body>
     <header>
-        <img src="8brcamBanner1.jpg" alt="8brcam Tournament Banner Logo" class="header-logo">
+        <img src="8brcamBanner.png" alt="8brcam Tournament Banner Logo" class="header-logo">
     </header>
 
     <div class="layout-container">
         
-        <!-- Left Side Navigation Box with all 8 buttons completely visible -->
+        <!-- Left Side Navigation Box with all 8 unique buttons completely visible -->
         <nav>
             <div class="nav-box">
                 <div class="nav-title">Tournament Menu</div>
                 
-                <!-- 4 BUTTONS FOR INSIDE: These open inside the context box -->
+                <!-- 4 BUTTONS FOR INSIDE: These open inside the middle content box -->
                 <a href="./Rules/" target="content-frame" class="nav-btn active" onclick="switchTab(this)">Rules</a>
                 <a href="./Groups/" target="content-frame" class="nav-btn" onclick="switchTab(this)">Groups</a>
                 <a href="./Playoffs/" target="content-frame" class="nav-btn" onclick="switchTab(this)">Playoffs</a>
                 <a href="./Archives/" target="content-frame" class="nav-btn" onclick="switchTab(this)">Archives</a>
                 
-                <!-- 4 BUTTONS FOR OUTSIDE: These open normal links outside the context box -->
+                <!-- 4 BUTTONS FOR OUTSIDE: These open normal links outside the middle content box -->
                 <a href="./Application/" class="nav-btn" onclick="switchTab(this)">Application</a>
                 <a href="./Videos/" class="nav-btn" onclick="switchTab(this)">Videos</a>
                 <a href="./Forum/" class="nav-btn" onclick="switchTab(this)">Forum</a>
@@ -337,31 +337,24 @@
                 <span class="lobby-tag">LOBBY #01</span>
             </div>
             
+            <!-- Username Identification Control Panel Box -->
+            <div id="username-panel" style="padding: 1.5rem; border-bottom: 1px solid #27272a; background-color: rgba(45, 212, 191, 0.05); display: flex; flex-direction: column; gap: 0.75rem;">
+                <p style="margin: 0; font-size: 0.875rem; color: #a1a1aa; font-weight: 700;">Set your player name to chat:</p>
+                <div style="display: flex; gap: 0.5rem;">
+                    <input type="text" id="username-input" placeholder="Enter nickname..." style="flex-grow: 1; background-color: #000; border: 1px solid #27272a; border-radius: 0.5rem; padding: 0.5rem; color: #fff; font-size: 0.875rem; outline: none;">
+                    <button type="button" id="save-username-btn" style="background-color: #2dd4bf; color: #000; font-weight: 900; border-radius: 0.5rem; padding: 0.5rem 1rem; border: none; cursor: pointer; font-size: 0.75rem; text-transform: uppercase;">Save</button>
+                </div>
+            </div>
+            
             <div class="chat-stream" id="chat-stream">
                 <div class="sys-alert">
-                    <span class="sys-tag">Welcome to Yahoo Pool Lobby</span>
-                </div>
-                
-                <div class="msg">
-                    <div class="msg-meta">
-                        <span class="user-left">Player_One</span>
-                        <span class="time">10:42 AM</span>
-                    </div>
-                    <div class="bubble">Good luck in the competition everyone!</div>
-                </div>
-
-                <div class="msg self">
-                    <div class="msg-meta">
-                        <span class="time">10:43 AM</span>
-                        <span class="user-right">You</span>
-                    </div>
-                    <div class="bubble">Thanks! Good luck to you too!</div>
+                    <span class="sys-tag">Connecting to tournament servers...</span>
                 </div>
             </div>
 
             <div class="chat-input-area">
-                <input type="text" id="chat-input" placeholder="Type a message...">
-                <button type="button" id="send-btn">Send</button>
+                <input type="text" id="chat-input" placeholder="Choose a name above to type..." disabled style="opacity: 0.5; cursor: not-allowed;">
+                <button type="button" id="send-btn" disabled style="opacity: 0.5; cursor: not-allowed;">Send</button>
             </div>
         </main>
     </div>
@@ -369,6 +362,10 @@
     <footer>
         &copy; 2026 8brcam Yahoo Pool Competition. All Rights Reserved.
     </footer>
+
+    <!-- Core Database Communication CDNs -->
+    <script src="https://gstatic.com"></script>
+    <script src="https://gstatic.com"></script>
 
     <script>
         // Manages UI navigation highlighting states cleanly
@@ -378,42 +375,124 @@
             clickedElement.classList.add('active');
         }
 
-        // Live Chat box message generator engine
+        // Live Chat Database Configuration [INDEX]
+        const firebaseConfig = {
+            apiKey: "AIzaSyBROwwCrWBPx-1WmDuZROeG6sDmpfn44CE",
+            authDomain: "://firebaseapp.com",
+            databaseURL: "https://firebaseio.com",
+            projectId: "brcam-chat",
+            storageBucket: "brcam-chat.firebasestorage.app",
+            messagingSenderId: "82194034681",
+            appId: "1:82194034681:web:6826aabf49732b981d9728"
+        };
+
+        // Initialize Firebase Connection Engine
+        firebase.initializeApp(firebaseConfig);
+        const database = firebase.database();
+        const chatRef = database.ref('messages');
+
+        // Core Layout Elements
+        let myUsername = localStorage.getItem('chat_nickname') || "";
+        const usernamePanel = document.getElementById('username-panel');
+        const usernameInput = document.getElementById('username-input');
+        const saveUsernameBtn = document.getElementById('save-username-btn');
         const sendBtn = document.getElementById('send-btn');
         const chatInput = document.getElementById('chat-input');
         const chatStream = document.getElementById('chat-stream');
 
-        if(sendBtn && chatInput && chatStream) {
-            sendBtn.addEventListener('click', () => {
-                const messageText = chatInput.value.trim();
-                if (messageText !== '') {
-                    const msgDiv = document.createElement('div');
-                    msgDiv.className = 'msg self';
-                    
-                    const now = new Date();
-                    const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                    
-                    msgDiv.innerHTML = `
-                        <div class="msg-meta">
-                            <span class="time">${timeStr}</span>
-                            <span class="user-right">You</span>
-                        </div>
-                        <div class="bubble">${messageText}</div>
-                    `;
-                    
-                    chatStream.appendChild(msgDiv);
-                    chatInput.value = '';
-                    chatStream.scrollTop = chatStream.scrollHeight;
-                }
-            });
-
-            chatInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') {
-                    sendBtn.click();
-                }
-            });
+        // Check user identity presence and flip text controls
+        function checkIdentityState() {
+            if (myUsername) {
+                usernamePanel.innerHTML = `<p style="margin:0; font-size:0.875rem; color:#2dd4bf;">Chatting live as: <strong style="color:#fff;">${myUsername}</strong> <span id="change-name" style="color:#71717a; font-size:10px; cursor:pointer; text-decoration:underline; margin-left:10px;">[Change]</span></p>`;
+                chatInput.disabled = false;
+                sendBtn.disabled = false;
+                chatInput.placeholder = "Type a message...";
+                chatInput.style.opacity = "1";
+                chatInput.style.cursor = "text";
+                sendBtn.style.opacity = "1";
+                sendBtn.style.cursor = "pointer";
+                
+                document.getElementById('change-name').addEventListener('click', () => {
+                    localStorage.removeItem('chat_nickname');
+                    window.location.reload();
+                });
+            }
         }
+
+        // Set User Name Identity Profile
+        saveUsernameBtn.addEventListener('click', () => {
+            const nameValue = usernameInput.value.trim();
+            if (nameValue !== '') {
+                myUsername = nameValue;
+                localStorage.setItem('chat_nickname', myUsername);
+                checkIdentityState();
+            }
+        });
+
+        usernameInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') saveUsernameBtn.click();
+        });
+
+        // Initialize User States
+        checkIdentityState();
+
+        // Broadcast Message Outward into Firebase Storage
+        sendBtn.addEventListener('click', () => {
+            const messageText = chatInput.value.trim();
+            if (messageText !== '' && myUsername !== '') {
+                const now = new Date();
+                const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
+                
+                // Pushes the message data globally
+                chatRef.push({
+                    username: myUsername,
+                    message: messageText,
+                    time: timeStr
+                });
+                
+                chatInput.value = '';
+            }
+        });
+
+        chatInput.addEventListener('keypress', (e) => {
+            if (e.key === 'Enter') sendBtn.click();
+        });
+
+        // Listen for Incoming Live Global Database Events
+        chatRef.limitToLast(50).on('child_added', (snapshot) => {
+            const data = snapshot.val();
+            
+            // Clear initial loading alerts if data arrives
+            const systemTags = chatStream.querySelectorAll('.sys-alert');
+            systemTags.forEach(tag => tag.remove());
+
+            const msgDiv = document.createElement('div');
+            
+            if (data.username === myUsername) {
+                // Self Message styling (Teal tint aligned right)
+                msgDiv.className = 'msg self';
+                msgDiv.innerHTML = `
+                    <div class="msg-meta">
+                        <span class="time">${data.time}</span>
+                        <span class="user-right">You</span>
+                    </div>
+                    <div class="bubble">${data.message}</div>
+                `;
+            } else {
+                // Foreign Competitor styling (Dark grey aligned left)
+                msgDiv.className = 'msg';
+                msgDiv.innerHTML = `
+                    <div class="msg-meta">
+                        <span class="user-left">${data.username}</span>
+                        <span class="time">${data.time}</span>
+                    </div>
+                    <div class="bubble">${data.message}</div>
+                `;
+            }
+
+            chatStream.appendChild(msgDiv);
+            chatStream.scrollTop = chatStream.scrollHeight;
+        });
     </script>
 </body>
 </html>
-
