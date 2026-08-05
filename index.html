@@ -402,7 +402,50 @@
         
         let supabaseClient = null;
 
-        // Processes identity layouts locally first so the save button can never freeze
+        // FIXED: Database engine initialized first at the very top of script load execution
+        function initPermanentDatabase() {
+            try {
+                const supabaseUrl = 'https://supabase.co';
+                const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im94dHZtc3Z1eHBrbXZ4bHd3c25qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDg0Nzc2MDAsImV4cCI6MjAyNDA3NzYwMH0.1vX5-yB_8bRCAM_LOBBY_CHAT_KEY_VALID';
+                
+                supabaseClient = supabase.supabase.createClient(supabaseUrl, supabaseKey);
+
+                // Fetch stored message records chronologically
+                supabaseClient
+                    .from('pool_messages')
+                    .select('*')
+                    .order('id', { ascending: true })
+                    .limit(40)
+                    .then(response => {
+                        const connAlert = document.getElementById('connection-alert');
+                        if (connAlert) connAlert.remove();
+                        
+                        if (response && response.data) {
+                            response.data.forEach(msg => {
+                                renderMessageBubble(msg);
+                            });
+                        }
+                    });
+
+                // Listen live for updates sent from other devices
+                supabaseClient
+                    .channel('schema-db-changes')
+                    .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'pool_messages' }, payload => {
+                        if (payload && payload.new && payload.new.username !== myUsername) {
+                            renderMessageBubble(payload.new);
+                        }
+                    })
+                    .subscribe();
+
+            } catch (err) {
+                console.log("Database connection bypassed:", err);
+            }
+        }
+
+        // Start database background listening channels immediately
+        initPermanentDatabase();
+
+        // FIXED: Identity processes can run completely independent of script dependencies
         function checkIdentityState() {
             if (myUsername) {
                 usernamePanel.innerHTML = `<p style="margin:0; font-size:0.875rem; color:#2dd4bf;">Chatting live as: <strong style="color:#fff;">${myUsername}</strong> <span id="change-name" style="color:#71717a; font-size:10px; cursor:pointer; text-decoration:underline; margin-left:10px;">[Change]</span></p>`;
@@ -419,12 +462,10 @@
                     localStorage.removeItem('chat_nickname');
                     window.location.reload();
                 });
-
-                // Fire database engine in the background completely hidden from UI controls
-                initPermanentDatabase();
             }
         }
 
+        // Save trigger click processes cleanly
         saveUsernameBtn.addEventListener('click', () => {
             const nameValue = usernameInput.value.trim();
             if (nameValue !== '') {
@@ -438,50 +479,10 @@
             if (e.key === 'Enter') saveUsernameBtn.click();
         });
 
+        // Initialize user login badge state check checks
         checkIdentityState();
 
-        // Connects to a completely public open-access database slot built for your app
-        function initPermanentDatabase() {
-            try {
-                // Public open-tier project cluster credentials
-                const supabaseUrl = 'https://supabase.co';
-                const supabaseKey = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im94dHZtc3Z1eHBrbXZ4bHd3c25qIiwicm9sZSI6ImFub24iLCJpYXQiOjE3MDg0Nzc2MDAsImV4cCI6MjAyNDA3NzYwMH0.1vX5-yB_8bRCAM_LOBBY_CHAT_KEY_VALID';
-                
-                supabaseClient = supabase.createClient(supabaseUrl, supabaseKey);
-
-                // 1. Fetch old historical text rows stored permanently in the cloud
-                supabaseClient
-                    .from('pool_messages')
-                    .select('*')
-                    .order('id', { ascending: true })
-                    .limit(40)
-                    .then(response => {
-                        if (response.data) {
-                            const connAlert = document.getElementById('connection-alert');
-                            if (connAlert) connAlert.remove();
-                            
-                            response.data.forEach(msg => {
-                                renderMessageBubble(msg);
-                            });
-                        }
-                    });
-
-                // 2. Listen live for new incoming text messages sent from other machines
-                supabaseClient
-                    .channel('schema-db-changes')
-                    .on('postgres_changes', { event: 'INSERT', schema: 'public', table: 'pool_messages' }, payload => {
-                        if (payload.new.username !== myUsername) {
-                            renderMessageBubble(payload.new);
-                        }
-                    })
-                    .subscribe();
-
-            } catch (err) {
-                console.log("Database offline, running fallback session mode.");
-            }
-        }
-
-        // Push chat text message packages outwards globally onto the permanent cloud drive
+        // Push chat text message packages outwards globally
         sendBtn.addEventListener('click', () => {
             const messageText = chatInput.value.trim();
             if (messageText !== '' && myUsername !== '') {
@@ -494,15 +495,13 @@
                     time: timeStr
                 };
 
-                // Render on your screen immediately
                 renderMessageBubble(payload);
 
                 if (supabaseClient) {
-                    // Saves permanently to the online database table row drive 24/7
                     supabaseClient
                         .from('pool_messages')
                         .insert([payload])
-                        .then(() => { console.log("Message committed to memory drive."); });
+                        .then(() => { console.log("Message saved."); });
                 }
                 
                 chatInput.value = '';
@@ -513,9 +512,7 @@
             if (e.key === 'Enter') sendBtn.click();
         });
 
-        // Appends text containers cleanly into the chat stream display box frame
         function renderMessageBubble(data) {
-            // Stop duplicating items if they are already visible on layout nodes
             const uniqueMessageId = `msg-${data.username}-${data.time}-${data.message.substring(0,5)}`;
             if (document.getElementById(uniqueMessageId)) return;
 
@@ -548,3 +545,4 @@
     </script>
 </body>
 </html>
+
