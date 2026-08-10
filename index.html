@@ -4,63 +4,139 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>8brcam | Yahoo Pool Competition</title>
-    
     <style>
         /* --- Base Layout --- */
         html, body {
             background-color: #000000 !important;
             color: #f3f4f6 !important;
             font-family: ui-sans-serif, system-ui, sans-serif;
-            margin: 0; padding: 0; min-height: 100vh;
-            display: flex; flex-direction: column; justify-content: space-between;
+            margin: 0;
+            padding: 0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
         }
-        header { width: 100%; padding: 2rem 0 1rem; display: flex; justify-content: center; }
-        .header-logo { max-width: 1170px; width: 90%; height: auto; object-fit: contain; }
+
+        header {
+            width: 100%;
+            padding: 2rem 0 1rem;
+            display: flex;
+            justify-content: center;
+        }
+
+        .header-logo {
+            max-width: 1170px;
+            width: 90%;
+            height: auto;
+            object-fit: contain;
+        }
 
         /* --- Flexible Adaptive Matrix Container --- */
         .layout-container {
-            width: 100%; max-width: 1200px; margin: 0 auto; padding: 1rem;
-            display: flex; flex-direction: column; gap: 1.25rem; flex-grow: 1; box-sizing: border-box;
+            width: 100%;
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.25rem;
+            flex-grow: 1;
+            box-sizing: border-box;
         }
 
         /* --- Custom Sidebar Button Items --- */
-        nav { width: 100%; flex-shrink: 0; }
+        nav {
+            width: 100%;
+            flex-shrink: 0;
+        }
+
         .nav-box {
-            background-color: #09090b; border: 1px solid #27272a; border-radius: 0.75rem;
-            padding: 1rem; display: flex; flex-direction: column; gap: 0.5rem;
+            background-color: #09090b;
+            border: 1px solid #27272a;
+            border-radius: 0.75rem;
+            padding: 1rem;
+            display: flex;
+            flex-direction: column;
+            gap: 0.5rem;
         }
+
         .nav-title {
-            font-size: 10px; text-transform: uppercase; letter-spacing: 0.15em; color: #71717a;
-            font-weight: 700; padding-bottom: 0.5rem; border-bottom: 1px solid #18181b; margin-bottom: 0.5rem;
+            font-size: 10px;
+            text-transform: uppercase;
+            letter-spacing: 0.15em;
+            color: #71717a;
+            font-weight: 700;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid #18181b;
+            margin-bottom: 0.5rem;
         }
+
         .nav-btn {
-            display: block; padding: 0.625rem 1rem; background-color: rgba(39, 39, 42, 0.5);
-            border: 1px solid #27272a; border-radius: 0.5rem; color: #f3f4f6;
-            font-size: 1.2rem; font-weight: 700; text-decoration: none; text-align: left; cursor: pointer;
+            display: block;
+            padding: 0.625rem 1rem;
+            background-color: rgba(39, 39, 42, 0.5);
+            border: 1px solid #27272a;
+            border-radius: 0.5rem;
+            color: #f3f4f6;
+            font-size: 1.2rem;
+            font-weight: 700;
+            text-decoration: none;
+            text-align: left;
+            cursor: pointer;
         }
-        .nav-btn:hover, .nav-btn.active { border-color: #2dd4bf !important; color: #2dd4bf !important; background-color: #27272a !important; }
+
+        .nav-btn:hover, .nav-btn.active {
+            border-color: #2dd4bf !important;
+            color: #2dd4bf !important;
+            background-color: #27272a !important;
+        }
 
         /* --- Central Dashboard iFrame Canvas --- */
-        .content-display-box { width: 100%; background-color: #09090b; border: 1px solid #27272a; border-radius: 1rem; height: 450px; overflow: hidden; }
-
-        /* --- Right-Hand Sidebar Discord Container --- */
-        main { 
-            width: 100%; 
-            border: 1px solid #27272a; 
-            background-color: #09090b; 
-            border-radius: 1rem; 
-            height: 550px; 
-            overflow: hidden; 
+        .content-display-box {
+            width: 100%;
+            background-color: #09090b;
+            border: 1px solid #27272a;
+            border-radius: 1rem;
+            height: 450px;
+            overflow: hidden;
         }
 
-        footer { text-align: center; padding: 2rem 0; font-size: 10px; color: #52525b; border-top: 1px solid #09090b; margin-top: 3rem; }
+        /* --- Right-Hand Sidebar Discord Container --- */
+        main {
+            width: 100%;
+            border: 1px solid #27272a;
+            background-color: #09090b;
+            border-radius: 1rem;
+            height: 550px;
+            overflow: hidden;
+        }
+
+        footer {
+            text-align: center;
+            padding: 2rem 0;
+            font-size: 10px;
+            color: #52525b;
+            border-top: 1px solid #09090b;
+            margin-top: 3rem;
+        }
 
         /* --- Desktop Rendering Grid Triggers --- */
         @media (min-width: 1024px) {
-            .layout-container { flex-direction: row; }
-            nav { width: 14rem; }
-            .content-display-box { flex-grow: 1; height: 550px; }
-            main { width: 24rem; height: 550px; }
+            .layout-container {
+                flex-direction: row;
+            }
+            nav {
+                width: 14rem;
+            }
+            .content-display-box {
+                flex-grow: 1;
+                height: 550px;
+            }
+            main {
+                width: 24rem;
+                height: 550px;
+            }
         }
     </style>
 </head>
@@ -71,6 +147,7 @@
     </header>
 
     <div class="layout-container">
+        
         <!-- Left Sidebar Navigation Layout -->
         <nav>
             <div class="nav-box">
@@ -85,7 +162,7 @@
                 <a href="./Chat/" target="content-frame" class="nav-btn" onclick="switchTab(this)">Chat</a>
             </div>
         </nav>
-        
+
         <!-- Center Content Window -->
         <div class="content-display-box">
             <iframe name="content-frame" id="content-frame" src="./Rules/" style="width: 100%; height: 100%; border: none; background: transparent;"></iframe>
@@ -93,16 +170,15 @@
 
         <!-- Right Side Live Discord Chat Frame -->
         <main>
-            <!-- ⚡ PRODUCTION IFRAME ENGINE: Fixed WidgetBot Script -->
-            <script src="https://jsdelivr.net"></script>
-            <widgetbot
-                server="1536340335666528349"
-                channel="1536340336249405452"
-                style="width: 100%; height: 100%;">
-            </widgetbot>
+            <!-- ⚡ PRODUCTION IFRAME ENGINE: Fixed WidgetBot Native Embed -->
+            <iframe 
+                src="https://widgetbot.io" 
+                style="width: 100%; height: 100%; border: none;">
+            </iframe>
         </main>
+
     </div>
-        
+
     <footer>
         &copy; 2026 8brcam Yahoo Pool Competition. All Rights Reserved.
     </footer>
@@ -117,10 +193,7 @@
             if (window.innerWidth < 1024) {
                 const contentBox = document.querySelector('.content-display-box');
                 if (contentBox) {
-                    contentBox.scrollIntoView({ 
-                        behavior: 'smooth', 
-                        block: 'start' 
-                    });
+                    contentBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
                 }
             }
         }
