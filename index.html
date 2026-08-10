@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>8brcam | Yahoo Pool Competition</title>
     
-    <!-- ⚡ FIXED: Completely removed external script tags. No external assets for the browser to block! -->
-
     <style>
         /* --- Base Layout --- */
         html, body {
@@ -45,37 +43,24 @@
         /* --- Central Dashboard iFrame Canvas --- */
         .content-display-box { width: 100%; background-color: #09090b; border: 1px solid #27272a; border-radius: 1rem; height: 450px; overflow: hidden; }
 
-        /* --- Right-Hand Sidebar Chat Panel Layout --- */
-        main { width: 100%; display: flex; flex-direction: column; border: 1px solid #27272a; background-color: #09090b; border-radius: 1rem; height: 550px; overflow: hidden; }
-        .chat-header { padding: 1rem 1.5rem; border-bottom: 1px solid #27272a; display: flex; justify-content: space-between; align-items: center; }
-        .live-indicator { display: flex; align-items: center; gap: 0.5rem; }
-        .dot { width: 0.5rem; height: 0.5rem; border-radius: 50%; background-color: #10b981; }
-        .chat-title { font-weight: 700; color: #d4d4d8; margin: 0; font-size: 1.1rem; text-transform: uppercase; }
-        .lobby-tag { font-size: 0.75rem; font-family: monospace; color: #2dd4bf; background-color: rgba(45, 212, 191, 0.1); border: 1px solid rgba(45, 212, 191, 0.2); padding: 0.125rem 0.5rem; border-radius: 0.25rem; }
+        /* --- Right-Hand Sidebar Discord Container --- */
+        main { 
+            width: 100%; 
+            border: 1px solid #27272a; 
+            background-color: #09090b; 
+            border-radius: 1rem; 
+            height: 550px; 
+            overflow: hidden; 
+        }
         
-        #username-panel { padding: 1rem; border-bottom: 1px solid #27272a; background-color: rgba(45, 212, 191, 0.05); display: flex; flex-direction: column; gap: 0.5rem; }
-        #username-input { background-color: #000; border: 1px solid #27272a; border-radius: 0.5rem; padding: 0.5rem; color: #fff; outline: none; }
-        #save-username-btn { background-color: #2dd4bf; color: #000; font-weight: 900; padding: 0.5rem 1rem; border-radius: 0.5rem; border: none; cursor: pointer; }
-        
-        .chat-stream { flex-grow: 1; padding: 1rem; overflow-y: auto; display: flex; flex-direction: column; gap: 1rem; background-color: rgba(0, 0, 0, 0.4); }
-        .sys-tag { font-size: 10px; background-color: #18181b; color: #71717a; padding: 0.25rem 0.75rem; border-radius: 9999px; border: 1px solid #27272a; }
-        
-        .msg { display: flex; flex-direction: column; gap: 0.25rem; max-width: 85%; }
-        .msg.self { align-self: flex-end; items: flex-end; text-align: right; }
-        .user-left { font-size: 0.75rem; font-weight: 900; color: #2dd4bf; }
-        .user-right { font-size: 0.75rem; font-weight: 900; color: #c084fc; }
-        .time { font-size: 10px; color: #52525b; font-family: monospace; margin: 0 5px; }
-        .bubble { background-color: #18181b; border: 1px solid #27272a; border-radius: 0 0.75rem 0.75rem 0.75rem; padding: 0.75rem; font-size: 0.875rem; color: #d4d4d8; word-break: break-word; }
-        .msg.self .bubble { background-color: rgba(45, 212, 191, 0.15); border-color: rgba(45, 212, 191, 0.3); border-radius: 0.75rem 0 0.75rem 0.75rem; }
-
-        .chat-input-area { padding: 1rem; border-top: 1px solid #27272a; display: flex; gap: 0.5rem; background-color: #09090b; }
-        .chat-input-area input { flex-grow: 1; background-color: #000; border: 1px solid #27272a; border-radius: 0.75rem; padding: 0.75rem; color: #fff; outline: none; }
-        .chat-input-area button { background-color: #2dd4bf; color: #000; font-weight: 900; padding: 0.75rem 1.25rem; border-radius: 0.75rem; border: none; cursor: pointer; }
+        main iframe {
+            width: 100%;
+            height: 100%;
+            border: none;
+            background-color: #09090b;
+        }
 
         footer { text-align: center; padding: 2rem 0; font-size: 10px; color: #52525b; border-top: 1px solid #09090b; margin-top: 3rem; }
-        .chat-stream::-webkit-scrollbar { width: 6px; }
-        .chat-stream::-webkit-scrollbar-track { background: transparent; }
-        .chat-stream::-webkit-scrollbar-thumb { background: #27272a; border-radius: 9999px; }
 
         /* --- Desktop Rendering Grid Triggers --- */
         @media (min-width: 1024px) {
@@ -107,33 +92,16 @@
                 <a href="./Chat/" target="content-frame" class="nav-btn" onclick="switchTab(this)">Chat</a>
             </div>
         </nav>
+        
         <!-- Center Content Window -->
         <div class="content-display-box">
             <iframe name="content-frame" id="content-frame" src="./Rules/" style="width: 100%; height: 100%; border: none; background: transparent;"></iframe>
         </div>
 
-        <!-- Right Side Live Chat Frame -->
+        <!-- Right Side Live Discord Chat Frame -->
         <main>
-            <div class="chat-header">
-                <div class="live-indicator"><span class="dot"></span><h2 class="chat-title">Global Chat</h2></div>
-                <span class="lobby-tag">LOBBY #01</span>
-            </div>
-            <div id="username-panel">
-                <p style="margin: 0; font-size: 0.875rem; color: #a1a1aa; font-weight: 700;">Set player name to chat globally:</p>
-                <div style="display: flex; gap: 0.5rem;">
-                    <input type="text" id="username-input" placeholder="Enter nickname..." />
-                    <button type="button" id="save-username-btn">Join</button>
-                </div>
-            </div>
-            
-            <div class="chat-stream" id="chat-stream">
-                <div class="sys-alert" id="connection-alert"><span class="sys-tag">Synchronising live lobby messages...</span></div>
-            </div>
-            
-            <div class="chat-input-area">
-                <input type="text" id="chat-input" placeholder="Choose a name above to type...">
-                <button type="button" id="send-btn">Send</button>
-            </div>
+            <!-- ⚡ PRODUCTION IFRAME ENGINE: Ready for GitHub Pages Deployment -->
+            <iframe src="https://widgetbot.io" title="8brcam Discord Lobby"></iframe>
         </main>
     </div>
         
@@ -158,130 +126,6 @@
                 }
             }
         }
-    </script>
-
-    <!-- Global Connection Engine (Native Web Sync Tool - Zero Script Downloads) -->
-    <script>
-        // Database link coordinates directly communicating via native web APIs
-        const dbEndpoint = "https://firebaseio.com";
-
-        let myUsername = localStorage.getItem('chat_nickname') || "";
-        const usernamePanel = document.getElementById('username-panel');
-        const usernameInput = document.getElementById('username-input');
-        const saveUsernameBtn = document.getElementById('save-username-btn');
-        const sendBtn = document.getElementById('send-btn');
-        const chatInput = document.getElementById('chat-input');
-        const chatStream = document.getElementById('chat-stream');
-
-        function checkIdentityState() {
-            if (myUsername) {
-                if (usernamePanel) {
-                    usernamePanel.innerHTML = `<p style="margin:0; font-size:0.875rem; color:#2dd4bf; font-weight:700;">Chatting as: <strong style="color:#fff;">${escapeHtml(myUsername)}</strong> <span id="change-name" style="color:#71717a; font-size:10px; cursor:pointer; text-decoration:underline; margin-left:10px;">[Change]</span></p>`;
-                    document.getElementById('change-name').addEventListener('click', () => {
-                        localStorage.removeItem('chat_nickname'); window.location.reload();
-                    });
-                }
-                if (chatInput) { chatInput.placeholder = "Type a global message..."; }
-            } else {
-                if (chatInput) { chatInput.placeholder = "Choose a name above..."; }
-            }
-        }
-
-        if (saveUsernameBtn) {
-            saveUsernameBtn.addEventListener('click', () => {
-                if (!usernameInput) return;
-                const nameValue = usernameInput.value.trim();
-                if (nameValue !== '') { 
-                    myUsername = nameValue; 
-                    localStorage.setItem('chat_nickname', myUsername); 
-                    checkIdentityState(); 
-                }
-            });
-        }
-        if (usernameInput) { usernameInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') saveUsernameBtn.click(); }); }
-
-        // Fetch existing messages securely using built-in web browser tools
-        async function loadMessages() {
-            try {
-                // Fetch the latest 50 entries using standard query bounds
-                const response = await fetch(`${dbEndpoint}?orderBy="$key"&limitToLast=50`);
-                if (!response.ok) throw new Error("Server communication fault");
-                
-                const data = await response.json();
-                const connAlert = document.getElementById('connection-alert');
-                if (connAlert) connAlert.style.display = 'none';
-
-                if (data) {
-                    // Render messages stored on the server sequentially
-                    Object.keys(data).forEach(key => {
-                        renderMessageBubble({ ...data[key], uniqueId: key });
-                    });
-                }
-            } catch (err) {
-                console.error("Fetch fault:", err);
-                const connAlert = document.getElementById('connection-alert');
-                if (connAlert) connAlert.innerHTML = '<span class="sys-tag" style="color:#ef4444;">Sync Connection Fault. Check Firebase Rules!</span>';
-            }
-        }
-
-        // Handle sending outbound chat messages globally
-        async function processOutboundMessage() {
-            const text = chatInput.value.trim();
-            if (!myUsername) {
-                alert("Please enter a nickname above and join the chat room first!");
-                return;
-            }
-            if (text !== '') {
-                const now = new Date();
-                const payload = {
-                    username: myUsername,
-                    message: text,
-                    time: now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-                    timestamp: Date.now()
-                };
-
-                try {
-                    // Send to your cloud database instantly
-                    const response = await fetch(dbEndpoint, {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json' },
-                        body: JSON.stringify(payload)
-                    });
-                    if (response.ok) {
-                        chatInput.value = '';
-                        loadMessages(); // Refresh chat area view to instantly reflect change
-                    }
-                } catch (err) {
-                    console.error("Transmission breakdown:", err);
-                }
-            }
-        }
-
-        if (sendBtn) sendBtn.addEventListener('click', processOutboundMessage);
-        if (chatInput) chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') processOutboundMessage(); });
-
-        function renderMessageBubble(data) {
-            const uniqueNodeId = `msg-${data.uniqueId}`;
-            if (document.getElementById(uniqueNodeId)) return;
-            const msgDiv = document.createElement('div'); msgDiv.id = uniqueNodeId;
-            
-            if (data.username === myUsername) {
-                msgDiv.className = 'msg self';
-                msgDiv.innerHTML = `<div class="msg-meta"><span class="time">${data.time}</span><span class="user-right">You</span></div><div class="bubble">${escapeHtml(data.message)}</div>`;
-            } else {
-                msgDiv.className = 'msg';
-                msgDiv.innerHTML = `<div class="msg-meta"><span class="user-left">${escapeHtml(data.username)}</span><span class="time">${data.time}</span></div><div class="bubble">${escapeHtml(data.message)}</div>`;
-            }
-            chatStream.appendChild(msgDiv); chatStream.scrollTop = chatStream.scrollHeight;
-        }
-
-        function escapeHtml(string) { return String(string).replace(/[&<>"']/g, s => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[s])); }
-        
-        checkIdentityState();
-        loadMessages();
-        
-        // Polling engine checks your server every 3 seconds to pull down messages sent from other countries
-        setInterval(loadMessages, 3000);
     </script>
 </body>
 </html>
