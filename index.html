@@ -4,18 +4,28 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>8brcam | Yahoo Pool Competition</title>
+    <!-- Google Fonts import for Orbitron -->
+    <link rel="preconnect" href="https://googleapis.com">
+    <link rel="preconnect" href="https://gstatic.com" crossorigin>
+    <link href="https://googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    
     <style>
-        /* --- Base Layout --- */
+        /* --- Base Layout with Custom Dot Background --- */
         html, body {
             background-color: #000000 !important;
-            color: #f3f4f6 !important;
-            font-family: ui-sans-serif, system-ui, sans-serif;
+            color: #ffffff !important; 
+            font-family: 'Orbitron', -apple-system, sans-serif; 
             margin: 0;
             padding: 0;
             min-height: 100vh;
             display: flex;
             flex-direction: column;
             justify-content: space-between;
+            box-sizing: border-box;
+            
+            /* Your custom matrix-dot background pattern */
+            background-image: radial-gradient(#1f2430 1px, transparent 0);
+            background-size: 16px 16px;
         }
 
         header {
@@ -35,7 +45,7 @@
         /* --- Flexible Adaptive Matrix Container --- */
         .layout-container {
             width: 100%;
-            max-width: 1300px;
+            max-width: 1300px; /* Kept slightly wider so Discord fits perfectly alongside the middle box */
             margin: 0 auto;
             padding: 1rem;
             display: flex;
@@ -78,8 +88,8 @@
             background-color: rgba(39, 39, 42, 0.5);
             border: 1px solid #27272a;
             border-radius: 0.5rem;
-            color: #f3f4f6;
-            font-size: 1.2rem;
+            color: #ffffff;
+            font-size: 1.2rem; /* Restored original button text scale */
             font-weight: 700;
             text-decoration: none;
             text-align: left;
@@ -132,14 +142,14 @@
                 width: 14rem;
             }
 
-            /* Balanced sizes: Middle box gets the majority share */
+            /* Balanced Layout: Middle box remains large and dynamic */
             .content-display-box {
                 width: 55%;
                 flex-grow: 0;
                 height: 550px;
             }
 
-            /* Discord box takes up the rest of the available row space */
+            /* Discord box has extra width to be easily readable */
             main {
                 width: 45%;
                 height: 550px;
