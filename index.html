@@ -1,213 +1,263 @@
-<!DOCTYPE html>
-<html lang="en">
+<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://w3.org">
+<html style="background-color: #000000 !important;" prefix="og: http://ogp.me article: http://ogp.me" itemscope itemtype="http://schema.org">
 <head>
-    <meta charset="UTF-8">
+    <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>8brcam | Yahoo Pool Competition</title>
-    <!-- Google Fonts import for Orbitron -->
+    <!-- Google Fonts import for Orbitron layout styling -->
     <link rel="preconnect" href="https://googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
     <link href="https://googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
-        /* --- Base Layout with Custom Dot Background --- */
-        html, body {
-            background-color: #000000 !important;
-            color: #ffffff !important; 
-            font-family: 'Orbitron', -apple-system, sans-serif; 
+        /* --- Base Layout & Your Custom Radial Mesh Background --- */
+        body {
             margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
-            box-sizing: border-box;
-            
-            /* Your custom matrix-dot background pattern */
-            background-image: radial-gradient(#1f2430 1px, transparent 0);
+            background-color: #000000 !important; 
+            color: #ffffff; 
+            padding: 15px; 
+            font-family: 'Orbitron', -apple-system, sans-serif; 
+            font-size: 11px; 
+            width: 100% !important; 
+            box-sizing: border-box; 
+            background-image: radial-gradient(#1f2430 1px, transparent 0); 
             background-size: 16px 16px;
         }
 
-        header {
+        /* --- Header Logo Configuration --- */
+        .main-top-header {
             width: 100%;
             padding: 2rem 0 1rem;
             display: flex;
             justify-content: center;
+            box-sizing: border-box;
         }
 
-        .header-logo {
+        .header-logo-graphic {
             max-width: 1170px;
             width: 90%;
             height: auto;
             object-fit: contain;
+            display: block;
         }
 
-        /* --- Flexible Adaptive Matrix Container --- */
-        .layout-container {
-            width: 100%;
-            max-width: 1300px; /* Kept slightly wider so Discord fits perfectly alongside the middle box */
-            margin: 0 auto;
-            padding: 1rem;
-            display: flex;
-            flex-direction: column;
-            gap: 1.25rem;
-            flex-grow: 1;
+        /* --- Master Restored 2014 Framework Wrapper (855px) --- */
+        .tournament-center-container {
+            width: 855px;
+            margin: 10px auto 30px auto;
+            background-color: rgb(17, 17, 17);
+            border-left: 20px solid black;
+            border-right: 20px solid black;
             box-sizing: border-box;
         }
 
-        /* --- Custom Sidebar Button Items --- */
-        nav {
+        /* --- Header Spacer Bar Section --- */
+        .banner-divider-bar {
             width: 100%;
-            flex-shrink: 0;
+            background-color: black;
+            padding: 10px 0px;
+            box-sizing: border-box;
         }
 
-        .nav-box {
-            background-color: #09090b;
-            border: 1px solid #27272a;
-            border-radius: 0.75rem;
-            padding: 1rem;
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
+        /* --- Three Column Core Grid Block --- */
+        .workspace-columns-row {
+            padding: 10px;
+            display: flow-root;
+            box-sizing: border-box;
         }
 
-        .nav-title {
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: #71717a;
-            font-weight: 700;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid #18181b;
-            margin-bottom: 0.5rem;
+        /* --- COLUMN 1: LEFT TOURNAMENT MENU BOX --- */
+        .left-menu-column {
+            width: 160px;
+            float: left;
         }
 
-        .nav-btn {
+        .nav-btn-link {
+            font-size: 16px;
+            color: rgb(255, 255, 255);
+            width: 160px;
+            background-color: rgb(29, 29, 29);
             display: block;
-            padding: 0.625rem 1rem;
-            background-color: rgba(39, 39, 42, 0.5);
-            border: 1px solid #27272a;
-            border-radius: 0.5rem;
-            color: #ffffff;
-            font-size: 1.2rem; /* Restored original button text scale */
-            font-weight: 700;
             text-decoration: none;
-            text-align: left;
-            cursor: pointer;
-            line-height: 1.4;
+            margin-bottom: 13px;
+            border: 3px solid rgb(0, 0, 0);
+            padding: 6px 0px;
+            text-align: center;
+            font-weight: 700;
+            box-sizing: border-box;
         }
 
-        .nav-btn:hover, .nav-btn.active {
+        .nav-btn-link:hover, .nav-btn-link.active {
             border-color: #2dd4bf !important;
             color: #2dd4bf !important;
-            background-color: #27272a !important;
+            background-color: rgb(40, 40, 40) !important;
         }
 
-        /* --- Central Dashboard iFrame Canvas --- */
-        .content-display-box {
-            width: 100%;
-            background-color: #09090b;
-            border: 1px solid #27272a;
-            border-radius: 1rem;
-            height: 450px;
-            overflow: hidden;
+        /* --- COLUMN 2: CENTER ACTION FORM/CONTENT DISPLAY BOX --- */
+        .center-display-column {
+            background-color: rgb(9, 9, 9);
+            width: 289px;
+            text-align: left;
+            margin-left: 11px;
+            float: left;
+            border: 4px solid black;
+            padding: 0px 10px 10px;
+            box-sizing: border-box;
         }
 
-        /* --- Right-Hand Sidebar Discord Container --- */
-        main {
-            width: 100%;
-            border: 1px solid #27272a;
-            background-color: #09090b;
-            border-radius: 1rem;
-            height: 550px;
-            overflow: hidden;
-        }
-
-        footer {
+        /* Updated to match Submit button color (#2dd4bf) */
+        .form-heading-main {
             text-align: center;
-            padding: 2rem 0;
-            font-size: 10px;
-            color: #52525b;
-            border-top: 1px solid #09090b;
-            margin-top: 3rem;
+            color: #2dd4bf;
+            font-size: 18px;
+            border-bottom: 1px solid rgb(51, 51, 51);
+            padding-bottom: 4px;
+            width: 100%;
+            margin-top: 10px;
+            margin-bottom: 10px;
         }
 
-        /* --- Desktop Rendering Grid Triggers --- */
-        @media (min-width: 1024px) {
-            .layout-container {
-                flex-direction: row;
-            }
+        .input-label-classic {
+            font-size: 13px;
+            color: rgb(204, 204, 204);
+            padding-top: 6px;
+            padding-bottom: 2px;
+            display: block;
+        }
 
-            nav {
-                width: 14rem;
-            }
+        .input-text-field-classic {
+            text-align: left;
+            background-color: rgb(34, 34, 34);
+            color: rgb(170, 170, 170);
+            font-size: 13px;
+            width: 100%;
+            height: 24px;
+            border: 1px solid rgb(120, 120, 120);
+            padding: 2px 4px;
+            box-sizing: border-box;
+            font-family: 'Orbitron', sans-serif;
+        }
 
-            /* Balanced Layout: Middle box remains large and dynamic */
-            .content-display-box {
-                width: 55%;
-                flex-grow: 0;
-                height: 550px;
-            }
-
-            /* Discord box has extra width to be easily readable */
-            main {
-                width: 45%;
-                height: 550px;
-            }
+        /* --- COLUMN 3: RIGHT PANEL ACCENTS --- */
+        .right-bulletin-column {
+            text-align: left;
+            background-color: rgb(9, 9, 9);
+            float: right;
+            width: 302px;
+            height: 263px;
+            border: 4px solid black;
+            padding: 0px 10px 10px;
+            box-sizing: border-box;
         }
     </style>
 </head>
 <body>
-    <header>
-        <img src="8brcamBanner1.jpg" alt="8brcam Tournament Banner Logo" class="header-logo" loading="lazy">
-    </header>
 
-    <div class="layout-container">
-        <!-- Left Sidebar Navigation Layout -->
-        <nav>
-            <div class="nav-box">
-                <div class="nav-title">Tournament Menu</div>
-                <a href="./Rules/" target="content-frame" class="nav-btn active" onclick="switchTab(this)">Rules</a>
-                <a href="./Groups/" target="content-frame" class="nav-btn" onclick="switchTab(this)">Groups</a>
-                <a href="./Playoffs/" target="content-frame" class="nav-btn" onclick="switchTab(this)">Playoffs</a>
-                <a href="./Archives/" target="content-frame" class="nav-btn" onclick="switchTab(this)">Archives</a>
-                <a href="./Application/" target="content-frame" class="nav-btn" onclick="switchTab(this)">Application</a>
-                <a href="./Videos/" target="content-frame" class="nav-btn" onclick="switchTab(this)">Videos</a>
-                <a href="./Forum/" target="content-frame" class="nav-btn" onclick="switchTab(this)">Forum</a>
-                <a href="./Chat/" target="content-frame" class="nav-btn" onclick="switchTab(this)">Chat</a>
+    <center>
+        <!-- TOP BANNER GRAPHICS CONTAINER -->
+        <header class="main-top-header">
+            <img src="8brcamBanner1.jpg" alt="8brcam Tournament Banner Logo" class="header-logo-graphic" loading="lazy">
+        </header>
+
+        <!-- Master Restored Framework Wrapper -->
+        <div class="tournament-center-container">
+            
+            <div class="banner-divider-bar"></div>
+
+            <div class="workspace-columns-row">
+                
+                <!-- COLUMN 1: LEFT NAVIGATION MENU LINKS -->
+                <div class="left-menu-column">
+                    <a href="./Rules/" target="content-frame" class="nav-btn-link active">Rules</a>
+                    <a href="./Groups/" target="content-frame" class="nav-btn-link">Groups</a>
+                    <a href="./Playoffs/" target="content-frame" class="nav-btn-link">Playoffs</a>
+                    <a href="./Archives/" target="content-frame" class="nav-btn-link">Archives</a>
+                    <a href="./Application/" target="content-frame" class="nav-btn-link">Application</a>
+                    <a href="./Videos/" target="content-frame" class="nav-btn-link">Videos</a>
+                    <a href="./Forum/" target="content-frame" class="nav-btn-link">Forum</a>
+                </div>
+                
+                <!-- COLUMN 2: CENTER MATCH REPORT SUBMISSION BOX -->
+                <div class="center-display-column">
+                    <h2 class="form-heading-main">Set Report Form</h2>
+                    <form action="#" method="post" enctype="multipart/form-data">
+                        <div>
+                            <label class="input-label-classic">Winner vs Loser with Score *</label>
+                            <input name="element_0" class="input-text-field-classic" type="text" value=""/>
+                        </div>
+                        <div>
+                            <label class="input-label-classic">Group *</label>
+                            <input name="element_1" class="input-text-field-classic" type="text" value=""/>
+                        </div>
+                        <div>
+                            <label class="input-label-classic">Video Download Link *</label>
+                            <input name="element_2" class="input-text-field-classic" type="text" value=""/>
+                        </div>
+                        <div>
+                            <label class="input-label-classic">Message</label>
+                            <textarea rows="5" name="element_3" style="text-align:left; background-color: rgb(34, 34, 34); color:rgb(170, 170, 170); font-size:13px; width:100%; height:78px; border: 1px solid rgb(120, 120, 120); padding: 2px 4px; box-sizing: border-box; font-family: inherit; resize: none;"></textarea>
+                        </div>
+                        <div style="margin-top:10px; display: flow-root;">
+                            <input type="hidden" name="element_counts" value="4"/>
+                            <input type="hidden" name="embed" value="forms"/>
+                            <input type="submit" value="SUBMIT" style="width: 100%; height: 35px; background-color: #27272a; color: #2dd4bf; border: 1px solid #2dd4bf; cursor: pointer; font-family: inherit; font-weight: bold;"/>
+                        </div>
+                    </form>
+                </div>
+
+                <!-- COLUMN 3: RIGHT ANNOUNCEMENTS COMPONENT BOX -->
+                <div class="right-bulletin-column">
+                    <h2 class="form-heading-main">Announcements</h2>
+                </div>
+
             </div>
-        </nav>
+            <!-- FLOATING ROW STRUCTURE CLEARANCE AXIS -->
+            <div style="clear:both;"></div>
 
-        <!-- Center Content Window -->
-        <div class="content-display-box">
-            <iframe name="content-frame" id="content-frame" src="./Rules/" style="width: 100%; height: 100%; border: none; background: transparent;"></iframe>
-        </div>
+            <!-- ROW 2: RECAP, FULL WIDGETBOT DISCORD PANEL, AND LEADERBOARDS -->
+            <div style="padding: 10px; display: flow-root; text-align: left;">
+                
+                <!-- PIECE 1: PLAYERS RECAP CANVAS BOX (220px Width - Cyan Header & Winner Tag Restored) -->
+                <div style="background-color: rgb(9, 9, 9); float:left; width:220px; height:424px; text-align:left; line-height:16px; border: 4px solid black; padding: 10px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
+                    <div>
+                        <!-- Updated to match Submit button color (#2dd4bf) -->
+                        <h2 class="form-heading-main" style="font-size: 16px; margin-top:0;">Previous Season Recap</h2>
+                        
+                        <div style="width:100%; height:320px; overflow:auto; background-color: rgb(17, 17, 17); border: 2px solid black; padding: 5px; box-sizing: border-box;">
+                            <!-- Drop your future player list links or text elements directly right here -->
+                        </div>
+                    </div>
+                    <!-- Updated Winner Component Label to Cyan -->
+                    <div style="padding-top: 8px; border-top: 1px solid rgb(17, 17, 17);">
+                        <span style="font-size: 11px; color: #2dd4bf;">Winner:</span> <b style="color: rgb(153,153,153); font-size:11px;"></b>
+                    </div>
+                </div>
 
-        <!-- Right Side Live Discord Chat Frame -->
-        <main>
-            <!-- PUT YOUR NUMBERS IN THE SRC LINK BELOW -->
-            <iframe src="https://e.widgetbot.io/channels/1536340335666528349/1536340336249405452" style="width: 100%; height: 100%; border: none;"></iframe>
-        </main>
-    </div>
+                <!-- PIECE 2: FULL-FIT WIDGETBOT DISCORD PANEL WINDOW (327px Width) -->
+                <div style="background-color: rgb(9, 9, 9); float:left; margin-left:11px; width:327px; height:424px; border: 4px solid black; padding: 0px; box-sizing: border-box; overflow: hidden;">
+                    <iframe src="https://e.widgetbot.io/channels/1536340335666528349/1536340336249405452" style="width: 100%; height: 100%; border: none; display: block; background: transparent;"></iframe>
+                </div>
 
-    <footer>
-        &copy; 2026 8brcam Yahoo Pool Competition. All Rights Reserved.
-    </footer>
+                <!-- PIECE 3: TOP 10 ALL TIME LEADERBOARD CONTAINER BOX (Strict 182px Width - Cyan Header Restored) -->
+                <div style="text-align:left; background-color: rgb(9, 9, 9); float:right; width:182px; height:260px; border: 4px solid black; padding: 0px 10px 10px; box-sizing: border-box;">
+                    <!-- Updated to match Submit button color (#2dd4bf) -->
+                    <h2 class="form-heading-main" style="font-size: 16px;">Top 10 All Time</h2>
+                    <ol style="color:rgb(170, 170, 170); text-align:left; font-size:11px; padding-left:22px; margin: 0px; white-space: nowrap; overflow: hidden;">
+                        <!-- Drop your future top 10 leaderboard entries directly right here -->
+                    </ol>
+                </div>
 
-    <!-- Mobile Screen Auto-Scroll Adjustment Script -->
-    <script>
-        function switchTab(element) {
-            const buttons = document.querySelectorAll('.nav-btn');
-            buttons.forEach(btn => btn.classList.remove('active'));
-            element.classList.add('active');
+                <!-- PIECE 4: BOTTOM RIGHT UTILITY CANVAS BOX (182px Width aligned layout - Now Empty) -->
+                <div style="background-color: rgb(9, 9, 9); float:right; width:182px; height:135px; text-align:center; font-size:12px; border: 4px solid black; padding: 10px; margin-top:15px; box-sizing: border-box;">
+                    <!-- Drop your future bottom-right banner links or graphics widgets directly right here -->
+                </div>
 
-            if (window.innerWidth < 1024) {
-                const contentBox = document.querySelector('.content-display-box');
-                if (contentBox) {
-                    contentBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
-                }
-            }
-        }
-    </script>
+            </div> <!-- Closes content row 2 -->
+
+            <!-- FLOATING ROW STRUCTURE CLEANUP AXIS -->
+            <div style="clear:both;"></div>
+        </div> <!-- Closes master tournament-center-container -->
+    </center>
+
 </body>
 </html>
