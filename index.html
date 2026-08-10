@@ -1,9 +1,9 @@
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://w3.org">
-<html style="background-color: #000000 !important;" prefix="og: http://ogp.me article: http://ogp.me" itemscope itemtype="http://schema.org">
+<html style="background-color: #000000 !important;">
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-    <!-- FORCES MOBILE TO ZOOM OUT AND RENDER EXACTLY LIKE A PC MONITOR -->
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.1"/>
+    <!-- FORCES PHONES TO ZOOM OUT SO THE LAYOUT LOOKS FLUID AND IDENTICAL TO A PC -->
+    <meta name="viewport" content="width=1024, initial-scale=0.3, minimum-scale=0.1, user-scalable=yes"/>
     <title>8brcam | Yahoo Pool Competition</title>
     <!-- Google Fonts import for Orbitron layout styling -->
     <link rel="preconnect" href="https://googleapis.com">
@@ -16,7 +16,7 @@
             margin: 0;
             background-color: #000000 !important; 
             color: #ffffff; 
-            padding: 15px; 
+            padding: 20px 0; 
             font-family: 'Orbitron', -apple-system, sans-serif; 
             font-size: 11px; 
             width: 100% !important; 
@@ -25,36 +25,42 @@
             background-size: 16px 16px;
         }
 
-        /* --- Locked PC Sizing Header Logo Configuration with Cyan Neon Glow --- */
+        /* --- Centered Master Grid Layout Wrapper --- */
+        .master-layout-alignment-block {
+            width: 855px;
+            margin: 0 auto;
+            display: block;
+            box-sizing: border-box;
+        }
+
+        /* --- Header Logo Configuration with Cyan Neon Glow --- */
         .main-top-header {
             width: 100%;
-            padding: 25px 0 15px 0;
-            display: flex;
-            justify-content: center;
+            margin-bottom: 20px;
             box-sizing: border-box;
         }
 
         .header-logo-graphic {
             width: 100%;
-            max-width: 855px; /* Locked to perfectly match your website frame on all devices */
             height: auto;
             object-fit: contain;
             display: block;
-            box-sizing: border-box;
             border-radius: 4px;
             box-shadow: 0 0 10px rgba(45, 212, 191, 0.4), 
                         0 0 20px rgba(45, 212, 191, 0.2), 
                         0 0 30px rgba(45, 212, 191, 0.1);
         }
 
-        /* --- Master Restored 2014 Framework Wrapper (Strict 855px) --- */
+        /* --- Master Restored 2014 Framework Wrapper with Cyan Neon Border Glow --- */
         .tournament-center-container {
-            width: 855px; /* Locked to strict PC width to stop boxes shifting on phones */
-            margin: 0 auto 30px auto;
+            width: 100%;
             background-color: rgb(17, 17, 17);
             border-left: 20px solid black;
             border-right: 20px solid black;
+            border-radius: 8px;
             box-sizing: border-box;
+            box-shadow: 0 0 15px rgba(45, 212, 191, 0.3), 
+                        0 0 25px rgba(45, 212, 191, 0.15);
         }
 
         /* --- Header Spacer Bar Section --- */
@@ -156,7 +162,6 @@
             box-sizing: border-box;
         }
 
-        /* Style for the internal announcements text container */
         .announcements-text-area {
             width: 100%;
             height: 200px;
@@ -171,7 +176,8 @@
 </head>
 <body>
 
-    <center>
+    <div class="master-layout-alignment-block">
+        
         <!-- HEADER CONTAINER WITH NEON GLOW -->
         <header class="main-top-header">
             <img src="8brcamBanner1.jpg" alt="8brcam Tournament Banner Logo" class="header-logo-graphic" loading="lazy">
@@ -179,12 +185,10 @@
 
         <!-- Master Framework Wrapper -->
         <div class="tournament-center-container">
-            
             <div class="banner-divider-bar"></div>
-
             <div class="workspace-columns-row">
                 
-                <!-- COLUMN 1: NAVIGATION MENU LINKS WITH IFRAME ROUTING ENGINES -->
+                <!-- COLUMN 1: NAVIGATION MENU LINKS -->
                 <div class="left-menu-column">
                     <a href="./Rules/" target="content-frame" class="nav-btn-link active" onclick="switchTab(this)">Rules</a>
                     <a href="./Groups/" target="content-frame" class="nav-btn-link" onclick="switchTab(this)">Groups</a>
@@ -223,11 +227,10 @@
                     </form>
                 </div>
 
-                <!-- COLUMN 3: RIGHT ANNOUNCEMENTS COMPONENT BOX (Add your text below) -->
+                <!-- COLUMN 3: RIGHT ANNOUNCEMENTS COMPONENT BOX -->
                 <div class="right-bulletin-column">
                     <h2 class="form-heading-main">Announcements</h2>
                     <div class="announcements-text-area">
-                        <!-- TYPE OR PASTE YOUR TOURNAMENT TEXT DIRECTLY IN HERE -->
                         Welcome to the arena. Type your announcements here.
                     </div>
                 </div>
@@ -275,7 +278,7 @@
             <!-- FLOATING ROW STRUCTURE CLEANUP AXIS -->
             <div style="clear:both;"></div>
         </div> <!-- Closes master tournament-center-container -->
-    </center>
+    </div> <!-- Closes master-layout-alignment-block -->
 
     <!-- Navigation Active Tab Script Indicator -->
     <script>
