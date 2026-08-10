@@ -115,20 +115,19 @@
         <!-- Right Side Live Chat Frame -->
         <main>
             <div class="chat-header">
-                <div class="live-indicator"><span class="dot"></span><h2 class="chat-title">Live Chat</h2></div>
+                <div class="live-indicator"><span class="dot"></span><h2 class="chat-title">Global Chat</h2></div>
                 <span class="lobby-tag">LOBBY #01</span>
             </div>
             <div id="username-panel">
-                <p style="margin: 0; font-size: 0.875rem; color: #a1a1aa; font-weight: 700;">Set player name to chat:</p>
+                <p style="margin: 0; font-size: 0.875rem; color: #a1a1aa; font-weight: 700;">Set player name to chat globally:</p>
                 <div style="display: flex; gap: 0.5rem;">
                     <input type="text" id="username-input" placeholder="Enter nickname..." />
                     <button type="button" id="save-username-btn">Join</button>
                 </div>
             </div>
             
-            <!-- FIXED: This is now the ONLY chat stream box, perfectly linked to your sidebar design -->
             <div class="chat-stream" id="chat-stream">
-                <div class="sys-alert" id="connection-alert"><span class="sys-tag">Connecting to servers...</span></div>
+                <div class="sys-alert" id="connection-alert"><span class="sys-tag">Connecting to global tournament servers...</span></div>
             </div>
             
             <div class="chat-input-area">
@@ -161,11 +160,12 @@
         }
     </script>
 
-    <!-- Firebase Modular Database Script -->
+    <!-- Global Firebase Real-Time Connection Engine -->
     <script type="module">
         import { initializeApp } from "https://gstatic.com";
         import { getDatabase, ref, push, limitToLast, query, onChildAdded, serverTimestamp } from "https://gstatic.com";
 
+        // Global server routing setup parameters
         const firebaseConfig = {
             apiKey: "AIzaSyBROwwCrWBPx-1WmDuZROeG6sDmpfn44CE",
             authDomain: "://firebaseapp.com",
@@ -193,7 +193,7 @@
                         localStorage.removeItem('chat_nickname'); window.location.reload();
                     });
                 }
-                if (chatInput) { chatInput.disabled = false; chatInput.placeholder = "Type a message..."; chatInput.style.opacity = "1"; }
+                if (chatInput) { chatInput.disabled = false; chatInput.placeholder = "Type a global message..."; chatInput.style.opacity = "1"; }
                 if (sendBtn) { sendBtn.disabled = false; sendBtn.style.opacity = "1"; }
                 initPermanentFirebaseChat();
             } else {
@@ -214,14 +214,20 @@
             try {
                 const app = initializeApp(firebaseConfig);
                 const db = getDatabase(app);
-                chatRoomRef = ref(db, "chats/8brcam_yahoo_pool_lobby_2026");
+                // Connected straight to the global live cloud database node paths
+                chatRoomRef = ref(db, "global_arenas/8brcam_lobby_2026");
                 const connAlert = document.getElementById('connection-alert');
                 if (connAlert) connAlert.innerHTML = '';
 
+                // Listens live across the web to grab messages sent by anyone else instantly
                 onChildAdded(query(chatRoomRef, limitToLast(50)), (snapshot) => {
                     renderMessageBubble({ ...snapshot.val(), uniqueId: snapshot.key });
                 });
-            } catch (err) { console.error(err); }
+            } catch (err) { 
+                console.error(err); 
+                const connAlert = document.getElementById('connection-alert');
+                if (connAlert) connAlert.innerHTML = '<span class="sys-tag" style="color:#ef4444;">Server Offline: Check Firebase Rules Settings</span>';
+            }
         }
 
         function processOutboundMessage() {
@@ -260,4 +266,5 @@
     </script>
 </body>
 </html>
+
 
