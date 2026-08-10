@@ -2,7 +2,8 @@
 <html style="background-color: #000000 !important;" prefix="og: http://ogp.me article: http://ogp.me" itemscope itemtype="http://schema.org">
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- FORCES MOBILE TO ZOOM OUT AND RENDER EXACTLY LIKE A PC MONITOR -->
+    <meta name="viewport" content="width=1024, initial-scale=0.3, minimum-scale=0.1"/>
     <title>8brcam | Yahoo Pool Competition</title>
     <!-- Google Fonts import for Orbitron layout styling -->
     <link rel="preconnect" href="https://googleapis.com">
@@ -24,7 +25,7 @@
             background-size: 16px 16px;
         }
 
-        /* --- Optimized Responsive Fluid Header Logo Configuration --- */
+        /* --- Locked PC Sizing Header Logo Configuration --- */
         .main-top-header {
             width: 100%;
             padding: 15px 0;
@@ -35,18 +36,16 @@
 
         .header-logo-graphic {
             width: 100%;
-            max-width: 855px; /* Locks it to perfectly match your website frame on PC */
+            max-width: 855px; /* Locked to perfectly match your website frame on all devices */
             height: auto;
             object-fit: contain;
             display: block;
             box-sizing: border-box;
-            padding: 0 20px; /* Gives it safe padding on mobile so it doesn't touch the screen edges */
         }
 
-        /* --- Master Restored 2014 Framework Wrapper (855px) --- */
+        /* --- Master Restored 2014 Framework Wrapper (Strict 855px) --- */
         .tournament-center-container {
-            width: 100%;
-            max-width: 855px; /* Makes the box fluid on mobile instead of breaking the screen */
+            width: 855px; /* Locked to strict PC width to stop boxes shifting on phones */
             margin: 0 auto 30px auto;
             background-color: rgb(17, 17, 17);
             border-left: 20px solid black;
@@ -156,7 +155,7 @@
 <body>
 
     <center>
-        <!-- RESPONSIVE HEADER CONTAINER -->
+        <!-- HEADER CONTAINER -->
         <header class="main-top-header">
             <img src="8brcamBanner1.jpg" alt="8brcam Tournament Banner Logo" class="header-logo-graphic" loading="lazy">
         </header>
@@ -219,37 +218,33 @@
             <!-- ROW 2: RECAP, FULL WIDGETBOT DISCORD PANEL, AND LEADERBOARDS -->
             <div style="padding: 10px; display: flow-root; text-align: left;">
                 
-                <!-- PIECE 1: PLAYERS RECAP CANVAS BOX (220px Width - Cyan Header & Winner Tag Restored) -->
+                <!-- PIECE 1: PLAYERS RECAP CANVAS BOX (Strict 220px Width) -->
                 <div style="background-color: rgb(9, 9, 9); float:left; width:220px; height:424px; text-align:left; line-height:16px; border: 4px solid black; padding: 10px; box-sizing: border-box; display: flex; flex-direction: column; justify-content: space-between;">
                     <div>
-                        <!-- Cyan-styled Season Recap Header Title -->
                         <h2 class="form-heading-main" style="font-size: 16px; margin-top:0;">Previous Season Recap</h2>
-                        
                         <div style="width:100%; height:320px; overflow:auto; background-color: rgb(17, 17, 17); border: 2px solid black; padding: 5px; box-sizing: border-box;">
                             <!-- Drop your future player list links or text elements directly right here -->
                         </div>
                     </div>
-                    <!-- Cyan Winner Component Label -->
                     <div style="padding-top: 8px; border-top: 1px solid rgb(17, 17, 17);">
                         <span style="font-size: 11px; color: #2dd4bf;">Winner:</span> <b style="color: rgb(153,153,153); font-size:11px;"></b>
                     </div>
                 </div>
 
-                <!-- PIECE 2: FULL-FIT WIDGETBOT DISCORD PANEL WINDOW (327px Width) -->
+                <!-- PIECE 2: FULL-FIT WIDGETBOT DISCORD PANEL WINDOW (Strict 327px Width) -->
                 <div style="background-color: rgb(9, 9, 9); float:left; margin-left:11px; width:327px; height:424px; border: 4px solid black; padding: 0px; box-sizing: border-box; overflow: hidden;">
                     <iframe src="https://e.widgetbot.io/channels/1536340335666528349/1536340336249405452" style="width: 100%; height: 100%; border: none; display: block; background: transparent;"></iframe>
                 </div>
 
-                <!-- PIECE 3: TOP 10 ALL TIME LEADERBOARD CONTAINER BOX (Strict 182px Width - Cyan Header) -->
+                <!-- PIECE 3: TOP 10 ALL TIME LEADERBOARD CONTAINER BOX (Strict 182px Width) -->
                 <div style="text-align:left; background-color: rgb(9, 9, 9); float:right; width:182px; height:260px; border: 4px solid black; padding: 0px 10px 10px; box-sizing: border-box;">
-                    <!-- Cyan-styled Top 10 Title -->
                     <h2 class="form-heading-main" style="font-size: 16px;">Top 10 All Time</h2>
                     <ol style="color:rgb(170, 170, 170); text-align:left; font-size:11px; padding-left:22px; margin: 0px; white-space: nowrap; overflow: hidden;">
                         <!-- Drop your future top 10 leaderboard entries directly right here -->
                     </ol>
                 </div>
 
-                <!-- PIECE 4: BOTTOM RIGHT UTILITY CANVAS BOX (182px Width aligned layout - Now Empty) -->
+                <!-- PIECE 4: BOTTOM RIGHT UTILITY CANVAS BOX (Strict 182px Width) -->
                 <div style="background-color: rgb(9, 9, 9); float:right; width:182px; height:135px; text-align:center; font-size:12px; border: 4px solid black; padding: 10px; margin-top:15px; box-sizing: border-box;">
                     <!-- Drop your future bottom-right banner links or graphics widgets directly right here -->
                 </div>
