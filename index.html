@@ -5,9 +5,9 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>8brcam | Yahoo Pool Competition</title>
     
-    <!-- Stable global network scripts loaded to prevent background module freezing -->
-    <script src="https://gstatic.com"></script>
-    <script src="https://gstatic.com"></script>
+    <!-- ⚡ NEUTRAL DELIVERY ROUTE: Replaced blocked gstatic links with Cloudflare cdnjs links -->
+    <script src="https://cloudflare.com"></script>
+    <script src="https://cloudflare.com"></script>
 
     <style>
         /* --- Base Layout --- */
@@ -21,13 +21,13 @@
         header { width: 100%; padding: 2rem 0 1rem; display: flex; justify-content: center; }
         .header-logo { max-width: 1170px; width: 90%; height: auto; object-fit: contain; }
 
-        /* --- Flexible Adaptive Container Grid --- */
+        /* --- Flexible Adaptive Matrix Container --- */
         .layout-container {
             width: 100%; max-width: 1200px; margin: 0 auto; padding: 1rem;
             display: flex; flex-direction: column; gap: 1.25rem; flex-grow: 1; box-sizing: border-box;
         }
 
-        /* --- Navigation Sidebar Components --- */
+        /* --- Custom Sidebar Button Items --- */
         nav { width: 100%; flex-shrink: 0; }
         .nav-box {
             background-color: #09090b; border: 1px solid #27272a; border-radius: 0.75rem;
@@ -44,7 +44,7 @@
         }
         .nav-btn:hover, .nav-btn.active { border-color: #2dd4bf !important; color: #2dd4bf !important; background-color: #27272a !important; }
 
-        /* --- Central Dashboard iFrame Canvas Frame --- */
+        /* --- Central Dashboard iFrame Canvas --- */
         .content-display-box { width: 100%; background-color: #09090b; border: 1px solid #27272a; border-radius: 1rem; height: 450px; overflow: hidden; }
 
         /* --- Right-Hand Sidebar Chat Panel Layout --- */
@@ -95,7 +95,7 @@
     </header>
 
     <div class="layout-container">
-        <!-- Sidebar Navigation Buttons Matrix -->
+        <!-- Left Sidebar Navigation Layout -->
         <nav>
             <div class="nav-box">
                 <div class="nav-title">Tournament Menu</div>
@@ -121,7 +121,6 @@
                 <span class="lobby-tag">LOBBY #01</span>
             </div>
             
-            <!-- Nickname input fields are ALWAYS open, visible, and functional from the start -->
             <div id="username-panel">
                 <p style="margin: 0; font-size: 0.875rem; color: #a1a1aa; font-weight: 700;">Set player name to chat globally:</p>
                 <div style="display: flex; gap: 0.5rem;">
@@ -164,7 +163,7 @@
         }
     </script>
 
-    <!-- Global Firebase Connection Engine (No-Lockout Production Build) -->
+    <!-- Global Firebase Connection Engine (Production Build) -->
     <script>
         const firebaseConfig = {
             apiKey: "AIzaSyBROwwCrWBPx-1WmDuZROeG6sDmpfn44CE",
@@ -228,12 +227,13 @@
                         renderMessageBubble({ ...snapshot.val(), uniqueId: snapshot.key });
                     });
                 } else {
+                    // Fail-safe fall-back strategy if scripts take an extra moment to load
                     const connAlert = document.getElementById('connection-alert');
-                    if (connAlert) connAlert.innerHTML = '<span class="sys-tag" style="color:#eab308;">Waiting for network scripts...</span>';
-                    setTimeout(startFirebase, 1000); // Retry silently in the background
+                    if (connAlert) connAlert.innerHTML = '<span class="sys-tag" style="color:#eab308;">Awaiting trusted cdnjs framework...</span>';
+                    setTimeout(startFirebase, 500); 
                 }
             } catch (err) {
-                console.error("Database fault:", err);
+                console.error("Database connection fault:", err);
             }
         }
 
@@ -279,6 +279,7 @@
     </script>
 </body>
 </html>
+
 
 
 
