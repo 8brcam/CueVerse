@@ -3,7 +3,7 @@
 <head>
     <meta http-equiv="Content-Type" content="text/html;charset=utf-8"/>
     <!-- FORCES MOBILE TO ZOOM OUT AND RENDER EXACTLY LIKE A PC MONITOR -->
-    <meta name="viewport" content="width=1024, initial-scale=0.3, minimum-scale=0.1"/>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, minimum-scale=0.1"/>
     <title>8brcam | Yahoo Pool Competition</title>
     <!-- Google Fonts import for Orbitron layout styling -->
     <link rel="preconnect" href="https://googleapis.com">
@@ -25,10 +25,10 @@
             background-size: 16px 16px;
         }
 
-        /* --- Locked PC Sizing Header Logo Configuration --- */
+        /* --- Locked PC Sizing Header Logo Configuration with Cyan Neon Glow --- */
         .main-top-header {
             width: 100%;
-            padding: 15px 0;
+            padding: 25px 0 15px 0;
             display: flex;
             justify-content: center;
             box-sizing: border-box;
@@ -41,6 +41,10 @@
             object-fit: contain;
             display: block;
             box-sizing: border-box;
+            border-radius: 4px;
+            box-shadow: 0 0 10px rgba(45, 212, 191, 0.4), 
+                        0 0 20px rgba(45, 212, 191, 0.2), 
+                        0 0 30px rgba(45, 212, 191, 0.1);
         }
 
         /* --- Master Restored 2014 Framework Wrapper (Strict 855px) --- */
@@ -87,6 +91,7 @@
             text-align: center;
             font-weight: 700;
             box-sizing: border-box;
+            cursor: pointer;
         }
 
         .nav-btn-link:hover, .nav-btn-link.active {
@@ -95,7 +100,7 @@
             background-color: rgb(40, 40, 40) !important;
         }
 
-        /* --- COLUMN 2: CENTER ACTION FORM/CONTENT DISPLAY BOX --- */
+        /* --- COLUMN 2: CENTER MATCH REPORT SUBMISSION BOX --- */
         .center-display-column {
             background-color: rgb(9, 9, 9);
             width: 289px;
@@ -150,12 +155,24 @@
             padding: 0px 10px 10px;
             box-sizing: border-box;
         }
+
+        /* Style for the internal announcements text container */
+        .announcements-text-area {
+            width: 100%;
+            height: 200px;
+            overflow-y: auto;
+            color: rgb(170, 170, 170);
+            font-size: 12px;
+            line-height: 1.6;
+            box-sizing: border-box;
+            padding: 5px;
+        }
     </style>
 </head>
 <body>
 
     <center>
-        <!-- HEADER CONTAINER -->
+        <!-- HEADER CONTAINER WITH NEON GLOW -->
         <header class="main-top-header">
             <img src="8brcamBanner1.jpg" alt="8brcam Tournament Banner Logo" class="header-logo-graphic" loading="lazy">
         </header>
@@ -167,15 +184,15 @@
 
             <div class="workspace-columns-row">
                 
-                <!-- COLUMN 1: LEFT NAVIGATION MENU LINKS -->
+                <!-- COLUMN 1: NAVIGATION MENU LINKS WITH IFRAME ROUTING ENGINES -->
                 <div class="left-menu-column">
-                    <a href="./Rules/" target="content-frame" class="nav-btn-link active">Rules</a>
-                    <a href="./Groups/" target="content-frame" class="nav-btn-link">Groups</a>
-                    <a href="./Playoffs/" target="content-frame" class="nav-btn-link">Playoffs</a>
-                    <a href="./Archives/" target="content-frame" class="nav-btn-link">Archives</a>
-                    <a href="./Application/" target="content-frame" class="nav-btn-link">Application</a>
-                    <a href="./Videos/" target="content-frame" class="nav-btn-link">Videos</a>
-                    <a href="./Forum/" target="content-frame" class="nav-btn-link">Forum</a>
+                    <a href="./Rules/" target="content-frame" class="nav-btn-link active" onclick="switchTab(this)">Rules</a>
+                    <a href="./Groups/" target="content-frame" class="nav-btn-link" onclick="switchTab(this)">Groups</a>
+                    <a href="./Playoffs/" target="content-frame" class="nav-btn-link" onclick="switchTab(this)">Playoffs</a>
+                    <a href="./Archives/" target="content-frame" class="nav-btn-link" onclick="switchTab(this)">Archives</a>
+                    <a href="./Application/" target="content-frame" class="nav-btn-link" onclick="switchTab(this)">Application</a>
+                    <a href="./Videos/" target="content-frame" class="nav-btn-link" onclick="switchTab(this)">Videos</a>
+                    <a href="./Forum/" target="content-frame" class="nav-btn-link" onclick="switchTab(this)">Forum</a>
                 </div>
                 
                 <!-- COLUMN 2: CENTER MATCH REPORT SUBMISSION BOX -->
@@ -206,12 +223,16 @@
                     </form>
                 </div>
 
-                <!-- COLUMN 3: RIGHT ANNOUNCEMENTS COMPONENT BOX -->
+                <!-- COLUMN 3: RIGHT ANNOUNCEMENTS COMPONENT BOX (Add your text below) -->
                 <div class="right-bulletin-column">
                     <h2 class="form-heading-main">Announcements</h2>
+                    <div class="announcements-text-area">
+                        <!-- TYPE OR PASTE YOUR TOURNAMENT TEXT DIRECTLY IN HERE -->
+                        Welcome to the arena. Type your announcements here.
+                    </div>
                 </div>
 
-            </div>
+            </div> <!-- Closes workspace-columns-row -->
             <!-- FLOATING ROW STRUCTURE CLEARANCE AXIS -->
             <div style="clear:both;"></div>
 
@@ -256,5 +277,13 @@
         </div> <!-- Closes master tournament-center-container -->
     </center>
 
+    <!-- Navigation Active Tab Script Indicator -->
+    <script>
+        function switchTab(element) {
+            const buttons = document.querySelectorAll('.nav-btn-link');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            element.classList.add('active');
+        }
+    </script>
 </body>
 </html>
