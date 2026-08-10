@@ -17,21 +17,18 @@
             flex-direction: column;
             justify-content: space-between;
         }
-
         header {
             width: 100%;
             padding: 2rem 0 1rem;
             display: flex;
             justify-content: center;
         }
-
         .header-logo {
             max-width: 1170px;
             width: 90%;
             height: auto;
             object-fit: contain;
         }
-
         /* --- Flexible Adaptive Matrix Container --- */
         .layout-container {
             width: 100%;
@@ -44,13 +41,11 @@
             flex-grow: 1;
             box-sizing: border-box;
         }
-
         /* --- Custom Sidebar Button Items --- */
         nav {
             width: 100%;
             flex-shrink: 0;
         }
-
         .nav-box {
             background-color: #09090b;
             border: 1px solid #27272a;
@@ -60,7 +55,6 @@
             flex-direction: column;
             gap: 0.5rem;
         }
-
         .nav-title {
             font-size: 10px;
             text-transform: uppercase;
@@ -71,7 +65,6 @@
             border-bottom: 1px solid #18181b;
             margin-bottom: 0.5rem;
         }
-
         .nav-btn {
             display: block;
             padding: 0.625rem 1rem;
@@ -84,14 +77,13 @@
             text-decoration: none;
             text-align: left;
             cursor: pointer;
+            line-height: 1.4;
         }
-
         .nav-btn:hover, .nav-btn.active {
             border-color: #2dd4bf !important;
             color: #2dd4bf !important;
             background-color: #27272a !important;
         }
-
         /* --- Central Dashboard iFrame Canvas --- */
         .content-display-box {
             width: 100%;
@@ -101,7 +93,6 @@
             height: 450px;
             overflow: hidden;
         }
-
         /* --- Right-Hand Sidebar Discord Container --- */
         main {
             width: 100%;
@@ -111,7 +102,6 @@
             height: 550px;
             overflow: hidden;
         }
-
         footer {
             text-align: center;
             padding: 2rem 0;
@@ -120,7 +110,6 @@
             border-top: 1px solid #09090b;
             margin-top: 3rem;
         }
-
         /* --- Desktop Rendering Grid Triggers --- */
         @media (min-width: 1024px) {
             .layout-container {
@@ -141,13 +130,10 @@
     </style>
 </head>
 <body>
-
     <header>
-        <img src="8brcamBanner1.jpg" alt="8brcam Tournament Banner Logo" class="header-logo">
+        <img src="8brcamBanner1.jpg" alt="8brcam Tournament Banner Logo" class="header-logo" loading="lazy">
     </header>
-
     <div class="layout-container">
-        
         <!-- Left Sidebar Navigation Layout -->
         <nav>
             <div class="nav-box">
@@ -162,34 +148,25 @@
                 <a href="./Chat/" target="content-frame" class="nav-btn" onclick="switchTab(this)">Chat</a>
             </div>
         </nav>
-
         <!-- Center Content Window -->
         <div class="content-display-box">
             <iframe name="content-frame" id="content-frame" src="./Rules/" style="width: 100%; height: 100%; border: none; background: transparent;"></iframe>
         </div>
-
         <!-- Right Side Live Discord Chat Frame -->
         <main>
-            <!-- ⚡ PRODUCTION IFRAME ENGINE: Fixed WidgetBot Native Embed -->
-            <iframe 
-                src="https://widgetbot.io" 
-                style="width: 100%; height: 100%; border: none;">
-            </iframe>
+            <!-- PUT YOUR NUMBERS IN THE SRC LINK BELOW -->
+            <iframe src="https://widgetbot.io1536340335666528349/1536340336249405452" style="width: 100%; height: 100%; border: none;"></iframe>
         </main>
-
     </div>
-
     <footer>
         &copy; 2026 8brcam Yahoo Pool Competition. All Rights Reserved.
     </footer>
-
     <!-- Mobile Screen Auto-Scroll Adjustment Script -->
     <script>
         function switchTab(element) {
             const buttons = document.querySelectorAll('.nav-btn');
             buttons.forEach(btn => btn.classList.remove('active'));
             element.classList.add('active');
-
             if (window.innerWidth < 1024) {
                 const contentBox = document.querySelector('.content-display-box');
                 if (contentBox) {
