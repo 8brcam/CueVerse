@@ -2,316 +2,93 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=1200, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>8brcam | Yahoo Pool Competition</title>
-    
     <style>
-        /* Base Setup */
+        /* --- Base Setup --- */
         html, body {
             background-color: #000000 !important;
             color: #f3f4f6 !important;
-            font-family: ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
-            margin: 0;
-            padding: 0;
-            min-height: 100vh;
-            min-width: 1200px;
-            display: flex;
-            flex-direction: column;
-            justify-content: space-between;
+            font-family: ui-sans-serif, system-ui, sans-serif;
+            margin: 0; padding: 0; min-height: 100vh;
+            display: flex; flex-direction: column; justify-content: space-between;
         }
+        header { width: 100%; padding: 2rem 0 1rem; display: flex; justify-content: center; }
+        .header-logo { max-width: 1170px; width: 90%; height: auto; object-fit: contain; }
 
-        /* Top Header */
-        header {
-            width: 100%;
-            padding-top: 2rem;
-            padding-bottom: 1rem;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-
-        .header-logo {
-            max-width: 1170px;
-            width: 100%;
-            height: auto;
-            object-fit: contain;
-            filter: drop-shadow(0 0 15px rgba(45, 212, 191, 0.25));
-        }
-
-        h1 {
-            font-size: 3rem;
-            font-weight: 900;
-            letter-spacing: 0.1em;
-            color: #2dd4bf;
-            margin: 0;
-            filter: drop-shadow(0 0 15px rgba(45, 212, 191, 0.3));
-        }
-
-        /* Fixed 3-Column Layout Grid */
+        /* --- Layout Grid --- */
         .layout-container {
-            width: 1200px;
-            margin-left: auto;
-            margin-right: auto;
-            padding: 1.5rem 1rem;
-            display: flex;
-            flex-direction: row;
-            gap: 1.5rem;
-            flex-grow: 1;
-            box-sizing: border-box;
+            width: 100%; max-width: 1200px; margin: 0 auto; padding: 1rem;
+            display: flex; flex-direction: column; gap: 1.25rem; flex-grow: 1; box-sizing: border-box;
         }
 
-        /* Left Side Navigation Box */
-        nav {
-            width: 14rem;
-            flex-shrink: 0;
-        }
-        
+        /* --- Navigation & Buttons --- */
+        nav { width: 100%; flex-shrink: 0; }
         .nav-box {
-            background-color: #09090b;
-            border: 1px solid #27272a;
-            border-radius: 0.75rem;
-            padding: 1rem;
-            box-shadow: 0 20px 25px -5px rgb(0 0 0 / 0.5);
-            display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
-            box-sizing: border-box;
+            background-color: #09090b; border: 1px solid #27272a; border-radius: 0.75rem;
+            padding: 1rem; display: flex; flex-direction: column; gap: 0.5rem;
         }
-        
         .nav-title {
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: #71717a;
-            font-weight: 700;
-            padding-left: 0.75rem;
-            padding-bottom: 0.5rem;
-            border-bottom: 1px solid #18181b;
-            margin-bottom: 0.5rem;
+            font-size: 10px; text-transform: uppercase; letter-spacing: 0.15em; color: #71717a;
+            font-weight: 700; padding-bottom: 0.5rem; border-bottom: 1px solid #18181b; margin-bottom: 0.5rem;
         }
-        
         .nav-btn {
-            display: block;
-            padding: 0.625rem 1rem;
-            background-color: rgba(39, 39, 42, 0.5);
-            border: 1px solid #27272a;
-            border-radius: 0.5rem;
-            color: #f3f4f6;
-            font-size: 1.2rem;
-            font-weight: 700;
-            letter-spacing: 0.025em;
-            text-decoration: none;
-            transition: all 0.2s ease;
-            text-align: left;
-            cursor: pointer;
+            display: block; padding: 0.625rem 1rem; background-color: rgba(39, 39, 42, 0.5);
+            border: 1px solid #27272a; border-radius: 0.5rem; color: #f3f4f6;
+            font-size: 1.2rem; font-weight: 700; text-decoration: none; text-align: left; cursor: pointer;
         }
-        
-        .nav-btn:hover, .nav-btn.active {
-            border-color: #2dd4bf !important;
-            color: #2dd4bf !important;
-            background-color: #27272a !important;
-        }
-        /* Central Content Box Frame */
-        .content-display-box {
-            flex-grow: 1;
-            background-color: #09090b;
-            border: 1px solid #27272a;
-            border-radius: 1rem;
-            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.5);
-            height: 550px;
-            overflow: hidden;
-            padding: 0;
-            box-sizing: border-box;
-        }
+        .nav-btn:hover, .nav-btn.active { border-color: #2dd4bf !important; color: #2dd4bf !important; background-color: #27272a !important; }
 
-        /* Right Side Chat Box Frame */
-        main {
-            width: 24rem;
-            flex-shrink: 0;
-            display: flex;
-            flex-direction: column;
-            border: 1px solid #27272a;
-            background-color: #09090b;
-            border-radius: 1rem;
-            overflow: hidden;
-            box-shadow: 0 25px 50px -12px rgb(0 0 0 / 0.5);
-            height: 550px;
-        }
-        
-        .chat-header {
-            padding: 1rem 1.5rem;
-            border-bottom: 1px solid #27272a;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        
-        .live-indicator {
-            display: flex;
-            align-items: center;
-            gap: 0.5rem;
-        }
-        
-        .dot {
-            width: 0.5rem;
-            height: 0.5rem;
-            border-radius: 50%;
-            background-color: #10b981;
-        }
-        
-        .chat-title {
-            font-weight: 700;
-            letter-spacing: 0.05em;
-            text-transform: uppercase;
-            color: #d4d4d8;
-            margin: 0;
-            font-size: 1.1rem;
-        }
-        
-        .lobby-tag {
-            font-size: 0.75rem;
-            font-family: monospace;
-            color: #2dd4bf;
-            font-weight: 700;
-            background-color: rgba(45, 212, 191, 0.1);
-            border: 1px solid rgba(45, 212, 191, 0.2);
-            padding: 0.125rem 0.5rem;
-            border-radius: 0.25rem;
-        }
+        /* --- Content Frame --- */
+        .content-display-box { width: 100%; background-color: #09090b; border: 1px solid #27272a; border-radius: 1rem; height: 450px; overflow: hidden; }
 
-        /* Chat Stream */
-        .chat-stream {
-            flex-grow: 1;
-            padding: 1.5rem;
-            overflow-y: auto;
-            display: flex;
-            flex-direction: column;
-            gap: 1rem;
-            background-color: rgba(0, 0, 0, 0.4);
-        }
+        /* --- Chat Panels --- */
+        main { width: 100%; display: flex; flex-direction: column; border: 1px solid #27272a; background-color: #09090b; border-radius: 1rem; height: 550px; overflow: hidden; }
+        .chat-header { padding: 1rem 1.5rem; border-bottom: 1px solid #27272a; display: flex; justify-content: space-between; align-items: center; }
+        .live-indicator { display: flex; align-items: center; gap: 0.5rem; }
+        .dot { width: 0.5rem; height: 0.5rem; border-radius: 50%; background-color: #10b981; }
+        .chat-title { font-weight: 700; color: #d4d4d8; margin: 0; font-size: 1.1rem; text-transform: uppercase; }
+        .lobby-tag { font-size: 0.75rem; font-family: monospace; color: #2dd4bf; background-color: rgba(45, 212, 191, 0.1); border: 1px solid rgba(45, 212, 191, 0.2); padding: 0.125rem 0.5rem; border-radius: 0.25rem; }
         
-        .sys-alert {
-            text-align: center;
-            margin: 0.25rem 0;
-            align-self: center;
-        }
+        #username-panel { padding: 1rem; border-bottom: 1px solid #27272a; background-color: rgba(45, 212, 191, 0.05); display: flex; flex-direction: column; gap: 0.5rem; }
+        #username-input { background-color: #000; border: 1px solid #27272a; border-radius: 0.5rem; padding: 0.5rem; color: #fff; outline: none; }
+        #save-username-btn { background-color: #2dd4bf; color: #000; font-weight: 900; padding: 0.5rem 1rem; border-radius: 0.5rem; border: none; cursor: pointer; }
         
-        .sys-tag {
-            font-size: 10px;
-            background-color: #18181b;
-            color: #71717a;
-            padding: 0.25rem 0.75rem;
-            border-radius: 9999px;
-            font-family: monospace;
-            text-transform: uppercase;
-            border: 1px solid #27272a;
-        }
+        .chat-stream { flex-grow: 1; padding: 1rem; overflow-y: auto; display: flex; flex-direction: column; gap: 1rem; background-color: rgba(0, 0, 0, 0.4); }
+        .sys-tag { font-size: 10px; background-color: #18181b; color: #71717a; padding: 0.25rem 0.75rem; border-radius: 9999px; border: 1px solid #27272a; }
         
-        .msg {
-            display: flex;
-            flex-direction: column;
-            gap: 0.25rem;
-            max-width: 85%;
-        }
-        
-        .msg-meta {
-            display: flex;
-            align-items: baseline;
-            gap: 0.5rem;
-        }
-        
+        .msg { display: flex; flex-direction: column; gap: 0.25rem; max-width: 85%; }
+        .msg.self { align-self: flex-end; items: flex-end; text-align: right; }
         .user-left { font-size: 0.75rem; font-weight: 900; color: #2dd4bf; }
         .user-right { font-size: 0.75rem; font-weight: 900; color: #c084fc; }
-        .time { font-size: 10px; color: #52525b; font-family: monospace; }
-        
-        .bubble {
-            background-color: #18181b;
-            border: 1px solid #27272a;
-            border-radius: 0 0.75rem 0.75rem 0.75rem;
-            padding: 0.75rem;
-            font-size: 0.875rem;
-            color: #d4d4d8;
-            line-height: 1.5;
-            text-align: left;
-        }
-        
-        .msg.self {
-            align-self: flex-end;
-            align-items: flex-end;
-        }
-        
-        .msg.self .bubble {
-            background-color: rgba(45, 212, 191, 0.15);
-            border-color: rgba(45, 212, 191, 0.3);
-            border-radius: 0.75rem 0 0.75rem 0.75rem;
-            color: #e4e4e7;
-            text-align: right;
-        }
+        .time { font-size: 10px; color: #52525b; font-family: monospace; margin: 0 5px; }
+        .bubble { background-color: #18181b; border: 1px solid #27272a; border-radius: 0 0.75rem 0.75rem 0.75rem; padding: 0.75rem; font-size: 0.875rem; color: #d4d4d8; word-break: break-word; }
+        .msg.self .bubble { background-color: rgba(45, 212, 191, 0.15); border-color: rgba(45, 212, 191, 0.3); border-radius: 0.75rem 0 0.75rem 0.75rem; }
 
-        /* Chat Input Area */
-        .chat-input-area {
-            padding: 1rem;
-            border-top: 1px solid #27272a;
-            display: flex;
-            gap: 0.5rem;
-            align-items: center;
-            background-color: #09090b;
-        }
-        
-        .chat-input-area input {
-            flex-grow: 1;
-            background-color: #000000;
-            border: 1px solid #27272a;
-            border-radius: 0.75rem;
-            padding: 0.75rem 1rem;
-            font-size: 0.875rem;
-            color: #f3f4f6;
-            outline: none;
-        }
-        
-        .chat-input-area input:focus {
-            border-color: #2dd4bf;
-        }
-        
-        .chat-input-area button {
-            background-color: #2dd4bf;
-            color: #000000;
-            font-weight: 900;
-            font-size: 0.75rem;
-            text-transform: uppercase;
-            letter-spacing: 0.05em;
-            padding: 0.75rem 1.25rem;
-            border-radius: 0.75rem;
-            border: none;
-            cursor: pointer;
-        }
-        
-        .chat-input-area button:hover {
-            background-color: #14b8a6;
-        }
+        .chat-input-area { padding: 1rem; border-top: 1px solid #27272a; display: flex; gap: 0.5rem; background-color: #09090b; }
+        .chat-input-area input { flex-grow: 1; background-color: #000; border: 1px solid #27272a; border-radius: 0.75rem; padding: 0.75rem; color: #fff; outline: none; }
+        .chat-input-area button { background-color: #2dd4bf; color: #000; font-weight: 900; padding: 0.75rem 1.25rem; border-radius: 0.75rem; border: none; cursor: pointer; }
+        input:disabled, button:disabled { opacity: 0.5; cursor: not-allowed !important; }
 
-        footer {
-            text-align: center;
-            padding: 2rem 0;
-            font-size: 10px;
-            text-transform: uppercase;
-            letter-spacing: 0.15em;
-            color: #52525b;
-            border-top: 1px solid #09090b;
-            margin-top: 3rem;
-        }
+        footer { text-align: center; padding: 2rem 0; font-size: 10px; color: #52525b; border-top: 1px solid #09090b; margin-top: 3rem; }
 
-        .chat-stream::-webkit-scrollbar { width: 6px; }
-        .chat-stream::-webkit-scrollbar-track { background: transparent; }
-        .chat-stream::-webkit-scrollbar-thumb { background: #27272a; border-radius: 9999px; }
+        /* --- Desktop View Controls --- */
+        @media (min-width: 1024px) {
+            .layout-container { flex-direction: row; }
+            nav { width: 14rem; }
+            .content-display-box { flex-grow: 1; height: 550px; }
+            main { width: 24rem; height: 550px; }
+        }
     </style>
 </head>
 <body>
+
     <header>
         <img src="8brcamBanner1.jpg" alt="8brcam Tournament Banner Logo" class="header-logo">
     </header>
 
     <div class="layout-container">
+        <!-- Left Sidebar Navigation -->
         <nav>
             <div class="nav-box">
                 <div class="nav-title">Tournament Menu</div>
@@ -319,84 +96,65 @@
                 <a href="./Groups/" target="content-frame" class="nav-btn" onclick="switchTab(this)">Groups</a>
                 <a href="./Playoffs/" target="content-frame" class="nav-btn" onclick="switchTab(this)">Playoffs</a>
                 <a href="./Archives/" target="content-frame" class="nav-btn" onclick="switchTab(this)">Archives</a>
-                <a href="./Application/" class="nav-btn" onclick="switchTab(this)">Application</a>
-                <a href="./Videos/" class="nav-btn" onclick="switchTab(this)">Videos</a>
-                <a href="./Forum/" class="nav-btn" onclick="switchTab(this)">Forum</a>
-                <a href="./Chat/" class="nav-btn" onclick="switchTab(this)">Chat</a>
+                <a href="./Application/" target="content-frame" class="nav-btn" onclick="switchTab(this)">Application</a>
+                <a href="./Videos/" target="content-frame" class="nav-btn" onclick="switchTab(this)">Videos</a>
+                <a href="./Forum/" target="content-frame" class="nav-btn" onclick="switchTab(this)">Forum</a>
+                <a href="./Chat/" target="content-frame" class="nav-btn" onclick="switchTab(this)">Chat</a>
             </div>
         </nav>
-
+        <!-- Center Content Window -->
         <div class="content-display-box">
-            <iframe name="content-frame" id="content-frame" src="./Rules/" style="width: 100%; height: 100%; border: none; background: transparent; border-radius: 1rem;"></iframe>
+            <iframe name="content-frame" id="content-frame" src="./Rules/" style="width: 100%; height: 100%; border: none; background: transparent;"></iframe>
         </div>
 
+        <!-- Right Side Live Chat Frame -->
         <main>
             <div class="chat-header">
-                <div class="live-indicator">
-                    <span class="dot"></span>
-                    <h2 class="chat-title">Live Match Chat</h2>
-                </div>
+                <div class="live-indicator"><span class="dot"></span><h2 class="chat-title">Live Chat</h2></div>
                 <span class="lobby-tag">LOBBY #01</span>
             </div>
-            
-            <div id="username-panel" style="padding: 1.5rem; border-bottom: 1px solid #27272a; background-color: rgba(45, 212, 191, 0.05); display: flex; flex-direction: column; gap: 0.75rem;">
-                <p style="margin: 0; font-size: 0.875rem; color: #a1a1aa; font-weight: 700;">Set your player name to chat:</p>
+            <div id="username-panel">
+                <p style="margin: 0; font-size: 0.875rem; color: #a1a1aa; font-weight: 700;">Set player name to chat:</p>
                 <div style="display: flex; gap: 0.5rem;">
-                    <input type="text" id="username-input" placeholder="Enter nickname..." style="flex-grow: 1; background-color: #000; border: 1px solid #27272a; border-radius: 0.5rem; padding: 0.5rem; color: #fff; font-size: 0.875rem; outline: none;">
-                    <button type="button" id="save-username-btn">Save</button>
+                    <input type="text" id="username-input" placeholder="Enter nickname..." />
+                    <button type="button" id="save-username-btn">Join</button>
                 </div>
             </div>
-            
             <div class="chat-stream" id="chat-stream">
-                <div class="sys-alert" id="connection-alert">
-                    <span class="sys-tag">Connecting to tournament servers...</span>
-                </div>
+                <div class="sys-alert" id="connection-alert"><span class="sys-tag">Connecting to servers...</span></div>
             </div>
-
             <div class="chat-input-area">
-                <input type="text" id="chat-input" placeholder="Choose a name above to type..." disabled style="opacity: 0.5; cursor: not-allowed;">
-                <button type="button" id="send-btn" disabled style="opacity: 0.5; cursor: not-allowed;">Send</button>
+                <input type="text" id="chat-input" placeholder="Choose a name above to type...">
+                <button type="button" id="send-btn">Send</button>
             </div>
         </main>
     </div>
-
+        
     <footer>
         &copy; 2026 8brcam Yahoo Pool Competition. All Rights Reserved.
     </footer>
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Real-Time Chat Lobby</title>
-    <style>
-        body { font-family: sans-serif; background: #09090b; color: #fff; padding: 20px; }
-        .chat-container { max-width: 600px; margin: 0 auto; background: #18181b; padding: 20px; border-radius: 8px; }
-        #chat-stream { height: 300px; overflow-y: auto; border: 1px solid #27272a; padding: 10px; margin-bottom: 10px; background: #09090b; }
-        .msg { margin-bottom: 10px; }
-        .msg.self { text-align: right; }
-        .bubble { display: inline-block; padding: 8px 12px; border-radius: 6px; background: #27272a; max-width: 70%; word-break: break-word; }
-        .msg.self .bubble { background: #2dd4bf; color: #09090b; }
-        .msg-meta { font-size: 11px; color: #a1a1aa; margin-bottom: 2px; }
-        input, button { padding: 10px; border-radius: 4px; border: 1px solid #27272a; background: #18181b; color: #fff; }
-        input:disabled, button:disabled { opacity: 0.5; cursor: not-allowed; }
-        #connection-alert { margin-bottom: 10px; }
-    </style>
-</head>
-<body>
-    <div class="chat-container">
-        <!-- Nickname screen is back so people have unique identities -->
-        <div id="username-panel" style="margin-bottom: 15px;">
-            <input type="text" id="username-input" placeholder="Choose a nickname...">
-            <button id="save-username-btn">Join Chat</button>
-        </div>
-        <div id="connection-alert"></div>
-        <div id="chat-stream"></div>
-        <div style="display: flex; gap: 10px;">
-            <input type="text" id="chat-input" style="flex: 1;" placeholder="Choose a name above to type...">
-            <button id="send-btn">Send</button>
-        </div>
-    </div>
+
+    <!-- Fixed Auto-Scroll Logic for Mobile Viewports -->
+    <script>
+        function switchTab(element) {
+            const buttons = document.querySelectorAll('.nav-btn');
+            buttons.forEach(btn => btn.classList.remove('active'));
+            element.classList.add('active');
+
+            // If the user screen width is narrow (mobile/tablet layout), scroll down automatically
+            if (window.innerWidth < 1024) {
+                const contentBox = document.querySelector('.content-display-box');
+                if (contentBox) {
+                    contentBox.scrollIntoView({ 
+                        behavior: 'smooth', 
+                        block: 'start' 
+                    });
+                }
+            }
+        }
+    </script>
+
+    <!-- Firebase Live Synchronization Module -->
     <script type="module">
         import { initializeApp } from "https://gstatic.com";
         import { getDatabase, ref, push, limitToLast, query, onChildAdded, serverTimestamp } from "https://gstatic.com";
@@ -408,8 +166,7 @@
             projectId: "brcam-chat",
             storageBucket: "brcam-chat.firebasestorage.app",
             messagingSenderId: "82194034681",
-            appId: "1:82194034681:web:bfb3dbe585c1e2601d9728",
-            measurementId: "G-E5RM1XMHYV"
+            appId: "1:82194034681:web:bfb3dbe585c1e2601d9728"
         };
 
         let myUsername = localStorage.getItem('chat_nickname') || "";
@@ -419,167 +176,81 @@
         const sendBtn = document.getElementById('send-btn');
         const chatInput = document.getElementById('chat-input');
         const chatStream = document.getElementById('chat-stream');
-        
-        let db = null;
         let chatRoomRef = null;
-        const tournamentRoomId = "8brcam_yahoo_pool_lobby_2026";
 
         function checkIdentityState() {
             if (myUsername) {
                 if (usernamePanel) {
-                    usernamePanel.innerHTML = `<p style="margin:0; font-size:0.875rem; color:#2dd4bf; font-weight:700;">Chatting live as: <strong style="color:#fff;">${escapeHtml(myUsername)}</strong> <span id="change-name" style="color:#71717a; font-size:10px; cursor:pointer; text-decoration:underline; margin-left:10px;">[Change]</span></p>`;
-                    
-                    const changeNameBtn = document.getElementById('change-name');
-                    if (changeNameBtn) {
-                        changeNameBtn.addEventListener('click', () => {
-                            localStorage.removeItem('chat_nickname');
-                            window.location.reload();
-                        });
-                    }
+                    usernamePanel.innerHTML = `<p style="margin:0; font-size:0.875rem; color:#2dd4bf; font-weight:700;">Chatting as: <strong style="color:#fff;">${escapeHtml(myUsername)}</strong> <span id="change-name" style="color:#71717a; font-size:10px; cursor:pointer; text-decoration:underline; margin-left:10px;">[Change]</span></p>`;
+                    document.getElementById('change-name').addEventListener('click', () => {
+                        localStorage.removeItem('chat_nickname'); window.location.reload();
+                    });
                 }
-                
-                if (chatInput) {
-                    chatInput.disabled = false;
-                    chatInput.placeholder = "Type a message...";
-                    chatInput.style.opacity = "1";
-                    chatInput.style.cursor = "text";
-                }
-                if (sendBtn) {
-                    sendBtn.disabled = false;
-                    sendBtn.style.opacity = "1";
-                    sendBtn.style.cursor = "pointer";
-                }
-
+                if (chatInput) { chatInput.disabled = false; chatInput.placeholder = "Type a message..."; chatInput.style.opacity = "1"; }
+                if (sendBtn) { sendBtn.disabled = false; sendBtn.style.opacity = "1"; }
                 initPermanentFirebaseChat();
             } else {
-                if (chatInput) {
-                    chatInput.disabled = true;
-                    chatInput.style.opacity = "0.5";
-                    chatInput.style.cursor = "not-allowed";
-                    chatInput.placeholder = "Choose a name above to type...";
-                }
-                if (sendBtn) {
-                    sendBtn.disabled = true;
-                    sendBtn.style.opacity = "0.5";
-                    sendBtn.style.cursor = "not-allowed";
-                }
+                if (chatInput) { chatInput.disabled = true; chatInput.placeholder = "Choose a name above..."; chatInput.style.opacity = "0.5"; }
+                if (sendBtn) { sendBtn.disabled = true; sendBtn.style.opacity = "0.5"; }
             }
         }
-        // FIXED: Using standard event listeners inside the module so the browser registers the click 100% of the time
+
         if (saveUsernameBtn) {
             saveUsernameBtn.addEventListener('click', () => {
-                if (!usernameInput) return;
                 const nameValue = usernameInput.value.trim();
-                if (nameValue !== '') {
-                    myUsername = nameValue;
-                    localStorage.setItem('chat_nickname', myUsername);
-                    checkIdentityState();
-                }
+                if (nameValue !== '') { myUsername = nameValue; localStorage.setItem('chat_nickname', myUsername); checkIdentityState(); }
             });
         }
-
-        if (usernameInput) {
-            usernameInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter' && saveUsernameBtn) {
-                    saveUsernameBtn.click();
-                }
-            });
-        }
+        if (usernameInput) { usernameInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') saveUsernameBtn.click(); }); }
 
         function initPermanentFirebaseChat() {
             try {
                 const app = initializeApp(firebaseConfig);
-                db = getDatabase(app);
-                chatRoomRef = ref(db, "chats/" + tournamentRoomId);
-
+                const db = getDatabase(app);
+                chatRoomRef = ref(db, "chats/8brcam_yahoo_pool_lobby_2026");
                 const connAlert = document.getElementById('connection-alert');
                 if (connAlert) connAlert.innerHTML = '';
 
-                const lastMessagesQuery = query(chatRoomRef, limitToLast(50));
-                onChildAdded(lastMessagesQuery, (snapshot) => {
-                    const msgPayload = snapshot.val();
-                    renderMessageBubble({
-                        ...msgPayload,
-                        uniqueId: snapshot.key
-                    });
+                onChildAdded(query(chatRoomRef, limitToLast(50)), (snapshot) => {
+                    renderMessageBubble({ ...snapshot.val(), uniqueId: snapshot.key });
                 });
-
-            } catch (err) {
-                console.error("Firebase setup error:", err);
-                const connAlert = document.getElementById('connection-alert');
-                if (connAlert) {
-                    connAlert.innerHTML = '<span style="color:#ef4444; border: 1px solid rgba(239,68,68,0.2); padding: 5px; border-radius: 4px; display: inline-block;">Database Error</span>';
-                }
-            }
+            } catch (err) { console.error(err); }
         }
-        function processOutboundMessage() {
-            if (!chatInput) return;
-            const messageText = chatInput.value.trim();
-            if (messageText !== '' && myUsername !== '' && chatRoomRef) {
-                const now = new Date();
-                const timeStr = now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' });
-                
-                const payload = {
-                    username: myUsername,
-                    message: messageText,
-                    time: timeStr,
-                    timestamp: serverTimestamp()
-                };
 
-                push(chatRoomRef, payload).catch(err => console.error("Cloud push failed:", err));
+        function processOutboundMessage() {
+            const text = chatInput.value.trim();
+            if (text !== '' && myUsername !== '' && chatRoomRef) {
+                const now = new Date();
+                push(chatRoomRef, {
+                    username: myUsername, message: text,
+                    time: now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
+                    timestamp: serverTimestamp()
+                });
                 chatInput.value = '';
             }
         }
 
-        if (sendBtn) {
-            sendBtn.addEventListener('click', processOutboundMessage);
-        }
-        
-        if (chatInput) {
-            chatInput.addEventListener('keypress', (e) => {
-                if (e.key === 'Enter') processOutboundMessage();
-            });
-        }
+        if (sendBtn) sendBtn.addEventListener('click', processOutboundMessage);
+        if (chatInput) chatInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') processOutboundMessage(); });
 
         function renderMessageBubble(data) {
-            const uniqueNodeId = `msg-${data.uniqueId || data.username + '-' + data.time}`;
+            const uniqueNodeId = `msg-${data.uniqueId}`;
             if (document.getElementById(uniqueNodeId)) return;
-
-            const msgDiv = document.createElement('div');
-            msgDiv.id = uniqueNodeId;
+            const msgDiv = document.createElement('div'); msgDiv.id = uniqueNodeId;
             
             if (data.username === myUsername) {
                 msgDiv.className = 'msg self';
-                msgDiv.innerHTML = `
-                    <div class="msg-meta"><span class="time">${data.time}</span><span class="user-right">You</span></div>
-                    <div class="bubble">${escapeHtml(data.message)}</div>
-                `;
+                msgDiv.innerHTML = `<div class="msg-meta"><span class="time">${data.time}</span><span class="user-right">You</span></div><div class="bubble">${escapeHtml(data.message)}</div>`;
             } else {
                 msgDiv.className = 'msg';
-                msgDiv.innerHTML = `
-                    <div class="msg-meta"><span class="user-left">${escapeHtml(data.username)}</span><span class="time">${data.time}</span></div>
-                    <div class="bubble">${escapeHtml(data.message)}</div>
-                `;
+                msgDiv.innerHTML = `<div class="msg-meta"><span class="user-left">${escapeHtml(data.username)}</span><span class="time">${data.time}</span></div><div class="bubble">${escapeHtml(data.message)}</div>`;
             }
-
-            if (chatStream) {
-                chatStream.appendChild(msgDiv);
-                chatStream.scrollTop = chatStream.scrollHeight;
-            }
+            chatStream.appendChild(msgDiv); chatStream.scrollTop = chatStream.scrollHeight;
         }
 
-        function escapeHtml(string) {
-            return String(string).replace(/[&<>"']/g, s => ({
-                '&': '&amp;', 
-                '<': '&lt;', 
-                '>': '&gt;', 
-                '"': '&quot;', 
-                "'": '&#39;'
-            }[s]));
-        }
-
+        function escapeHtml(string) { return String(string).replace(/[&<>"']/g, s => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[s])); }
         checkIdentityState();
     </script>
 </body>
-</html> 
-  
+</html>
+
