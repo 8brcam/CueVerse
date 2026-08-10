@@ -5,9 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>8brcam | Yahoo Pool Competition</title>
     
-    <!-- ⚡ NEUTRAL DELIVERY ROUTE: Replaced blocked gstatic links with Cloudflare cdnjs links -->
-    <script src="https://cloudflare.com"></script>
-    <script src="https://cloudflare.com"></script>
+    <!-- ⚡ FIXED: Completely removed external script tags. No external assets for the browser to block! -->
 
     <style>
         /* --- Base Layout --- */
@@ -120,7 +118,6 @@
                 <div class="live-indicator"><span class="dot"></span><h2 class="chat-title">Global Chat</h2></div>
                 <span class="lobby-tag">LOBBY #01</span>
             </div>
-            
             <div id="username-panel">
                 <p style="margin: 0; font-size: 0.875rem; color: #a1a1aa; font-weight: 700;">Set player name to chat globally:</p>
                 <div style="display: flex; gap: 0.5rem;">
@@ -130,11 +127,11 @@
             </div>
             
             <div class="chat-stream" id="chat-stream">
-                <div class="sys-alert" id="connection-alert"><span class="sys-tag">Connecting to global tournament servers...</span></div>
+                <div class="sys-alert" id="connection-alert"><span class="sys-tag">Synchronising live lobby messages...</span></div>
             </div>
             
             <div class="chat-input-area">
-                <input type="text" id="chat-input" placeholder="Set your username above to type...">
+                <input type="text" id="chat-input" placeholder="Choose a name above to type...">
                 <button type="button" id="send-btn">Send</button>
             </div>
         </main>
@@ -163,22 +160,12 @@
         }
     </script>
 
-    <!-- Global Firebase Connection Engine (Production Build) -->
+    <!-- Global Connection Engine (Native Web Sync Tool - Zero Script Downloads) -->
     <script>
-        const firebaseConfig = {
-            apiKey: "AIzaSyBROwwCrWBPx-1WmDuZROeG6sDmpfn44CE",
-            authDomain: "://firebaseapp.com",
-            databaseURL: "https://firebaseio.com",
-            projectId: "brcam-chat",
-            storageBucket: "brcam-chat.firebasestorage.app",
-            messagingSenderId: "82194034681",
-            appId: "1:82194034681:web:bfb3dbe585c1e2601d9728"
-        };
+        // Database link coordinates directly communicating via native web APIs
+        const dbEndpoint = "https://firebaseio.com";
 
-        let db = null;
-        let chatRoomRef = null;
         let myUsername = localStorage.getItem('chat_nickname') || "";
-
         const usernamePanel = document.getElementById('username-panel');
         const usernameInput = document.getElementById('username-input');
         const saveUsernameBtn = document.getElementById('save-username-btn');
@@ -213,44 +200,60 @@
         }
         if (usernameInput) { usernameInput.addEventListener('keypress', (e) => { if (e.key === 'Enter') saveUsernameBtn.click(); }); }
 
-        function startFirebase() {
+        // Fetch existing messages securely using built-in web browser tools
+        async function loadMessages() {
             try {
-                if (typeof firebase !== 'undefined') {
-                    firebase.initializeApp(firebaseConfig);
-                    db = firebase.database();
-                    chatRoomRef = db.ref("global_arenas/8brcam_lobby_2026");
-                    
-                    const connAlert = document.getElementById('connection-alert');
-                    if (connAlert) connAlert.innerHTML = '';
+                // Fetch the latest 50 entries using standard query bounds
+                const response = await fetch(`${dbEndpoint}?orderBy="$key"&limitToLast=50`);
+                if (!response.ok) throw new Error("Server communication fault");
+                
+                const data = await response.json();
+                const connAlert = document.getElementById('connection-alert');
+                if (connAlert) connAlert.style.display = 'none';
 
-                    chatRoomRef.limitToLast(50).on('child_added', (snapshot) => {
-                        renderMessageBubble({ ...snapshot.val(), uniqueId: snapshot.key });
+                if (data) {
+                    // Render messages stored on the server sequentially
+                    Object.keys(data).forEach(key => {
+                        renderMessageBubble({ ...data[key], uniqueId: key });
                     });
-                } else {
-                    // Fail-safe fall-back strategy if scripts take an extra moment to load
-                    const connAlert = document.getElementById('connection-alert');
-                    if (connAlert) connAlert.innerHTML = '<span class="sys-tag" style="color:#eab308;">Awaiting trusted cdnjs framework...</span>';
-                    setTimeout(startFirebase, 500); 
                 }
             } catch (err) {
-                console.error("Database connection fault:", err);
+                console.error("Fetch fault:", err);
+                const connAlert = document.getElementById('connection-alert');
+                if (connAlert) connAlert.innerHTML = '<span class="sys-tag" style="color:#ef4444;">Sync Connection Fault. Check Firebase Rules!</span>';
             }
         }
 
-        function processOutboundMessage() {
+        // Handle sending outbound chat messages globally
+        async function processOutboundMessage() {
             const text = chatInput.value.trim();
             if (!myUsername) {
                 alert("Please enter a nickname above and join the chat room first!");
                 return;
             }
-            if (text !== '' && chatRoomRef) {
+            if (text !== '') {
                 const now = new Date();
-                chatRoomRef.push({
-                    username: myUsername, message: text,
+                const payload = {
+                    username: myUsername,
+                    message: text,
                     time: now.toLocaleTimeString([], { hour: '2-digit', minute: '2-digit' }),
-                    timestamp: firebase.database.ServerValue.TIMESTAMP
-                });
-                chatInput.value = '';
+                    timestamp: Date.now()
+                };
+
+                try {
+                    // Send to your cloud database instantly
+                    const response = await fetch(dbEndpoint, {
+                        method: 'POST',
+                        headers: { 'Content-Type': 'application/json' },
+                        body: JSON.stringify(payload)
+                    });
+                    if (response.ok) {
+                        chatInput.value = '';
+                        loadMessages(); // Refresh chat area view to instantly reflect change
+                    }
+                } catch (err) {
+                    console.error("Transmission breakdown:", err);
+                }
             }
         }
 
@@ -275,11 +278,10 @@
         function escapeHtml(string) { return String(string).replace(/[&<>"']/g, s => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[s])); }
         
         checkIdentityState();
-        startFirebase();
+        loadMessages();
+        
+        // Polling engine checks your server every 3 seconds to pull down messages sent from other countries
+        setInterval(loadMessages, 3000);
     </script>
 </body>
 </html>
-
-
-
-
