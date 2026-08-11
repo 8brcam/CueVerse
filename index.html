@@ -1,17 +1,17 @@
-<!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01//EN" "http://w3.org">
-<html style="background-color: #000000 !important;">
+<!DOCTYPE html>
+<html lang="en" style="background-color: #000000 !important;">
 <head>
-    <meta name="viewport" content="width=1300, initial-scale=1.0, shrink-to-fit=no">
- <!-- FORCES MOBILE DEVICES TO ZOOM OUT AND MATCH THE EXACT PC SCREEN MONITOR LAYOUT -->
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-   <title>8brcam | Yahoo Pool Competition</title>
+    <!-- FORCES MOBILE DEVICES TO ZOOM OUT AND MATCH THE EXACT PC SCREEN MONITOR LAYOUT -->
+    <meta name="viewport" content="width=1160, initial-scale=1.0, shrink-to-fit=no">
+    <title>8brcam | Yahoo Pool Competition</title>
+    
     <!-- Google Fonts import for Orbitron layout styling -->
     <link rel="preconnect" href="https://googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
     <link href="https://googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
     
     <style>
-        /* --- Base Layout & Your Custom Radial Mesh Background --- */
+        /* --- Base Layout & Custom Radial Mesh Background --- */
         body {
             margin: 0;
             background-color: #000000 !important; 
@@ -33,11 +33,27 @@
             box-sizing: border-box;
         }
 
-        /* --- Header Logo Configuration with Cyan Neon Glow --- */
+        /* --- Header Logo Container Configuration with Game-Cyan Moving Wave Neon Glow --- */
         .main-top-header {
             width: 100%;
             margin-bottom: 20px;
             box-sizing: border-box;
+        }
+
+        /* Keyframes animation handles a high-end moving wave glow in original Cyan (#2dd4bf) */
+        @keyframes movingWaveGlow {
+            0% {
+                box-shadow: -15px 0px 20px -10px rgba(45, 212, 191, 0.7),
+                            0px 0px 10px rgba(45, 212, 191, 0.3);
+            }
+            50% {
+                box-shadow: 0px 0px 30px rgba(45, 212, 191, 0.8),
+                            0px 0px 15px rgba(45, 212, 191, 0.4);
+            }
+            100% {
+                box-shadow: 15px 0px 20px -10px rgba(45, 212, 191, 0.7),
+                            0px 0px 10px rgba(45, 212, 191, 0.3);
+            }
         }
 
         .header-logo-graphic {
@@ -46,12 +62,10 @@
             object-fit: contain;
             display: block;
             border-radius: 4px;
-            box-shadow: 0 0 10px rgba(45, 212, 191, 0.4), 
-                        0 0 20px rgba(45, 212, 191, 0.2), 
-                        0 0 30px rgba(45, 212, 191, 0.1);
+            animation: movingWaveGlow 3s ease-in-out infinite alternate; /* Applies moving Cyan game glow */
         }
 
-        /* --- Master Restored 2014 Framework Wrapper with Cyan Neon Border Glow --- */
+        /* --- Master Restored 2014 Framework Wrapper with Grey Neon Border Glow --- */
         .tournament-center-container {
             width: 100%;
             background-color: rgb(17, 17, 17);
@@ -59,8 +73,9 @@
             border-right: 20px solid black;
             border-radius: 8px;
             box-sizing: border-box;
-            box-shadow: 0 0 15px rgba(45, 212, 191, 0.3), 
-                        0 0 25px rgba(45, 212, 191, 0.15);
+            /* Sits inside custom dark metallic grey box borders shadow profiles */
+            box-shadow: 0 0 15px rgba(128, 128, 128, 0.3), 
+                        0 0 25px rgba(128, 128, 128, 0.15);
         }
 
         /* --- Header Spacer Bar Section --- */
@@ -68,6 +83,14 @@
             width: 100%;
             background-color: black;
             padding: 10px 0px;
+            box-sizing: border-box;
+        }
+
+        /* --- Bottom Layout Spacer Block --- */
+        .bottom-divider-bar {
+            width: 100%;
+            background-color: black;
+            height: 15px;
             box-sizing: border-box;
         }
 
@@ -111,15 +134,16 @@
             cursor: pointer;
         }
 
+        /* Master UI items hover state matching grey layout look */
         .nav-btn-link:hover, .nav-btn-link.active {
-            border-color: #2dd4bf !important;
-            color: #2dd4bf !important;
+            border-color: #888888 !important;
+            color: #ffffff !important;
             background-color: rgb(40, 40, 40) !important;
         }
 
         .form-heading-main {
             text-align: center;
-            color: #2dd4bf;
+            color: #aaaaaa; 
             font-size: 18px;
             border-bottom: 1px solid rgb(51, 51, 51);
             padding-bottom: 4px;
@@ -128,6 +152,7 @@
             margin-bottom: 10px;
         }
 
+        /* --- Inputs, Form Elements, Labels --- */
         .input-label-classic {
             font-size: 13px;
             color: rgb(204, 204, 204);
@@ -149,6 +174,32 @@
             font-family: 'Orbitron', sans-serif;
         }
 
+        .form-textarea-classic {
+            text-align: left; 
+            background-color: rgb(34, 34, 34); 
+            color: rgb(170, 170, 170); 
+            font-size: 13px; 
+            width: 100%; 
+            height: 78px; 
+            border: 1px solid rgb(120, 120, 120); 
+            padding: 2px 4px; 
+            box-sizing: border-box; 
+            font-family: inherit; 
+            resize: none;
+        }
+
+        .form-submit-btn {
+            width: 100%; 
+            height: 35px; 
+            background-color: #27272a; 
+            color: #aaaaaa; 
+            border: 1px solid #888888; 
+            cursor: pointer; 
+            font-family: inherit; 
+            font-weight: bold;
+        }
+
+        /* --- Content Panels & Scroll Lists --- */
         .announcements-text-area {
             width: 100%;
             height: 200px;
@@ -158,6 +209,43 @@
             line-height: 1.6;
             box-sizing: border-box;
             padding: 5px;
+            scroll-behavior: smooth;
+        }
+
+        .scrollable-inner-list {
+            width: 100%; 
+            height: 320px; 
+            overflow: auto; 
+            background-color: rgb(17, 17, 17); 
+            border: 2px solid black; 
+            padding: 5px; 
+            box-sizing: border-box;
+        }
+
+        .leaderboard-ordered-list {
+            color: rgb(170, 170, 170); 
+            text-align: left; 
+            font-size: 11px; 
+            padding-left: 22px; 
+            margin: 0px; 
+            white-space: nowrap; 
+            overflow: hidden;
+        }
+
+        /* Custom Scrollbars */
+        .announcements-text-area::-webkit-scrollbar,
+        .scrollable-inner-list::-webkit-scrollbar {
+            width: 6px;
+            height: 6px;
+        }
+        .announcements-text-area::-webkit-scrollbar-track,
+        .scrollable-inner-list::-webkit-scrollbar-track {
+            background: #090909;
+        }
+        .announcements-text-area::-webkit-scrollbar-thumb,
+        .scrollable-inner-list::-webkit-scrollbar-thumb {
+            background: #555555;
+            border-radius: 3px;
         }
     </style>
 </head>
@@ -165,7 +253,7 @@
 
     <div class="master-layout-alignment-block">
         
-        <!-- HEADER CONTAINER WITH NEON GLOW -->
+        <!-- HEADER CONTAINER WITH THE MOVING CYAN ACCENT GLOW -->
         <header class="main-top-header">
             <img src="8brcamBanner1.jpg" alt="8brcam Tournament Banner Logo" class="header-logo-graphic" loading="lazy">
         </header>
@@ -175,7 +263,7 @@
             <div class="banner-divider-bar"></div>
             
             <!-- ROW 1 TABLE CONTEXT BLOCK -->
-            <table class="classic-layout-row-table" border="0" cellspacing="0" cellpadding="0">
+            <table class="classic-layout-row-table">
                 <tr>
                     <!-- COLUMN 1: LEFT NAVIGATION MENU CELL -->
                     <td class="left-menu-cell">
@@ -187,8 +275,7 @@
                         <a href="./Videos/" target="content-frame" class="nav-btn-link" onclick="switchTab(this)">Videos</a>
                         <a href="./Forum/" target="content-frame" class="nav-btn-link" onclick="switchTab(this)">Forum</a>
                     </td>
-
-                    <!-- COLUMN 2: CENTER MATCH SUBMISSION BOX (Percentage balanced width) -->
+                    <!-- COLUMN 2: CENTER MATCH SUBMISSION BOX -->
                     <td class="layout-box-cell" style="width: 45%; height: 263px;">
                         <h2 class="form-heading-main">Set Report Form</h2>
                         <form action="#" method="post" enctype="multipart/form-data">
@@ -206,17 +293,17 @@
                             </div>
                             <div>
                                 <label class="input-label-classic">Message</label>
-                                <textarea rows="5" name="element_3" style="text-align:left; background-color: rgb(34, 34, 34); color:rgb(170, 170, 170); font-size:13px; width:100%; height:78px; border: 1px solid rgb(120, 120, 120); padding: 2px 4px; box-sizing: border-box; font-family: inherit; resize: none;"></textarea>
+                                <textarea rows="5" name="element_3" class="form-textarea-classic"></textarea>
                             </div>
                             <div style="margin-top:10px; display: flow-root;">
                                 <input type="hidden" name="element_counts" value="4"/>
                                 <input type="hidden" name="embed" value="forms"/>
-                                <input type="submit" value="SUBMIT" style="width: 100%; height: 35px; background-color: #27272a; color: #2dd4bf; border: 1px solid #2dd4bf; cursor: pointer; font-family: inherit; font-weight: bold;"/>
+                                <input type="submit" value="SUBMIT" class="form-submit-btn"/>
                             </div>
                         </form>
                     </td>
 
-                    <!-- COLUMN 3: RIGHT ANNOUNCEMENTS BOX (Percentage balanced width) -->
+                    <!-- COLUMN 3: RIGHT ANNOUNCEMENTS BOX -->
                     <td class="layout-box-cell" style="width: 55%; height: 263px;">
                         <h2 class="form-heading-main">Announcements</h2>
                         <div class="announcements-text-area">
@@ -225,37 +312,38 @@
                     </td>
                 </tr>
             </table>
+
             <!-- ROW 2 TABLE CONTEXT BLOCK -->
-            <table class="classic-layout-row-table" border="0" cellspacing="0" cellpadding="0" style="margin-top: -5px;">
+            <table class="classic-layout-row-table" style="margin-top: -5px;">
                 <tr>
                     <!-- PIECE 1: PLAYERS RECAP CANVAS BOX -->
                     <td class="layout-box-cell" style="width: 220px; height: 424px; min-width: 220px;">
                         <div style="height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
                             <div>
                                 <h2 class="form-heading-main" style="font-size: 16px; margin-top:0;">Previous Season Recap</h2>
-                                <div style="width:100%; height:320px; overflow:auto; background-color: rgb(17, 17, 17); border: 2px solid black; padding: 5px; box-sizing: border-box;">
+                                <div class="scrollable-inner-list">
                                     <!-- Drop your future player list links or text elements directly right here -->
                                 </div>
                             </div>
                             <div style="padding-top: 8px; border-top: 1px solid rgb(17, 17, 17); margin-top: auto;">
-                                <span style="font-size: 11px; color: #2dd4bf;">Winner:</span> <b style="color: rgb(153,153,153); font-size:11px;"></b>
+                                <span style="font-size: 11px; color: #888888;">Winner:</span> <b style="color: rgb(153,153,153); font-size:11px;"></b>
                             </div>
                         </div>
                     </td>
 
                     <!-- PIECE 2: FULL-FIT WIDGETBOT DISCORD PANEL WINDOW -->
                     <td class="layout-box-cell" style="padding: 0px; height: 424px; overflow: hidden;">
-                        <iframe src="https://e.widgetbot.io/channels/1536340335666528349/1536340336249405452" style="width: 100%; height: 100%; border: none; display: block; background: transparent;"></iframe>
+                        <iframe src="https://widgetbot.io" style="width: 100%; height: 100%; border: none; display: block; background: transparent;"></iframe>
                     </td>
 
                     <!-- RIGHT STACKED CONTAINERS CELLS -->
                     <td style="width: 240px; min-width: 240px; padding: 0; border: none; background: transparent; vertical-align: top;">
-                        <table border="0" cellspacing="0" cellpadding="0" style="width: 100%;">
+                        <table style="width: 100%; border-collapse: separate; border-spacing: 0;">
                             <tr>
                                 <!-- PIECE 3: TOP 10 ALL TIME LEADERBOARD CONTAINER BOX -->
                                 <td class="layout-box-cell" style="width: 100%; height: 260px; display: block;">
                                     <h2 class="form-heading-main" style="font-size: 16px;">Top 10 All Time</h2>
-                                    <ol style="color:rgb(170, 170, 170); text-align:left; font-size:11px; padding-left:22px; margin: 0px; white-space: nowrap; overflow: hidden;">
+                                    <ol class="leaderboard-ordered-list">
                                         <!-- Drop your future top 10 leaderboard entries directly right here -->
                                     </ol>
                                 </td>
@@ -271,6 +359,9 @@
                     </td>
                 </tr>
             </table>
+
+            <!-- This block inserts the exact required spacer gap before the master container's neon bottom border line closes -->
+            <div class="bottom-divider-bar"></div>
 
         </div> <!-- Closes master tournament-center-container -->
     </div> <!-- Closes master-layout-alignment-block -->
