@@ -1,169 +1,165 @@
-<!DOCTYPE html>
-<html lang="en" style="background-color: #000000 !important;">
-<head>
-    <!-- FORCES MOBILE DEVICES TO ZOOM OUT AND MATCH THE EXACT PC SCREEN MONITOR LAYOUT -->
-    <meta name="viewport" content="width=1160, initial-scale=1.0, shrink-to-fit=no">
-    <title>8brcam | Yahoo Pool Competition</title>
+<!DOCTYPE html> 
+<html lang="en" style="background-color: #000000 !important;"> 
+<head> 
+    <!-- FORCES MOBILE DEVICES TO ZOOM OUT AND MATCH THE EXACT PC SCREEN MONITOR LAYOUT --> 
+    <meta name="viewport" content="width=1160, initial-scale=1.0, shrink-to-fit=no"> 
+    <title>8brcam | Yahoo Pool Competition</title> 
     
-    <!-- Google Fonts import for Orbitron layout styling -->
-    <link rel="preconnect" href="https://googleapis.com">
-    <link rel="preconnect" href="https://gstatic.com" crossorigin>
-    <link href="https://googleapis.com" rel="stylesheet">
-    
-    <style>
-        /* --- 1. Register Property for Smooth Border Angle Rotation --- */
-        @property --border-angle {
-            syntax: "<angle>";
-            inherits: false;
-            initial-value: 0deg;
-        }
+    <!-- Google Fonts import for Orbitron layout styling --> 
+    <link rel="preconnect" href="https://googleapis.com"> 
+    <link rel="preconnect" href="https://gstatic.com" crossorigin> 
+    <link href="https://googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet"> 
 
-        /* --- Base Layout & Custom Radial Mesh Background --- */
-        body {
-            margin: 0;
-            background-color: #000000 !important; 
+    <style> 
+        /* --- 1. Register Property for Smooth Border Angle Rotation --- */ 
+        @property --border-angle { 
+            syntax: "<angle>"; 
+            inherits: false; 
+            initial-value: 0deg; 
+        } 
+
+        /* --- Base Layout & High-Density Carbon Matrix Background --- */ 
+        body { 
+            margin: 0; 
+            background-color: #070709 !important; 
             color: #ffffff; 
             padding: 20px 0; 
             font-family: 'Orbitron', -apple-system, sans-serif; 
             font-size: 11px; 
             width: 100% !important; 
             box-sizing: border-box; 
-            background-image: radial-gradient(#1f2430 1px, transparent 0); 
-            background-size: 16px 16px;
-        }
+            
+            /* High-Density Carbon Micro-Weave Pattern Matrix */
+            background-image: 
+                linear-gradient(45deg, #111115 25%, transparent 25%, transparent 75%, #111115 75%, #111115),
+                linear-gradient(45deg, #111115 25%, #09090b 25%, #09090b 75%, #111115 75%, #111115); 
+            background-size: 8px 8px;
+            background-position: 0 0, 4px 4px;
+            background-attachment: fixed;
+        } 
 
-        /* --- Expanded Widescreen Master Grid Alignment Block --- */
-        .master-layout-alignment-block {
-            width: 1160px; /* Holds 1120px content + 20px side cushions */
-            margin: 0 auto;
-            display: block;
-            box-sizing: border-box;
+        /* --- Expanded Widescreen Master Grid Alignment Block --- */ 
+        .master-layout-alignment-block { 
+            width: 1160px; /* Holds 1120px content + 20px side cushions */ 
+            margin: 0 auto; 
+            display: block; 
+            box-sizing: border-box; 
             padding-top: 15px; 
-            padding-left: 20px;
-            padding-right: 20px;
+            padding-left: 20px; 
+            padding-right: 20px; 
             overflow: hidden; 
-        }
+        } 
 
-        /* --- Header Logo Container Configuration with Game-Cyan Muted Neon Glow --- */
-        .main-top-header {
-            width: 100%;
-            margin: 0px !important;
-            padding: 0px !important;
-            box-sizing: border-box;
-            display: flex;
-            justify-content: center;
+        /* --- Header Logo Container Configuration with Game-Cyan Muted Neon Glow --- */ 
+        .main-top-header { 
+            width: 100%; 
+            margin: 0px !important; 
+            padding: 0px !important; 
+            box-sizing: border-box; 
+            display: flex; 
+            justify-content: center; 
             line-height: 0 !important; 
-            font-size: 0 !important;
-        }
+            font-size: 0 !important; 
+        } 
 
-        /* Subtle, low-intensity 4-way pulse around the header image so it pops out less */
-        @keyframes movingWaveGlow {
-            0% {
-                box-shadow: 0px 0px 20px rgba(45, 212, 191, 0.95);
-            }
-            50% {
-                box-shadow: 0px 0px 20px rgba(45, 212, 191, 0.95);
-            }
-            100% {
-                box-shadow: 0px 0px 12px rgba(45, 212, 191, 0.95);
-            }
-        }
+        /* Subtle, low-intensity 4-way pulse around the header image so it pops out less */ 
+        @keyframes movingWaveGlow { 
+            0% { box-shadow: 0px 0px 20px rgba(45, 212, 191, 0.95); } 
+            50% { box-shadow: 0px 0px 20px rgba(45, 212, 191, 0.95); } 
+            100% { box-shadow: 0px 0px 12px rgba(45, 212, 191, 0.95); } 
+        } 
 
-        /* Restored layout image size to exactly 1120px to match the boxes below perfectly */
-        .header-logo-graphic {
+        /* Restored layout image size to exactly 1120px to match the boxes below perfectly */ 
+        .header-logo-graphic { 
             width: 1120px; 
-            height: auto;
-            object-fit: contain;
+            height: auto; 
+            object-fit: contain; 
             display: block; 
             margin: 0px !important; 
-            padding: 0px !important;
-            border-radius: 4px;
-            animation: movingWaveGlow 2s ease-in-out infinite alternate; /* Muted pulse animation speed */
+            padding: 0px !important; 
+            border-radius: 4px; 
+            animation: movingWaveGlow 2s ease-in-out infinite alternate; 
         }
-
-        /* --- Master Framework Wrapper with Concentrated Orbiting Laser Border --- */
-        .tournament-center-container {
-            width: 100%;
-            background-color: rgb(17, 17, 17);
-            border-radius: 8px;
-            box-sizing: border-box;
+        /* --- Master Framework Wrapper with Concentrated Orbiting Laser Border --- */ 
+        .tournament-center-container { 
+            width: 100%; 
+            background-color: rgb(17, 17, 17); 
+            border-radius: 8px; 
+            box-sizing: border-box; 
             margin-top: 15px; 
+            /* Sharp, small laser beam line tracking along the 4 borders */ 
+            border: 3px solid transparent; 
+            background-image: linear-gradient(rgb(17, 17, 17), rgb(17, 17, 17)), conic-gradient(from var(--border-angle), #2dd4bf 0deg, #2dd4bf 30deg, transparent 50deg, transparent 360deg); 
+            background-origin: border-box; 
+            background-clip: padding-box, border-box; 
+            animation: orbitingLaserTrack 25s linear infinite; 
             
-            /* Sharp, small laser beam line tracking along the 4 borders */
-            border: 3px solid transparent;
-            background-image: linear-gradient(rgb(17, 17, 17), rgb(17, 17, 17)), 
-                              conic-gradient(from var(--border-angle), #2dd4bf 0deg, #2dd4bf 30deg, transparent 60deg, transparent 360deg);
-            background-origin: border-box;
-            background-clip: padding-box, border-box;
-            
-            /* Continuous circular loop animation */
-            animation: orbitingLaserTrack 12s linear infinite; 
-            
-            /* Clean baseline static shadow to keep depth without full background glow */
-            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
-            overflow: hidden; /* Ensures flush bottom elements hug the container corners */
-        }
+            /* Clean baseline static shadow to keep depth without full background glow */ 
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6); 
+            overflow: hidden; /* Ensures flush bottom elements hug the container corners */ 
+        } 
 
-        /* Keyframes that rotate the small light beam continuously in a perfect circle loop */
-        @keyframes orbitingLaserTrack {
-            to {
-                --border-angle: 360deg;
-            }
-        }
-        /* --- Integrated Admin Box inside the main master frame --- */
-        .admin-custom-code-gap {
-            width: 100%;
-            background-color: rgb(9, 9, 9);
+        /* Keyframes that rotate the small light beam continuously in a perfect circle loop */ 
+        @keyframes orbitingLaserTrack { 
+            to { 
+                --border-angle: 360deg; 
+            } 
+        } 
+
+        /* --- Integrated Admin Box inside the main master frame --- */ 
+        .admin-custom-code-gap { 
+            width: 100%; 
+            background-color: rgb(9, 9, 9); 
             border-bottom: 4px solid black; 
-            border-top-left-radius: 4px;
-            border-top-right-radius: 4px;
+            border-top-left-radius: 4px; 
+            border-top-right-radius: 4px; 
             padding: 8px 20px; 
-            box-sizing: border-box;
-            display: flex;
+            box-sizing: border-box; 
+            display: flex; 
             justify-content: space-between; 
-            align-items: center;
-            margin-bottom: 0px !important;
-        }
+            align-items: center; 
+            margin-bottom: 0px !important; 
+        } 
 
-        /* Styled Label sitting perfectly on the left side of the integrated box */
-        .admin-label-text {
-            color: #aaaaaa;
-            font-weight: bold;
-            font-size: 13px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
+        /* Styled Label sitting perfectly on the left side of the integrated box */ 
+        .admin-label-text { 
+            color: #aaaaaa; 
+            font-weight: bold; 
+            font-size: 13px; 
+            text-transform: uppercase; 
+            letter-spacing: 1px; 
+        } 
 
-        .inner-player-table {
-            border-collapse: collapse;
-            margin: 0;
-            padding: 0;
-        }
+        .inner-player-table { 
+            border-collapse: collapse; 
+            margin: 0; 
+            padding: 0; 
+        } 
 
-        .discord-comms-btn {
-            display: block;
-            vertical-align: middle;
-            transition: transform 0.2s ease;
-        }
+        .discord-comms-btn { 
+            display: block; 
+            vertical-align: middle; 
+            transition: transform 0.2s ease; 
+        } 
 
-        .discord-comms-btn:hover {
-            transform: scale(1.15);
-        }
+        .discord-comms-btn:hover { 
+            transform: scale(1.15); 
+        } 
 
-        .moving-gold-text {
-            color: #ffd700;
-            font-weight: bold;
-            font-size: 12px;
-            text-transform: uppercase;
-            letter-spacing: 0.5px;
-        }
+        .moving-gold-text { 
+            color: #ffd700; 
+            font-weight: bold; 
+            font-size: 12px; 
+            text-transform: uppercase; 
+            letter-spacing: 0.5px; 
+        } 
 
-        /* --- Standard 2014 Table Row Framework Grid Architecture --- */
-        .classic-layout-row-table {
-            width: 100%;
-            border-collapse: separate;
+        /* --- Standard 2014 Table Row Framework Grid Architecture --- */ 
+        .classic-layout-row-table { 
+            width: 100%; 
+            border-collapse: separate; 
             border-spacing: 15px; 
-            padding: 15px 5px 0px 5px;
+            padding: 15px 5px 0px 5px; 
         }
 
         .layout-box-cell {
@@ -312,10 +308,9 @@
             background: #555555;
             border-radius: 3px;
         }
-    </style>
-</head>
+    </style> 
+</head> 
 <body>
-
     <div class="master-layout-alignment-block">
         
         <!-- HEADER CONTAINER WITH THE BALANCED INTERACTIVE HALO GLOW -->
