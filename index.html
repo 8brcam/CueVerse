@@ -8,9 +8,16 @@
     <!-- Google Fonts import for Orbitron layout styling -->
     <link rel="preconnect" href="https://googleapis.com">
     <link rel="preconnect" href="https://gstatic.com" crossorigin>
-    <link href="https://googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet">
+    <link href="https://googleapis.com" rel="stylesheet">
     
     <style>
+        /* --- 1. Register Property for Smooth Border Angle Rotation --- */
+        @property --border-angle {
+            syntax: "<angle>";
+            inherits: false;
+            initial-value: 0deg;
+        }
+
         /* --- Base Layout & Custom Radial Mesh Background --- */
         body {
             margin: 0;
@@ -37,7 +44,7 @@
             overflow: hidden; 
         }
 
-        /* --- Header Logo Container Configuration with Game-Cyan 4-Way Moving Neon Glow --- */
+        /* --- Header Logo Container Configuration with Game-Cyan Muted Neon Glow --- */
         .main-top-header {
             width: 100%;
             margin: 0px !important;
@@ -49,17 +56,16 @@
             font-size: 0 !important;
         }
 
-        /* Balanced 4-way pulse around the full-width header image */
+        /* Subtle, low-intensity 4-way pulse around the header image so it pops out less */
         @keyframes movingWaveGlow {
             0% {
-                box-shadow: 0px 0px 25px rgba(45, 212, 191, 0.6);
+                box-shadow: 0px 0px 12px rgba(45, 212, 191, 0.25);
             }
             50% {
-                box-shadow: 0px 0px 45px rgba(45, 212, 191, 0.9), 
-                            0px 0px 20px rgba(45, 212, 191, 0.4);
+                box-shadow: 0px 0px 20px rgba(45, 212, 191, 0.45);
             }
             100% {
-                box-shadow: 0px 0px 25px rgba(45, 212, 191, 0.6);
+                box-shadow: 0px 0px 12px rgba(45, 212, 191, 0.25);
             }
         }
 
@@ -72,43 +78,43 @@
             margin: 0px !important; 
             padding: 0px !important;
             border-radius: 4px;
-            animation: movingWaveGlow 3s ease-in-out infinite alternate; 
+            animation: movingWaveGlow 5s ease-in-out infinite alternate; /* Muted pulse animation speed */
         }
 
-        /* Keyframes that smoothly shift the snake gradient track positions horizontally and vertically */
-        @keyframes safeSnakeTrack {
-            0% { background-position: 0% 50%; }
-            50% { background-position: 100% 50%; }
-            100% { background-position: 0% 50%; }
-        }
-        /* --- Master Framework Wrapper with Fused Admin Box and Safe Snake Border --- */
+        /* --- Master Framework Wrapper with Concentrated Orbiting Laser Border --- */
         .tournament-center-container {
             width: 100%;
             background-color: rgb(17, 17, 17);
             border-radius: 8px;
             box-sizing: border-box;
-            margin-top: 15px; /* Clean gap below the header graphic */
+            margin-top: 15px; 
             
-            /* FIXED: Laser border setup using an animated gradient that tracks ALL 4 sides completely */
-            border: 4px solid transparent;
+            /* Sharp, small laser beam line tracking along the 4 borders */
+            border: 3px solid transparent;
             background-image: linear-gradient(rgb(17, 17, 17), rgb(17, 17, 17)), 
-                              linear-gradient(90deg, #2dd4bf 0%, rgba(45, 212, 191, 0.3) 25%, transparent 50%, rgba(45, 212, 191, 0.3) 75%, #2dd4bf 100%);
+                              conic-gradient(from var(--border-angle), #2dd4bf 0deg, #2dd4bf 30deg, transparent 60deg, transparent 360deg);
             background-origin: border-box;
             background-clip: padding-box, border-box;
-            background-size: 100% 100%, 300% 300%;
-            animation: safeSnakeTrack 14s linear infinite; /* Slow cinematic snake speed */
             
-            /* Baseline atmospheric ambient glow matching your original grey styling */
-            box-shadow: 0 0 15px rgba(128, 128, 128, 0.2), 
-                        0 0 25px rgba(128, 128, 128, 0.1);
+            /* Continuous circular loop animation */
+            animation: orbitingLaserTrack 12s linear infinite; 
+            
+            /* Clean baseline static shadow to keep depth without full background glow */
+            box-shadow: 0 4px 20px rgba(0, 0, 0, 0.6);
+            overflow: hidden; /* Ensures flush bottom elements hug the container corners */
         }
 
+        /* Keyframes that rotate the small light beam continuously in a perfect circle loop */
+        @keyframes orbitingLaserTrack {
+            to {
+                --border-angle: 360deg;
+            }
+        }
         /* --- Integrated Admin Box inside the main master frame --- */
-        /* FIXED: Stripped bottom margins completely so it locks seamlessly against the elements below it */
         .admin-custom-code-gap {
             width: 100%;
             background-color: rgb(9, 9, 9);
-            border-bottom: 4px solid black; /* Standard divider look */
+            border-bottom: 4px solid black; 
             border-top-left-radius: 4px;
             border-top-right-radius: 4px;
             padding: 8px 20px; 
@@ -152,16 +158,7 @@
             letter-spacing: 0.5px;
         }
 
-        /* --- Bottom Layout Spacer Block --- */
-        .bottom-divider-bar {
-            width: 100%;
-            background-color: black;
-            height: 15px;
-            box-sizing: border-box;
-        }
-
         /* --- Standard 2014 Table Row Framework Grid Architecture --- */
-        /* FIXED: Added padding-top: 15px directly to layout to replace old heavy black spacer bars safely */
         .classic-layout-row-table {
             width: 100%;
             border-collapse: separate;
@@ -176,6 +173,7 @@
             vertical-align: top;
             box-sizing: border-box;
         }
+
         /* --- COLUMN 1: LEFT TOURNAMENT MENU BOX --- */
         .left-menu-cell {
             width: 160px;
@@ -342,8 +340,6 @@
                     </tr>
                 </table>
             </div>
-
-            <!-- FIXED: Black divider-bar completely stripped out from here to allow tables to run flush -->
             
             <!-- ROW 1 TABLE CONTEXT BLOCK -->
             <table class="classic-layout-row-table">
@@ -397,19 +393,19 @@
                 </tr>
             </table>
             <!-- ROW 2 TABLE CONTEXT BLOCK -->
-            <table class="classic-layout-row-table" style="margin-top: -5px;">
+            <table class="classic-layout-row-table" style="margin-top: -5px; padding-bottom: 0px; border-spacing: 15px 0px;">
                 <tr>
                     <!-- PIECE 1: PLAYERS RECAP CANVAS BOX -->
                     <td class="layout-box-cell" style="width: 220px; height: 424px; min-width: 220px;">
                         <div style="height: 100%; display: flex; flex-direction: column; justify-content: space-between;">
                             <div>
-                                <h2 class="form-heading-main" style="font-size: 16px; margin-top:0;">Previous Season Recap</h2>
+                                <h2 class="form-heading-main" style="font-size: 16px; margin-top: 0;">Previous Season Recap</h2>
                                 <div class="scrollable-inner-list">
                                     <!-- Drop your future player list links or text elements directly right here -->
                                 </div>
                             </div>
                             <div style="padding-top: 8px; border-top: 1px solid rgb(17, 17, 17); margin-top: auto;">
-                                <span style="font-size: 11px; color: #888888;">Winner:</span> <b style="color: rgb(153,153,153); font-size:11px;"></b>
+                                <span style="font-size: 11px; color: #888888;">Winner:</span> <b style="color: rgb(153,153,153); font-size: 11px;"></b>
                             </div>
                         </div>
                     </td>
@@ -442,9 +438,6 @@
                     </td>
                 </tr>
             </table>
-
-            <!-- This block inserts the exact required spacer gap before the master container's neon bottom border line closes -->
-            <div class="bottom-divider-bar"></div>
 
         </div> <!-- Closes master tournament-center-container -->
     </div> <!-- Closes master-layout-alignment-block -->
