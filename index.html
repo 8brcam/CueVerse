@@ -25,9 +25,9 @@
             background-size: 16px 16px;
         }
 
-        /* --- Master Alignment Block --- */
+        /* --- Expanded Widescreen Master Grid Alignment Block --- */
         .master-layout-alignment-block {
-            width: 1160px; /* Comfortably holds 1120px content + 20px side cushions */
+            width: 1160px; /* Holds 1120px content + 20px side cushions */
             margin: 0 auto;
             display: block;
             box-sizing: border-box;
@@ -40,10 +40,13 @@
         /* --- Header Logo Container Configuration with Game-Cyan 4-Way Moving Neon Glow --- */
         .main-top-header {
             width: 100%;
-            margin-bottom: 0px; 
+            margin: 0px !important;
+            padding: 0px !important;
             box-sizing: border-box;
             display: flex;
             justify-content: center;
+            line-height: 0 !important; 
+            font-size: 0 !important;
         }
 
         /* Balanced 4-way pulse around the full-width header image */
@@ -60,32 +63,63 @@
             }
         }
 
-        /* FIXED: Restored layout image size to exactly 1120px to match the boxes below perfectly */
+        /* Restored layout image size to exactly 1120px to match the boxes below perfectly */
         .header-logo-graphic {
             width: 1120px; 
             height: auto;
             object-fit: contain;
-            display: block;
+            display: block; 
+            margin: 0px !important; 
+            padding: 0px !important;
             border-radius: 4px;
             animation: movingWaveGlow 3s ease-in-out infinite alternate; 
         }
 
-        /* --- Full-width ribbon layout with reduced height (tight padding) --- */
+        /* Keyframes that smoothly shift the snake gradient track positions horizontally and vertically */
+        @keyframes safeSnakeTrack {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+        /* --- Master Framework Wrapper with Fused Admin Box and Safe Snake Border --- */
+        .tournament-center-container {
+            width: 100%;
+            background-color: rgb(17, 17, 17);
+            border-radius: 8px;
+            box-sizing: border-box;
+            margin-top: 15px; /* Clean gap below the header graphic */
+            
+            /* FIXED: Laser border setup using an animated gradient that tracks ALL 4 sides completely */
+            border: 4px solid transparent;
+            background-image: linear-gradient(rgb(17, 17, 17), rgb(17, 17, 17)), 
+                              linear-gradient(90deg, #2dd4bf 0%, rgba(45, 212, 191, 0.3) 25%, transparent 50%, rgba(45, 212, 191, 0.3) 75%, #2dd4bf 100%);
+            background-origin: border-box;
+            background-clip: padding-box, border-box;
+            background-size: 100% 100%, 300% 300%;
+            animation: safeSnakeTrack 14s linear infinite; /* Slow cinematic snake speed */
+            
+            /* Baseline atmospheric ambient glow matching your original grey styling */
+            box-shadow: 0 0 15px rgba(128, 128, 128, 0.2), 
+                        0 0 25px rgba(128, 128, 128, 0.1);
+        }
+
+        /* --- Integrated Admin Box inside the main master frame --- */
+        /* FIXED: Stripped bottom margins completely so it locks seamlessly against the elements below it */
         .admin-custom-code-gap {
             width: 100%;
             background-color: rgb(9, 9, 9);
-            border: 4px solid black; 
-            border-radius: 6px;
-            padding: 4px 15px; 
-            margin-bottom: 20px;
+            border-bottom: 4px solid black; /* Standard divider look */
+            border-top-left-radius: 4px;
+            border-top-right-radius: 4px;
+            padding: 8px 20px; 
             box-sizing: border-box;
             display: flex;
             justify-content: space-between; 
             align-items: center;
-            margin-top: 10px; 
+            margin-bottom: 0px !important;
         }
 
-        /* Styled Label sitting perfectly on the left side of the full-width box */
+        /* Styled Label sitting perfectly on the left side of the integrated box */
         .admin-label-text {
             color: #aaaaaa;
             font-weight: bold;
@@ -117,78 +151,6 @@
             text-transform: uppercase;
             letter-spacing: 0.5px;
         }
-        /* --- Master Framework Wrapper with 4-Way Travelling Cyan Border Light --- */
-        .tournament-center-container {
-            position: relative; /* Required to lock the travelling glow pseudo-element behind it */
-            width: 100%;
-            background-color: rgb(17, 17, 17);
-            border: none; /* FIXED: Removed solid black borders so light travels across all 4 sides */
-            border-radius: 8px;
-            box-sizing: border-box;
-            margin-top: -20px; 
-            overflow: hidden; /* Clips the spinning gradient to only show on the border profile */
-            /* Baseline atmospheric ambient glow matching your original grey styling */
-            box-shadow: 0 0 15px rgba(128, 128, 128, 0.2), 
-                        0 0 25px rgba(128, 128, 128, 0.1);
-        }
-
-        /* Keyframes animation that physically rotates the traveling light beam path clockwise */
-        @keyframes travelBorder {
-            0% {
-                transform: rotate(0deg);
-            }
-            100% {
-                transform: rotate(360deg);
-            }
-        }
-
-        /* FIXED: Amplified container canvas bounds (width/height 300%) to ensure light travels smoothly over the widescreen top and bottom edges */
-        .tournament-center-container::before {
-            content: '';
-            position: absolute;
-            top: -100%;
-            left: -100%;
-            width: 300%;
-            height: 300%;
-            /* A clean stream of Cyan (#2dd4bf) light fading into transparent black space */
-            background: conic-gradient(
-                from 0deg,
-                transparent 75%,
-                #2dd4bf 92%,
-                #2dd4bf 98%,
-                transparent 100%
-            );
-            animation: travelBorder 8s linear infinite; /* 8s gives a smoother cinematic speed over the larger top/bottom run */
-            z-index: 1;
-        }
-
-        /* FIXED: Masking layer leaves an explicit 4px frame track around ALL 4 borders (top, bottom, left, right) */
-        .tournament-center-container::after {
-            content: '';
-            position: absolute;
-            inset: 4px; /* Creates the uniform glowing neon path thickness all the way around */
-            background: rgb(17, 17, 17);
-            border-radius: 6px;
-            z-index: 2;
-        }
-
-        /* --- Master Z-Index Safety Reset for Table Content Layout Elements --- */
-        /* Forces all interior layout columns to render safely on top of the travelling border rays background */
-        .tournament-center-container > * {
-            position: relative;
-            z-index: 3;
-            /* FIXED: Re-applied internal grid structure buffers to replace the old heavy black borders safely */
-            padding-left: 20px;
-            padding-right: 20px;
-        }
-
-        /* --- Header Spacer Bar Section --- */
-        .banner-divider-bar {
-            width: 100%;
-            background-color: black;
-            padding: 10px 0px;
-            box-sizing: border-box;
-        }
 
         /* --- Bottom Layout Spacer Block --- */
         .bottom-divider-bar {
@@ -199,10 +161,12 @@
         }
 
         /* --- Standard 2014 Table Row Framework Grid Architecture --- */
+        /* FIXED: Added padding-top: 15px directly to layout to replace old heavy black spacer bars safely */
         .classic-layout-row-table {
             width: 100%;
             border-collapse: separate;
-            border-spacing: 15px; /* Handles all gap spacing mathematically */
+            border-spacing: 15px; 
+            padding: 15px 5px 0px 5px;
         }
 
         .layout-box-cell {
@@ -212,7 +176,6 @@
             vertical-align: top;
             box-sizing: border-box;
         }
-
         /* --- COLUMN 1: LEFT TOURNAMENT MENU BOX --- */
         .left-menu-cell {
             width: 160px;
@@ -356,29 +319,31 @@
 <body>
 
     <div class="master-layout-alignment-block">
+        
         <!-- HEADER CONTAINER WITH THE BALANCED INTERACTIVE HALO GLOW -->
         <header class="main-top-header">
             <img src="8brcamBanner1.jpg" alt="8brcam Tournament Banner Logo" class="header-logo-graphic" loading="lazy">
         </header>
 
-        <!-- Full-width ribbon layout with fixed margin padding alignment -->
-        <div class="admin-custom-code-gap">
-            <span class="admin-label-text">Admin:</span>
-            <table class="inner-player-table">
-                <tr>
-                    <td style="padding-right: 8px !important;">
-                        <a href="https://discord.com/users/1368339128491442196" target="_blank" title="Click to message this player to arrange your group stage match">
-                            <img src="https://github.com/8brcam/Groups/blob/main/Discordd-Photoroom.png?raw=true" width="18" height="18" class="discord-comms-btn">
-                        </a>
-                    </td>
-                    <td><span class="moving-gold-text">Kevin likes ladyboys</span></td>
-                </tr>
-            </table>
-        </div>
-
         <!-- Master Framework Wrapper -->
         <div class="tournament-center-container">
-            <div class="banner-divider-bar"></div>
+
+            <!-- FUSED PLACEMENT: Inside the container shell to kill the layout gap space permanently -->
+            <div class="admin-custom-code-gap">
+                <span class="admin-label-text">Admin:</span>
+                <table class="inner-player-table">
+                    <tr>
+                        <td style="padding-right: 8px !important;">
+                            <a href="https://discord.com/users/1368339128491442196" target="_blank" title="Click to message this player to arrange your group stage match">
+                                <img src="https://github.com/8brcam/Groups/blob/main/Discordd-Photoroom.png?raw=true" width="18" height="18" class="discord-comms-btn">
+                            </a>
+                        </td>
+                        <td><span class="moving-gold-text">Kevin likes ladyboys</span></td>
+                    </tr>
+                </table>
+            </div>
+
+            <!-- FIXED: Black divider-bar completely stripped out from here to allow tables to run flush -->
             
             <!-- ROW 1 TABLE CONTEXT BLOCK -->
             <table class="classic-layout-row-table">
