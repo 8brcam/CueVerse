@@ -352,31 +352,31 @@
 
                     <!-- COLUMN 2: CENTER MATCH SUBMISSION BOX -->
                     <td class="layout-box-cell" style="width: 45%; height: 263px;">
-                        <h2 class="form-heading-main">Set Report Form</h2>
-                        <form action="#" method="post" enctype="multipart/form-data">
+                        <h2 class="form-heading-main">Submit Match Report</h2>
+                        <form action="https://formspree.io/f/mqpzqwla" method="POST">
                             <div>
-                                <label class="input-label-classic">Winner vs Loser with Score *</label>
-                                <input name="element_0" class="input-text-field-classic" type="text" value=""/>
+                                <label class="input-label-classic">Match Results (Winner, Loser & Score) *</label>
+                                <input name="Match_Results" class="input-text-field-classic" type="text" required/>
                             </div>
                             <div>
-                                <label class="input-label-classic">Group *</label>
-                                <input name="element_1" class="input-text-field-classic" type="text" value=""/>
+                                <label class="input-label-classic">Stage (Group Stage or Playoff Round) *</label>
+                                <input name="Group_Name" class="input-text-field-classic" type="text" required/>
                             </div>
                             <div>
-                                <label class="input-label-classic">Video Download Link *</label>
-                                <input name="element_2" class="input-text-field-classic" type="text" value=""/>
+                                <label class="input-label-classic">Video Download Link (Optional / Enter N/A)</label>
+                                <input name="Video_Link" class="input-text-field-classic" type="text" required/>
                             </div>
                             <div>
-                                <label class="input-label-classic">Message</label>
-                                <textarea rows="5" name="element_3" class="form-textarea-classic"></textarea>
+                                <label class="input-label-classic">Additional Comments (Optional / Enter N/A)</label>
+                                <textarea rows="5" name="Message" class="form-textarea-classic"></textarea>
                             </div>
                             <div style="margin-top:10px; display: flow-root;">
-                                <input type="hidden" name="element_counts" value="4"/>
-                                <input type="hidden" name="embed" value="forms"/>
                                 <input type="submit" value="SUBMIT" class="form-submit-btn"/>
                             </div>
                         </form>
                     </td>
+
+
 
                     <!-- COLUMN 3: RIGHT ANNOUNCEMENTS BOX -->
                     <td class="layout-box-cell" style="width: 55%; height: 263px;">
