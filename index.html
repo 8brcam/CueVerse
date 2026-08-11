@@ -27,32 +27,40 @@
 
         /* --- Expanded Widescreen Master Grid Alignment Block --- */
         .master-layout-alignment-block {
-            width: 1120px; /* Locked widescreen width to minimize the side gap spacing */
+            width: 1160px; /* Widened slightly from 1120px to hold side breathing room */
             margin: 0 auto;
             display: block;
             box-sizing: border-box;
+            /* Padding-top allows the top glow animation to bleed out instead of getting clipped */
+            padding-top: 15px; 
+            padding-left: 20px;
+            padding-right: 20px;
+            overflow: hidden; 
         }
 
-        /* --- Header Logo Container Configuration with Game-Cyan Moving Wave Neon Glow --- */
+        /* --- Header Logo Container Configuration with Game-Cyan 4-Way Moving Neon Glow --- */
         .main-top-header {
             width: 100%;
-            margin-bottom: 20px;
+            margin-bottom: 0px; 
             box-sizing: border-box;
         }
 
-        /* Keyframes animation handles a high-end moving wave glow in original Cyan (#2dd4bf) */
+        /* FIXED: Changed from @@ to single @ so the browser compiles and renders the 4-way neon glow completely */
         @keyframes movingWaveGlow {
             0% {
-                box-shadow: -15px 0px 20px -10px rgba(45, 212, 191, 0.7),
-                            0px 0px 10px rgba(45, 212, 191, 0.3);
+                box-shadow: -25px -10px 30px -10px rgba(45, 212, 191, 0.75),
+                            25px 10px 30px -10px rgba(45, 212, 191, 0.75),
+                            0px 0px 15px rgba(45, 212, 191, 0.35);
             }
             50% {
-                box-shadow: 0px 0px 30px rgba(45, 212, 191, 0.8),
-                            0px 0px 15px rgba(45, 212, 191, 0.4);
+                box-shadow: -10px -20px 40px rgba(45, 212, 191, 0.85),
+                            10px 20px 40px rgba(45, 212, 191, 0.85),
+                            0px 0px 25px rgba(45, 212, 191, 0.55);
             }
             100% {
-                box-shadow: 15px 0px 20px -10px rgba(45, 212, 191, 0.7),
-                            0px 0px 10px rgba(45, 212, 191, 0.3);
+                box-shadow: 25px -10px 30px -10px rgba(45, 212, 191, 0.75),
+                            -25px 10px 30px -10px rgba(45, 212, 191, 0.75),
+                            0px 0px 15px rgba(45, 212, 191, 0.35);
             }
         }
 
@@ -62,10 +70,57 @@
             object-fit: contain;
             display: block;
             border-radius: 4px;
-            animation: movingWaveGlow 3s ease-in-out infinite alternate; /* Applies moving Cyan game glow */
+            animation: movingWaveGlow 3s ease-in-out infinite alternate; /* Full 360 surround glow */
         }
 
-        /* --- Master Restored 2014 Framework Wrapper with Grey Neon Border Glow --- */
+        /* --- Full-width ribbon layout with reduced height (tight padding) --- */
+        .admin-custom-code-gap {
+            width: 100%;
+            background-color: rgb(9, 9, 9);
+            border: 4px solid black; 
+            border-radius: 6px;
+            padding: 4px 15px; 
+            margin-bottom: 20px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: space-between; 
+            align-items: center;
+            margin-top: 10px; 
+        }
+
+        /* Styled Label sitting perfectly on the left side of the full-width box */
+        .admin-label-text {
+            color: #aaaaaa;
+            font-weight: bold;
+            font-size: 13px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+        }
+
+        .inner-player-table {
+            border-collapse: collapse;
+            margin: 0;
+            padding: 0;
+        }
+
+        .discord-comms-btn {
+            display: block;
+            vertical-align: middle;
+            transition: transform 0.2s ease;
+        }
+
+        .discord-comms-btn:hover {
+            transform: scale(1.15);
+        }
+
+        .moving-gold-text {
+            color: #ffd700;
+            font-weight: bold;
+            font-size: 12px;
+            text-transform: uppercase;
+            letter-spacing: 0.5px;
+        }
+        /* --- Master Restored 2014 Framework Wrapper with RESTORED Grey Neon Border Glow --- */
         .tournament-center-container {
             width: 100%;
             background-color: rgb(17, 17, 17);
@@ -73,6 +128,8 @@
             border-right: 20px solid black;
             border-radius: 8px;
             box-sizing: border-box;
+            /* Negative top margin pulls this box up flush against your admin banner above it, removing the gap entirely */
+            margin-top: -20px; 
             /* Sits inside custom dark metallic grey box borders shadow profiles */
             box-shadow: 0 0 15px rgba(128, 128, 128, 0.3), 
                         0 0 25px rgba(128, 128, 128, 0.15);
@@ -98,7 +155,7 @@
         .classic-layout-row-table {
             width: 100%;
             border-collapse: separate;
-            border-spacing: 15px; /* Safely handles all gap spacing mathematically */
+            border-spacing: 15px; /* Handles all gap spacing mathematically */
         }
 
         .layout-box-cell {
@@ -134,7 +191,7 @@
             cursor: pointer;
         }
 
-        /* Master UI items hover state matching grey layout look */
+        /* Hover states matching the sleek grey look */
         .nav-btn-link:hover, .nav-btn-link.active {
             border-color: #888888 !important;
             color: #ffffff !important;
@@ -258,6 +315,20 @@
             <img src="8brcamBanner1.jpg" alt="8brcam Tournament Banner Logo" class="header-logo-graphic" loading="lazy">
         </header>
 
+        <!-- Full-width ribbon layout with fixed margin padding alignment -->
+        <div class="admin-custom-code-gap">
+            <span class="admin-label-text">Admin:</span>
+            <table class="inner-player-table">
+                <tr>
+                    <td style="padding-right: 8px !important;">
+                        <a href="https://discord.com/users/1368339128491442196" target="_blank" title="Click to message admin">
+                            <img src="https://github.com/8brcam/Groups/blob/main/Discordd-Photoroom.png?raw=true" width="18" height="18" class="discord-comms-btn">
+                        </a>
+                    </td>
+                    <td><span class="moving-gold-text">Kevin likes ladyboys</span></td>
+                </tr>
+            </table>
+        </div>
         <!-- Master Framework Wrapper -->
         <div class="tournament-center-container">
             <div class="banner-divider-bar"></div>
@@ -275,6 +346,7 @@
                         <a href="./Videos/" target="content-frame" class="nav-btn-link" onclick="switchTab(this)">Videos</a>
                         <a href="./Forum/" target="content-frame" class="nav-btn-link" onclick="switchTab(this)">Forum</a>
                     </td>
+
                     <!-- COLUMN 2: CENTER MATCH SUBMISSION BOX -->
                     <td class="layout-box-cell" style="width: 45%; height: 263px;">
                         <h2 class="form-heading-main">Set Report Form</h2>
@@ -312,7 +384,6 @@
                     </td>
                 </tr>
             </table>
-
             <!-- ROW 2 TABLE CONTEXT BLOCK -->
             <table class="classic-layout-row-table" style="margin-top: -5px;">
                 <tr>
