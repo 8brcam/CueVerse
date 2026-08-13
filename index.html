@@ -323,15 +323,15 @@
 
             <!-- FUSED PLACEMENT: Inside the container shell to kill the layout gap space permanently -->
             <div class="admin-custom-code-gap">
-                <span class="admin-label-text">Admin:</span>
+                <span class="admin-label-text">Admins:</span>
                 <table class="inner-player-table">
                     <tr>
                         <td style="padding-right: 8px !important;">
-                            <a href="https://discord.com/users/1368339128491442196" target="_blank" title="Click to message this player to arrange your group stage match">
-                                <img src="https://github.com/8brcam/Groups/blob/main/Discordd-Photoroom.png?raw=true" width="18" height="18" class="discord-comms-btn">
+                            <a href="https://discord.com/users/1368339128491442196" target="_blank" title="Message Admin">
+                                <img src="https://github.com/8brcam/Groups/blob/main/Discordd-Photoroom.png?raw=true" width="22" height="18" class="discord-comms-btn">
                             </a>
                         </td>
-                        <td><span class="moving-gold-text">Kevin likes ladyboys</span></td>
+                        <td><span class="moving-white-text">Kevin</span></td>
                     </tr>
                 </table>
             </div>
@@ -375,18 +375,25 @@
                             </div>
                         </form>
                     </td>
+<!-- COLUMN 3: RIGHT ANNOUNCEMENTS BOX -->
+<td class="layout-box-cell" style="width: 55%; height: 263px;">
+    <h2 class="form-heading-main">Announcements</h2>
+    <div class="announcements-text-area" style="color: #ffffff;">
+        <!-- Static sentences that DO NOT scroll (White font) -->
+        <p style="margin-bottom: 10px; color: #ffffff; font-weight: bold; font-size: 16px;">Welcome to 8brcam look who's reborn!</p>
+        <p style="margin-bottom: 15px; color: #ffffff;">Applications are open. Group stages will lock once all player slots are filled.</p>
+        
+        <!-- Scrolling announcements (White font) -->
+        <marquee behavior="scroll" direction="left" scrollamount="4" style="color: #ffffff;">
+            ⏳ Player slots are filling up fast! Submit your application now before the brackets close...
+        </marquee>
+    </div>
+</td>
+</tr>
+</table>
 
 
 
-                    <!-- COLUMN 3: RIGHT ANNOUNCEMENTS BOX -->
-                    <td class="layout-box-cell" style="width: 55%; height: 263px;">
-                        <h2 class="form-heading-main">Announcements</h2>
-                        <div class="announcements-text-area">
-                            Welcome to the arena. Type your announcements here.
-                        </div>
-                    </td>
-                </tr>
-            </table>
             <!-- ROW 2 TABLE CONTEXT BLOCK -->
             <table class="classic-layout-row-table" style="margin-top: -5px; padding-bottom: 0px; border-spacing: 15px 0px;">
                 <tr>
@@ -415,31 +422,32 @@
                         <table style="width: 100%; border-collapse: separate; border-spacing: 0;">
                             <tr>
 <!-- PIECE 3: TOP 10 ALL TIME LEADERBOARD CONTAINER BOX -->
-<td class="layout-box-cell" style="width: 100%; height: 260px; display: block;">
-    <!-- Headings margin-bottom creates the initial space -->
-    <h2 class="form-heading-main" style="font-size: 16px; margin-bottom: 5px;">Top 10 All Time</h2>
-    
-    <!-- LIGHT BLUE LINE WITH LEFT & RIGHT MOVEMENT -->
-    <div style="width: 100%; height: 3px; background: #00f0ff; box-shadow: 0 0 10px #00f0ff, 0 0 20px #00f0ff; margin-bottom: 15px; border-radius: 2px; overflow: hidden;">
-        <!-- Changed behavior to alternate for left-and-right bouncing -->
-        <marquee behavior="alternate" direction="left" scrollamount="3" style="color: transparent; height: 100%; width: 100%;">.</marquee>
-    </div>
-    
-    <!-- list-style-type: none hides the automatic HTML numbers -->
-    <ol class="leaderboard-ordered-list" style="font-size: 15px; margin-left: 20px; list-style-type: none; padding-left: 0;">
-        <li>1. Luis, deep.cerebro</li>
-        <li>2. Ant, good-faith</li>
-        <li>3. Kevin, sixohtwo</li>
-        <li>4. MJ, MJ_The_King</li>
-        <li>5. James, cue.ball</li>
-        <li>6. Chris, chris.dogg</li>
-        <li>7. CK, Xx_CK_xX</li>
-        <li>8. Si, xxl_themachine_lxx</li>
-        <li>9. Charlie, p00l_charlie</li>
-        <!-- Added a negative margin to pull "10." slightly to the left -->
-        <li style="margin-left: -4px;">10. Stu, zl_stu_lz</li>
-    </ol>
+<td class="w-full h-[260px] block">
+  <!-- Headings margin-bottom creates the initial space -->
+  <h2 class="text-[16px] mb-[5px] font-bold">Top 10 All Time</h2>
+  
+  <!-- LIGHT BLUE LINE WITH GLOW EFFECT -->
+  <div class="w-full h-[3px] bg-[#00f0ff] mb-[15px] rounded-[2px] overflow-hidden" style="box-shadow: 0 0 10px #00f0ff, 0 0 20px #00f0ff;">
+    <!-- Animated line inside instead of marquee -->
+    <div class="h-full w-1/3 bg-[#00f0ff] animate-pulse"></div>
+  </div>
+  
+  <!-- Leaderboard List -->
+  <ol class="text-[15px] pl-0 list-none custom-leaderboard-list">
+    <li class="pl-[20px]">1. Luis, deep.cerebro</li>
+    <li class="pl-[20px]">2. Ant, good-faith</li>
+    <li class="pl-[20px]">3. Kevin, sixohtwo</li>
+    <li class="pl-[20px]">4. MJ, MJ_The_King</li>
+    <li class="pl-[20px]">5. James, cue.ball</li>
+    <li class="pl-[20px]">6. Chris, chris.dogg</li>
+    <li class="pl-[20px]">7. CK, Xx_CK_xX</li>
+    <li class="pl-[20px]">8. Si, xxl_themachine_lxx</li>
+    <li class="pl-[20px]">9. Charlie, p00l_charlie</li>
+    <!-- Fixed syntax error and alignment for double digits -->
+    <li class="pl-[12px]">10. Stu, zl_stu_lz</li>
+  </ol>
 </td>
+
                             </tr>
                             <tr><td style="height: 15px;"></td></tr>
                             <tr>
