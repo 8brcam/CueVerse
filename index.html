@@ -8,7 +8,10 @@
     <!-- Google Fonts import for Orbitron layout styling --> 
     <link rel="preconnect" href="https://googleapis.com"> 
     <link rel="preconnect" href="https://gstatic.com" crossorigin> 
-    <link href="https://googleapis.com/css2?family=Orbitron:wght@400;700&display=swap" rel="stylesheet"> 
+    <link href="https://googleapis.com" rel="stylesheet"> 
+
+    <!-- FORCES TAILWIND PLAY COMPATIBILITY ON GITHUB PAGES -->
+    <script src="https://tailwindcss.com"></script>
 
     <style> 
         /* --- 1. Register Property for Smooth Border Angle Rotation --- */ 
@@ -81,7 +84,7 @@
             animation: movingWaveGlow 2s ease-in-out infinite alternate; 
         }
         /* --- Master Framework Wrapper with Concentrated Orbiting Laser Border --- */ 
-        .tournament-center-container { 
+        .tournament-center-container {
             width: 100%; 
             background-color: rgb(17, 17, 17); 
             border-radius: 8px; 
@@ -116,9 +119,10 @@
             padding: 8px 20px; 
             box-sizing: border-box; 
             display: flex; 
-            justify-content: space-between; 
+            justify-content: flex-start; 
             align-items: center; 
             margin-bottom: 0px !important; 
+            gap: 10px;
         } 
 
         /* Styled Label sitting perfectly on the left side of the integrated box */ 
@@ -195,7 +199,6 @@
             cursor: pointer;
         }
 
-        /* Hover states matching the sleek grey look */
         .nav-btn-link:hover, .nav-btn-link.active {
             border-color: #888888 !important;
             color: #ffffff !important;
@@ -212,7 +215,6 @@
             margin-top: 10px;
             margin-bottom: 10px;
         }
-
         /* --- Inputs, Form Elements, Labels --- */
         .input-label-classic {
             font-size: 13px;
@@ -289,7 +291,7 @@
             font-size: 11px; 
             padding-left: 22px; 
             margin: 0px; 
-            white-space: nowrap; 
+            white-space: normal !important; /* FIXED: Text wraps instead of breaking out */
             overflow: hidden;
         }
 
@@ -321,21 +323,26 @@
         <!-- Master Framework Wrapper -->
         <div class="tournament-center-container">
 
-            <!-- FUSED PLACEMENT: Inside the container shell to kill the layout gap space permanently -->
+            <!-- FIXED ADMIN BAR: Kevin sits right next to ADMIN label tightly on one line -->
             <div class="admin-custom-code-gap">
                 <span class="admin-label-text">Admins:</span>
-                <table class="inner-player-table">
+                <table class="inner-player-table" style="display: inline-block; vertical-align: middle;">
                     <tr>
-                        <td style="padding-right: 8px !important;">
+                        <td style="padding-right: 8px !important; vertical-align: middle;">
                             <a href="https://discord.com/users/1368339128491442196" target="_blank" title="Message Admin">
-                                <img src="https://github.com/8brcam/Groups/blob/main/Discordd-Photoroom.png?raw=true" width="22" height="18" class="discord-comms-btn">
+                                <img src="https://github.com/8brcam/Groups/blob/main/Discordd-Photoroom.png?raw=true" width="18" height="18" class="discord-comms-btn">
                             </a>
                         </td>
-                        <td><span class="moving-white-text">Kevin</span></td>
+<td style="vertical-align: middle;">
+    <!-- Added font-size: 14px !important to change the text size -->
+    <span class="moving-gold-text" style="text-transform: none !important; color: #e2e8f0 !important; font-size: 14px !important;">Kevin</span>
+</td>
+
+
+
                     </tr>
                 </table>
             </div>
-            
             <!-- ROW 1 TABLE CONTEXT BLOCK -->
             <table class="classic-layout-row-table">
                 <tr>
@@ -351,7 +358,7 @@
                     </td>
 
                     <!-- COLUMN 2: CENTER MATCH SUBMISSION BOX -->
-                    <td class="layout-box-cell" style="width: 45%; height: 263px;">
+                    <td class="layout-box-cell" style="width: 40%; height: 263px;">
                         <h2 class="form-heading-main">Submit Match Report</h2>
                         <form action="https://formspree.io/f/xrpzqjyq" method="POST">
                             <div>
@@ -375,25 +382,23 @@
                             </div>
                         </form>
                     </td>
-<!-- COLUMN 3: RIGHT ANNOUNCEMENTS BOX -->
-<td class="layout-box-cell" style="width: 55%; height: 263px;">
-    <h2 class="form-heading-main">Announcements</h2>
-    <div class="announcements-text-area" style="color: #ffffff;">
-        <!-- Static sentences that DO NOT scroll (White font) -->
-        <p style="margin-bottom: 10px; color: #ffffff; font-weight: bold; font-size: 16px;">Welcome to 8brcam look who's reborn!</p>
-        <p style="margin-bottom: 15px; color: #ffffff;">Applications are open. Group stages will lock once all player slots are filled.</p>
-        
-        <!-- Scrolling announcements (White font) -->
-        <marquee behavior="scroll" direction="left" scrollamount="4" style="color: #ffffff;">
-            ⏳ Player slots are filling up fast! Submit your application now before the brackets close...
-        </marquee>
-    </div>
-</td>
-</tr>
-</table>
 
-
-
+                    <!-- COLUMN 3: RIGHT ANNOUNCEMENTS BOX (Fixed Width & White Font Setup) -->
+                    <td class="layout-box-cell" style="width: 45%; height: 263px;">
+                        <h2 class="form-heading-main">Announcements</h2>
+                        <div class="announcements-text-area" style="color: #ffffff; height: 200px; overflow-y: auto;">
+                            <!-- Static content text blocks -->
+                            <p style="margin: 0 0 10px 0; color: #ffffff; font-weight: bold; font-size: 16px;">Welcome to 8brcam look who's reborn!</p>
+                            <p style="margin: 0 0 15px 0; color: #ffffff;">Applications are open. Group stages will lock once all player slots are filled.</p>
+                            
+                            <!-- Scrolling white announcements ticker tracker -->
+                            <marquee behavior="scroll" direction="left" scrollamount="4" style="color: #ffffff; display: block; margin-top: 20px; font-weight: bold;">
+                                ⏳ Player slots are filling up fast! Submit your application now before the brackets close...
+                            </marquee>
+                        </div>
+                    </td>
+                </tr>
+            </table>
             <!-- ROW 2 TABLE CONTEXT BLOCK -->
             <table class="classic-layout-row-table" style="margin-top: -5px; padding-bottom: 0px; border-spacing: 15px 0px;">
                 <tr>
@@ -403,7 +408,7 @@
                             <div>
                                 <h2 class="form-heading-main" style="font-size: 16px; margin-top: 0;">Previous Season Recap</h2>
                                 <div class="scrollable-inner-list">
-                                    <!-- Drop your future player list links or text elements directly right here -->
+                                    <!-- Drop future player links here -->
                                 </div>
                             </div>
                             <div style="padding-top: 8px; border-top: 1px solid rgb(17, 17, 17); margin-top: auto;">
@@ -414,46 +419,44 @@
 
                     <!-- PIECE 2: FULL-FIT WIDGETBOT DISCORD PANEL WINDOW -->
                     <td class="layout-box-cell" style="padding: 0px; height: 424px; overflow: hidden;">
-                        <iframe src="https://e.widgetbot.io/channels/1536340335666528349/1536340336249405452" style="width: 100%; height: 100%; border: none; display: block; background: transparent;"></iframe>
+                        <iframe src="https://e.widgetbot.io/channels/1536340335666528349/1536340336249405452"" style="width: 100%; height: 100%; border: none; display: block; background: transparent;"></iframe>
                     </td>
 
                     <!-- RIGHT STACKED CONTAINERS CELLS -->
                     <td style="width: 240px; min-width: 240px; padding: 0; border: none; background: transparent; vertical-align: top;">
                         <table style="width: 100%; border-collapse: separate; border-spacing: 0;">
                             <tr>
-<!-- PIECE 3: TOP 10 ALL TIME LEADERBOARD CONTAINER BOX -->
-<td class="w-full h-[260px] block">
-  <!-- Headings margin-bottom creates the initial space -->
-  <h2 class="text-[16px] mb-[5px] font-bold">Top 10 All Time</h2>
-  
-  <!-- LIGHT BLUE LINE WITH GLOW EFFECT -->
-  <div class="w-full h-[3px] bg-[#00f0ff] mb-[15px] rounded-[2px] overflow-hidden" style="box-shadow: 0 0 10px #00f0ff, 0 0 20px #00f0ff;">
-    <!-- Animated line inside instead of marquee -->
-    <div class="h-full w-1/3 bg-[#00f0ff] animate-pulse"></div>
-  </div>
-  
-  <!-- Leaderboard List -->
-  <ol class="text-[15px] pl-0 list-none custom-leaderboard-list">
-    <li class="pl-[20px]">1. Luis, deep.cerebro</li>
-    <li class="pl-[20px]">2. Ant, good-faith</li>
-    <li class="pl-[20px]">3. Kevin, sixohtwo</li>
-    <li class="pl-[20px]">4. MJ, MJ_The_King</li>
-    <li class="pl-[20px]">5. James, cue.ball</li>
-    <li class="pl-[20px]">6. Chris, chris.dogg</li>
-    <li class="pl-[20px]">7. CK, Xx_CK_xX</li>
-    <li class="pl-[20px]">8. Si, xxl_themachine_lxx</li>
-    <li class="pl-[20px]">9. Charlie, p00l_charlie</li>
-    <!-- Fixed syntax error and alignment for double digits -->
-    <li class="pl-[12px]">10. Stu, zl_stu_lz</li>
-  </ol>
-</td>
-
+                                <!-- PIECE 3: TOP 10 ALL TIME LEADERBOARD CONTAINER BOX -->
+                                <td class="layout-box-cell" style="width: 100%; height: 260px; display: block; font-family: sans-serif; box-sizing: border-box;">
+                                  
+                                  <h2 style="font-size: 16px; margin-bottom: 5px; font-weight: bold; margin-top: 10px; color: #aaaaaa; text-align: center; border-bottom: 1px solid rgb(51, 51, 51); padding-bottom: 4px;">Top 10 All Time</h2>
+                                  
+                                  <!-- LIGHT BLUE LINE WITH GLOW EFFECT -->
+                                  <div style="width: 100%; height: 3px; background-color: #00f0ff; margin-bottom: 15px; border-radius: 2px; overflow: hidden; box-shadow: 0 0 10px #00f0ff, 0 0 20px #00f0ff;">
+                                    <marquee behavior="alternate" direction="left" scrollamount="3" style="color: transparent; height: 100%; width: 100%;">.</marquee>
+                                  </div>
+                                  
+                                  <!-- Leaderboard List with fixed layout text wrapping -->
+                                  <ol class="leaderboard-ordered-list" style="font-size: 11.5px; padding-left: 0; margin: 0; list-style-type: none; line-height: 1.6; color: rgb(170, 170, 170); white-space: normal !important;">
+                                    <li style="padding-left: 20px;">1. Luis, deep.cerebro</li>
+                                    <li style="padding-left: 20px;">2. Ant, good-faith</li>
+                                    <li style="padding-left: 20px;">3. Kevin, sixohtwo</li>
+                                    <li style="padding-left: 20px;">4. MJ, MJ_The_King</li>
+                                    <li style="padding-left: 20px;">5. James, cue.ball</li>
+                                    <li style="padding-left: 20px;">6. Chris, chris.dogg</li>
+                                    <li style="padding-left: 20px;">7. CK, Xx_CK_xX</li>
+                                    <li style="padding-left: 20px;">8. Si, xxl_themachine_lxx</li>
+                                    <li style="padding-left: 20px;">9. Charlie, p00l_charlie</li>
+                                    <!-- FIXED: Resets color, thickness, and forces alignment inside container borders -->
+                                    <li style="padding-left: 12px; font-weight: normal; color: rgb(170, 170, 170);">10. Stu, zl_stu_lz</li>
+                                  </ol>
+                                </td>
                             </tr>
                             <tr><td style="height: 15px;"></td></tr>
                             <tr>
                                 <!-- PIECE 4: BOTTOM RIGHT UTILITY CANVAS BOX -->
                                 <td class="layout-box-cell" style="width: 100%; height: 149px; display: block; text-align: center; font-size: 12px; padding: 10px;">
-                                    <!-- Drop your future bottom-right banner links or graphics widgets directly right here -->
+                                    <!-- Drop future widgets here -->
                                 </td>
                             </tr>
                         </table>
@@ -462,6 +465,14 @@
             </table>
 
         </div> <!-- Closes master tournament-center-container -->
+
+        <!-- FOOTER SECTION: Positioned properly inside body block wrappers -->
+        <footer style="text-align: center; margin-top: 40px; padding: 20px;">
+            <p style="font-size: 14px; font-weight: bold; color: #666666; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0;">
+                &copy; 2026 8brcam by Bren. An old website reborn.
+            </p>
+        </footer>
+
     </div> <!-- Closes master-layout-alignment-block -->
 
     <!-- Navigation Active Tab Script Indicator -->
@@ -474,8 +485,3 @@
     </script>
 </body>
 </html>
-<footer style="text-align: center; margin-top: 40px; padding: 20px;">
-    <p style="font-size: 14px; font-weight: bold; color: #666666; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif; margin: 0;">
-        &copy; 2026 8brcam by Bren. An old website reborn.
-    </p>
-</footer>
